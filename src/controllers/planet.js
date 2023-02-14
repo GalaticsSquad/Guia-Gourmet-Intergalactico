@@ -43,6 +43,7 @@ exports.addPlanet = async (req, res) => {
     let planet = await service.add_Planet(name, icon, background, description)
     response.message ='Sucess'
     response.data = planet
+    res.status(200).json(response)
   } catch (error) {
     console.log(error);
 
@@ -53,6 +54,8 @@ exports.addPlanet = async (req, res) => {
     res.json(response);
   }
 };
+
+
 
 // Receitas
 exports.getRecipeById = async (req, res) => {
