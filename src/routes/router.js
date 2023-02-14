@@ -21,9 +21,9 @@ console.log("router: OK");
 
 router.get("/getplanet", controller.getPlanetById);
 router.get("/getrecipe", controller.getRecipeById);
-// router.post("/:id", authenticate, controller.addPlanet);
+router.post("/planet", authenticate, controller.addPlanet);
 // router.post("/:id", authenticate, controller.addRecipe);
-// router.patch("/:id", authenticate, controller.editPlanet);
+router.patch("/planet/:id", authenticate, controller.editPlanet);
 // router.patch("/:id", authenticate, controller.editRecipe);
 // router.delete("/:id", authenticate, controller.delRecipe);
 // router.delete("/:id", authenticate, controller.delRecipe);

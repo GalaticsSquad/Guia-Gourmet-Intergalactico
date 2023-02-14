@@ -12,11 +12,37 @@ exports.getPlanetById = async (req, res) => {
   };
 
   try {
-    console.log("Deu certo try controller");
     const planets = await service.getPlanet();
     response.message = "Success";
     response.data = planets;
-    res.json(response);
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = "Erro interno do Servidor";
+
+    res.status(500).json(response);
+  }
+};
+
+
+exports.addPlanet = async (req, res) => {
+  console.log("Controller: /POST");
+  const {name, icon, background, description} = req.body
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  // if de teste para verificar os dados recebidos no corpo, pois os dados recebidos não estão sendo verificados.
+  // se alguém quiser implementar fique avontade.
+  try { 
+    let planet = await service.add_Planet(name, icon, background, description)
+    response.message ='Sucess'
+    response.data = planet
   } catch (error) {
     console.log(error);
 
