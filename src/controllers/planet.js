@@ -51,7 +51,7 @@ exports.addPlanet = async (req, res) => {
     response.data = null;
     response.error = "Erro interno do Servidor";
 
-    res.json(response);
+    res.status(500).json(response);
   }
 };
 
