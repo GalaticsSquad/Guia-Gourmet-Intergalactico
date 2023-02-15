@@ -36,8 +36,6 @@ exports.addPlanet = async (req, res) => {
     error: null,
   };
 
-  // if de teste para verificar os dados recebidos no corpo, pois os dados recebidos não estão sendo verificados.
-  // se alguém quiser implementar fique avontade.
   try {
     if (!name) {
       throw "Error: Por favor insira o nome do planeta.";
@@ -135,9 +133,6 @@ exports.addRecipe = async (req, res) => {
     error: null,
   };
 
-  // if de teste para verificar os dados recebidos no corpo, pois os dados recebidos não estão sendo verificados.
-
-  // se alguém quiser implementar fique avontade.
   try {
     if (!name) {
       throw "Error: Favor inserir o nome da receita!";

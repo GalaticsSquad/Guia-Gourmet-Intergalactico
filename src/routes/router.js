@@ -1,13 +1,7 @@
 const express = require("express");
 const controller = require("../controllers/planet");
-// const router = express();
 const router = express.Router();
 
-/* const userRoutes = require("./routes/users");
-
-router.use(todoRouts);
-router.use(userRouts);
- */
 
 function authenticate(req, res, next) {
   if (req.body.password !== 123) {
@@ -17,13 +11,13 @@ function authenticate(req, res, next) {
   next();
 }
 
-console.log("router: OK");
 
+// Rotas dos planetas:
 router.get("/getplanet", controller.getPlanetById);
 router.post("/planet", authenticate, controller.addPlanet);
+router.patch("/planet/:id", authenticate, controller.editPlanet);
 
-// router.patch("/planet/:id", authenticate, controller.editPlanet);
-
+// Rotas das receitas:
 router.get("/getrecipe", controller.getRecipeById);
 router.post("/recipe", authenticate, controller.addRecipe);
 router.patch("/recipe/:id", authenticate, controller.editRecipe);
