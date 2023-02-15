@@ -82,3 +82,29 @@ exports.getRecipeById = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+exports.delRecipe = async (req, res) => {
+  console.log("Controller: /DELETE");
+  let _id = req.params.id
+  
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  try {
+    const receitas = await service.del_Recipe(_id);
+    response.message = "Success";
+    response.data = receitas;
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = "Erro interno do Servidor";
+
+    res.status(500).json(response);
+  }
+};

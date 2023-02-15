@@ -26,6 +26,7 @@ let recipe = [
     ingredients: "teste ingredientes",
     instructions: "teste modo de preparo",
     image: "../../img/recipe/prat1.png",
+    delete: false,
     visit_count: 0,
   },
   {
@@ -37,6 +38,7 @@ let recipe = [
     ingredients: "teste ingredientes 2",
     instructions: "teste modo de preparo 2",
     image: "../../img/recipe/prat2.png",
+    delete: false,
     visit_count: 0,
   },
 ];

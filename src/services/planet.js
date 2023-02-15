@@ -26,7 +26,18 @@ exports.add_Planet = async (_name, _icon, _background, _description) =>{
 
 //Recipes
 exports.getRecipe = async () => {
-  const recipes = dbPlanet.recipe;
-  console.log(recipes); //Vê o que tem
+  let recipes = dbPlanet.recipe.filter(recipe => recipe.delete !== true)
   return recipes; //repository
+};
+
+
+exports.del_Recipe = async (_id) => {
+  let id = parseInt(_id)
+  let recipe = dbPlanet.recipe.find( recipe => recipe.id === id)
+  if(!recipe){
+    throw 'Error: receita não encontrada'
+  }
+  let index = dbPlanet.recipe.indexOf(recipe);
+  dbPlanet.recipe[index].delete = true;
+  return recipe;
 };
