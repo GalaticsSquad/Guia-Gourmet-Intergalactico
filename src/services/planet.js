@@ -30,6 +30,25 @@ exports.getRecipe = async () => {
   return recipes; //repository
 };
 
+exports.add_Recipe = async (_name, _description, _type, _time, _ingredients, _instructions, _image) =>{
+  let last_id = dbPlanet.recipe[dbPlanet.recipe.length -1].id
+  try{
+    let objeto = {
+      id : last_id+1,
+      name: _name,
+      description: _description,
+      type: _type,
+      time: _time,
+      ingredients: _ingredients,
+      instructions: _instructions,
+      image: _image}
+    dbPlanet.recipe.push(objeto)
+    return objeto;
+  }catch(err){
+    console.log(err)
+    return err;
+  }
+}
 
 exports.del_Recipe = async (_id) => {
   let id = parseInt(_id)

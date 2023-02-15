@@ -20,7 +20,7 @@ let recipe = [
   {
     id: 0,
     name: "Suco de tarantula-aquática do mar do norte",
-    descricao: "Uma bebida extremamente refrescante",
+    description: "Uma bebida extremamente refrescante",
     type: "teste tipo",
     time: "10 min",
     ingredients: "teste ingredientes",
@@ -32,7 +32,7 @@ let recipe = [
   {
     id: 1,
     name: "carne de boi da fazenda do sul",
-    descricao: "Exemplo de Receita 2",
+    description: "Exemplo de Receita 2",
     type: "teste tipo 2",
     time: "20 min",
     ingredients: "teste ingredientes 2",

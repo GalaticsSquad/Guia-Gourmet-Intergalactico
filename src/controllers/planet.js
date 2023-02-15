@@ -83,6 +83,34 @@ exports.getRecipeById = async (req, res) => {
   }
 };
 
+
+exports.addRecipe = async (req, res) => {
+  console.log("Controller: /POST");
+  const {name, description, type, time, ingredients, instructions, image} = req.body
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  // if de teste para verificar os dados recebidos no corpo, pois os dados recebidos não estão sendo verificados.
+  // se alguém quiser implementar fique avontade.
+  try { 
+    let recipe = await service.add_Recipe(name, description, type, time, ingredients, instructions, image)
+    response.message ='Sucess'
+    response.data = recipe
+    res.status(200).json(response)
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = "Erro interno do Servidor";
+
+    res.status(500).json(response);
+  }
+};
+
 exports.delRecipe = async (req, res) => {
   console.log("Controller: /DELETE");
   let _id = req.params.id
