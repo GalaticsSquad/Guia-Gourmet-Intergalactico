@@ -19,6 +19,7 @@ let planet = [
 let recipe = [
   {
     id: 0,
+    id_planet: 1,
     name: "Suco de tarantula-aquática do mar do norte",
     description: "Uma bebida extremamente refrescante",
     type: "teste tipo",
@@ -31,6 +32,7 @@ let recipe = [
   },
   {
     id: 1,
+    id_planet: 1,
     name: "carne de boi da fazenda do sul",
     description: "Exemplo de Receita 2",
     type: "teste tipo 2",

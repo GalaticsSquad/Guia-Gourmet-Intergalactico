@@ -230,7 +230,7 @@ exports.delRecipe = async (req, res) => {
 
     response.message = "Erro interno do Servidor";
     response.data = null;
-    response.error = "Erro interno do Servidor";
+    response.error = error;
 
     res.status(500).json(response);
   }

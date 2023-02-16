@@ -59,6 +59,8 @@ exports.add_Recipe = async (
       ingredients: _ingredients,
       instructions: _instructions,
       image: _image,
+      delete: false,
+      visit_count: 0
     };
     dbPlanet.recipe.push(objeto);
     return objeto;
@@ -83,6 +85,9 @@ exports.del_Recipe = async (_id) => {
   let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);
   if (!recipe) {
     throw "Error: receita não encontrada";
+  }
+  if(recipe.delete === true){
+    throw "Error: receita não encontrada"
   }
   let index = dbPlanet.recipe.indexOf(recipe);
   dbPlanet.recipe[index].delete = true;
