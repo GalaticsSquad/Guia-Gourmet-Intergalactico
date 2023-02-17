@@ -1,10 +1,13 @@
 const dbPlanet = require("../repository/DB_planet");
+
+// @author {Carolina}
+// @coauthor {Eduardo}
 //planet
 exports.getPlanet = async () => {
   const planets = dbPlanet.planet;
   return planets; //repository
 };
-
+// @author {Eduardo}
 exports.add_Planet = async (_name, _icon, _background, _description) => {
   let last_id = dbPlanet.planet[dbPlanet.planet.length - 1].id;
   try {
@@ -22,7 +25,7 @@ exports.add_Planet = async (_name, _icon, _background, _description) => {
     return err;
   }
 };
-
+// @author {Eduardo}
 exports.edit_Planet = async (_id, body) => {
   let id = parseInt(_id);
   let planet = dbPlanet.planet.find((planet) => planet.id === id);
@@ -32,13 +35,26 @@ exports.edit_Planet = async (_id, body) => {
   Object.assign(planet, body);
   return planet;
 };
-
+// @author {Eduardo}
 //Recipes
 exports.getRecipe = async () => {
   let recipes = dbPlanet.recipe.filter((recipe) => recipe.delete !== true);
   return recipes; //repository
 };
 
+// @author {Eduardo}
+exports.get_Recipe_id = async (_id) => {
+  let id = parseInt(_id);
+  let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);
+  if(!recipe){
+    throw "Error: Receita não encontrada"
+  }
+  if(recipe.delete === true){
+    throw "Error: Receita não encontrada"
+  }
+  return recipe; //repository
+};
+// @author {Eduardo}
 exports.add_Recipe = async (
   _name,
   _description,
@@ -69,7 +85,7 @@ exports.add_Recipe = async (
     return err;
   }
 };
-
+// @author {Eduardo}
 exports.edit_Recipe = async (_id, body) => {
   let id = parseInt(_id);
   let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);
@@ -79,7 +95,7 @@ exports.edit_Recipe = async (_id, body) => {
   Object.assign(recipe, body);
   return recipe;
 };
-
+// @author {Eduardo}
 exports.del_Recipe = async (_id) => {
   let id = parseInt(_id);
   let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);

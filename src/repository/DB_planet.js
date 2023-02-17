@@ -1,3 +1,5 @@
+// @coauthor {Eduardo, Henrique, João, Carolina}
+
 let planet = [
   {
     id: 0,

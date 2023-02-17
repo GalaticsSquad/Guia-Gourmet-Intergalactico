@@ -11,14 +11,19 @@ function authenticate(req, res, next) {
   next();
 }
 
+// @author {Carolina}
+// @coauthor {Eduardo}
 
 // Rotas dos planetas:
 router.get("/getplanet", controller.getPlanetById);
 router.post("/planet", authenticate, controller.addPlanet);
 router.patch("/planet/:id", authenticate, controller.editPlanet);
 
+// @author {Eduardo}
+// @coauthor {Carolina}
 // Rotas das receitas:
-router.get("/getrecipe", controller.getRecipeById);
+router.get("/getrecipe", controller.getRecipes);
+router.get("/getrecipe/:id", controller.getRecipeById);
 router.post("/recipe", authenticate, controller.addRecipe);
 router.patch("/recipe/:id", authenticate, controller.editRecipe);
 router.delete("/recipe/:id", authenticate, controller.delRecipe);

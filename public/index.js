@@ -4,11 +4,8 @@ import home from "./pages/home.js";
 import add_P_R from "./pages/add_planet_recipe.js";
 import envio_p_r from "./pages/envio_planet_receita.js";
 
-// initial()
-envio_p_r()
-//add_P_R();
 
-// initial();
+initial();
 
 // const container = document.querySelector("#root");
 // container.appendChild(routes["initial"]);

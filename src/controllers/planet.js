@@ -1,6 +1,10 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
 
+
+// @author {Carolina}
+// @coauthor {Eduardo}
+
 // Planetas
 exports.getPlanetById = async (req, res) => {
   console.log("Controller: /GET");
@@ -26,6 +30,8 @@ exports.getPlanetById = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+// @author {Eduardo}
 
 exports.addPlanet = async (req, res) => {
   console.log("Controller: /POST");
@@ -65,6 +71,7 @@ exports.addPlanet = async (req, res) => {
   }
 };
 
+// @author {Eduardo}
 exports.editPlanet = async (req, res) => {
   console.log("Controller: /PATCH");
   let _id = req.params.id;
@@ -97,8 +104,9 @@ exports.editPlanet = async (req, res) => {
   }
 };
 
+// @author {Eduardo}
 // Receitas
-exports.getRecipeById = async (req, res) => {
+exports.getRecipes = async (req, res) => {
   console.log("Controller: /GET");
 
   const response = {
@@ -123,6 +131,35 @@ exports.getRecipeById = async (req, res) => {
   }
 };
 
+// @author {Eduardo}
+exports.getRecipeById = async (req, res) => {
+  console.log("Controller: /GET");
+  let _id = req.params.id;
+
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  try {
+    const receita = await service.get_Recipe_id(_id);
+    response.message = "Success";
+    response.data = receita;
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = error;
+
+    res.status(500).json(response);
+  }
+};
+
+// @author {Eduardo}
+// @coauthor {Henrique}
 exports.addRecipe = async (req, res) => {
   console.log("Controller: /POST");
   const { name, description, type, time, ingredients, instructions, image } =
@@ -178,6 +215,7 @@ exports.addRecipe = async (req, res) => {
   }
 };
 
+// @author {Eduardo}
 exports.editRecipe = async (req, res) => {
   console.log("Controller: /PATCH");
   let _id = req.params.id;
@@ -195,21 +233,22 @@ exports.editRecipe = async (req, res) => {
   };
 
   try {
-    const receitas = await service.edit_Recipe(_id, _body);
+    const receita = await service.edit_Recipe(_id, _body);
     response.message = "Success";
-    response.data = receitas;
+    response.data = receita;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
 
     response.message = "Erro interno do Servidor";
     response.data = null;
-    response.error = "Erro interno do Servidor";
+    response.error = error;
 
     res.status(500).json(response);
   }
 };
 
+// @author {Eduardo}
 exports.delRecipe = async (req, res) => {
   console.log("Controller: /DELETE");
   let _id = req.params.id;
