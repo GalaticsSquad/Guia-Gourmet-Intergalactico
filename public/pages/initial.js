@@ -1,3 +1,4 @@
+import EventCustom from "../eventCustom.js"
 export default () => {
   const root = document.querySelector("#root");
   const container = document.createElement("div");
@@ -20,6 +21,12 @@ export default () => {
   containerButton.setAttribute("class", "container-button-init");
   //title.setAttribute("class", "title-init");
   button.setAttribute("class", "button-init");
+
+  button.addEventListener('click', ()=>{
+    console.log('/planets')
+    const evento = EventCustom('/planets')
+    root.dispatchEvent(evento) 
+  })
 
   //title.textContent = "Guia Gourmet Intergaláctico";
   button.textContent = "Entrar";

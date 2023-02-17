@@ -6,16 +6,18 @@
 export default function () {
 const root = document.querySelector("#root");
 
+const main_container = document.createElement("div");
 // Main container, background:
 const container = document.createElement("div");
+
 container.setAttribute("class", "main-container");
 const background = document.createElement("div");
 
 const header = document.createElement('header')
 container.appendChild(header);
 
-root.appendChild(container);
-root.appendChild(background);
+main_container.appendChild(container);
+main_container.appendChild(background);
 
 background.setAttribute("class", "planet-background");
 
@@ -119,11 +121,11 @@ templateRecipeImgDiv.setAttribute("class", "template-image-div");
 templateRecipeTextSection.setAttribute("class", "template-text-section");
 templateRecipeText.setAttribute("class", "template-recipe-text");
 
-/* insertHeader() */
+return main_container;
 
 }
 
-// return container;
+
 // };
 
 // let i_civil = 0;
