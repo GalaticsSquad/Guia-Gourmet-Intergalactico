@@ -23,8 +23,7 @@ export default () => {
   button.setAttribute("class", "button-init");
 
   button.addEventListener('click', ()=>{
-    console.log('/planets')
-    const evento = EventCustom('/planets')
+    const evento = EventCustom('/home')
     root.dispatchEvent(evento) 
   })
 

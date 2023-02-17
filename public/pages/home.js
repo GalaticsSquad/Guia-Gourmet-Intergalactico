@@ -4,13 +4,12 @@ import insertHeader from './header.js'
 //@coauthor {João}
 
 export default function renderHome () {
-    
+    const headerFake = insertHeader()
     const root = document.getElementById('root');
 
-    root.innerHTML = 
-    `    
-    <header></header>
-
+    const container = document.createElement('div')
+    container.innerHTML= `    
+    <header>${headerFake}</header>
     <main class="mainHome">
 
         <section class="containerSliderHome">
@@ -248,7 +247,8 @@ export default function renderHome () {
     <footer></footer>
 
     `
-    insertHeader()
+    // insertHeader()
+    return container
 
 };
 

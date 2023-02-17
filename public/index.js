@@ -14,8 +14,10 @@ console.log(rota)
 const root = document.querySelector("#root")
 
 root.addEventListener('onstatechange', function(event){
+   
     root.innerHTML = ``
     const url =  event.detail.url
+    console.log(rota.getPages(url))
     root.appendChild(rota.getPages(url))
     window.history.pushState('','', url)
 })

@@ -44,7 +44,7 @@ imgDiv.appendChild(recipeName);
 recipeName.innerHTML = "Mixtrous a lá Borroca";
 recipeImg.appendChild(imgprato1);
 imgprato1.setAttribute("class", "imagep1");
-imgprato1.src = "images/prat1.png";
+// imgprato1.src = "images/prat1.png";
 
 recipeContainer.appendChild(imgDiv);
 imgDiv.appendChild(recipeImg);
