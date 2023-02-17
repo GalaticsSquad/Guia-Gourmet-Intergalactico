@@ -115,7 +115,7 @@ nav a{
 /* -------------------------- HEADER -------------------------- */
 
 header {
-    height: 12%;
+    height: 100px;
     width: 100%;
     background-color: #fff4d72d;
     display: flex;
@@ -126,7 +126,7 @@ header {
 .containerLogoHeader {
     height: 90%;
     width: 10%;
-    background-image: url("images/logofinal.png");
+    background-image: url("img/logofinal.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -173,7 +173,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: end;
-    background-image: url('images/logofinal.png');
+    background-image: url('./img/logofinal.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -277,7 +277,7 @@ header {
 /* -------------------------- HOME -------------------------- */
 
 .mainHome {
-    height: 78%;
+    height: 800px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -322,7 +322,7 @@ header {
 }
 
 /* .recipePlate {
-    background-image: url('images/prat1.png');
+    background-image: url('img/prat1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0px -17px;
@@ -491,7 +491,7 @@ li:nth-child(2), li:nth-child(3) {
     z-index: 100;
 }
 
-.button-container .button {
+.button-container .buttonCarrossel {
     color: rgba(0, 0, 0, 1);
     font-size: 32px;
     cursor: pointer;
@@ -500,11 +500,11 @@ li:nth-child(2), li:nth-child(3) {
     transition: all 300ms ease-in-out;
 }
 
-.button-container .button:hover {
+.button-container .buttonCarrossel:hover {
     opacity: 1;
 }
 
-.button-container .button:before {
+.button-container .buttonCarrossel:before {
     content: "";
     position: absolute;
     top: 50%;
@@ -517,11 +517,11 @@ li:nth-child(2), li:nth-child(3) {
     z-index: -99;
 }
 
-.button-container .button:nth-child(1) {
+.button-container .buttonCarrossel:nth-child(1) {
     float: left;
 }
 
-.button-container .button:nth-child(2) {
+.button-container .buttonCarrossel:nth-child(2) {
     float: right;
 }
 
@@ -530,7 +530,7 @@ li:nth-child(2), li:nth-child(3) {
 .main-container{
     display: flex;
     height: 120%;
-    background-image: url('images/back1.1.jpg');
+    background-image: url('img/back1.1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     align-items: center;
@@ -585,7 +585,7 @@ h3 {
 }
 
 .imgplaneta1{
-    background-image: url('images/p3.png');
+    background-image: url('img/p3.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 35px;

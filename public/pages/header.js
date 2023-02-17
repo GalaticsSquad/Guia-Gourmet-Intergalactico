@@ -1,8 +1,6 @@
-
-export default function insertMenu () {
-    // const header = document.createElement('header')
-    const header= 
-    `
+export default function insertMenu() {
+  // const header = document.createElement('header')
+  const header = `
     <div id="menu"> 
         <input type="checkbox" id="check" /> 
 
@@ -11,7 +9,7 @@ export default function insertMenu () {
         </div>
 
         <label for="check" id="icone">
-            <img class="imgMenu" src="./images/icone_bar.png"/>
+            <img class="imgMenu" src="img/icone_bar.png"/>
         </label>
 
         <div class="barra">
@@ -40,6 +38,6 @@ export default function insertMenu () {
 
     <div class="containerLogoHeader"></div>   
 
-    `
-    return header;
+    `;
+  return header;
 }

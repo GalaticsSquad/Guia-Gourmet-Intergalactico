@@ -1,14 +1,14 @@
-import insertHeader from './header.js'
+import insertHeader from "./header.js";
 
 // @author {Carolina}
 //@coauthor {João}
 
-export default function renderHome () {
-    const headerFake = insertHeader()
-    const root = document.getElementById('root');
+export default function renderHome() {
+  const headerFake = insertHeader();
+  const root = document.getElementById("root");
 
-    const container = document.createElement('div')
-    container.innerHTML= `    
+  const container = document.createElement("div");
+  container.innerHTML = `    
     <header>${headerFake}</header>
     <main class="mainHome">
 
@@ -223,20 +223,20 @@ export default function renderHome () {
             
             <div class="items">
                 <div class="item active">
-                    <img src="images/p1.png">
+                    <img src="../img/planet/p1.png">
                 </div>
                 <div class=" item next">
-                    <img src="images/p2.png">
+                    <img src="../img/planet/p2.png">
                 </div>
                 <div class="item">
-                    <img src="images/p4.png">
+                    <img src="../img/planet/p3.png">
                 </div>
                 <div class="item prev">
-                    <img src="images/p3.png">
+                    <img src="../img/planet/p4.png">
                 </div>
                 <div class="button-container">
-                    <div class="button"><i class="fas fa-angle-left"></i></div>
-                    <div class="button"><i class="fas fa-angle-right"></i></div>
+                    <div class="buttonCarrossel"><i class="fas fa-angle-left"></i></div>
+                    <div class="buttonCarrossel"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
     
@@ -245,32 +245,10 @@ export default function renderHome () {
     </main>
 
     <footer></footer>
+    `;
 
-    `
-    // insertHeader()
-    return container
+  //   carrosel();
 
-};
-
-{/* <div id="recipes">
-                <div class="item active">
-                    <div class="frame-content">
-                        <h2>Slide 1</h2>
-                    </div>
-                </div>
-                <div class=" item next">
-                    <div class="frame-content">
-                        <h2>Slide 2</h2>
-                    </div>
-                </div>
-                <div class=" item">
-                    <div class="frame-content">
-                        <h2>Slide 3</h2>
-                    </div>
-                </div>
-                <div class="item prev">
-                    <div class="frame-content">
-                        <h2>Slide 4</h2>
-                    </div>
-                </div>
-            </div> */}
+  // insertHeader()
+  return container;
+}

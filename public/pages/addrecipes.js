@@ -4,7 +4,7 @@ root.innerHTML = `
     <div class="container_planet_recipe">
         <form class="form_envio">
             <div class="div_input">
-                <lable>Nome do Planeta</lable>
+                <label>Nome do Planeta</label>
                 <div>
                     <select>
                         <option>planet 1</option>
@@ -15,13 +15,13 @@ root.innerHTML = `
                 </div>
             </div>
             <div class="div_input">
-                <lable>Imagem da receita:</lable>
+                <label>Imagem da receita:</label>
                 <div class="div_image">
                     <input type="text" id="input_image_receita">
                 </div>
             </div>
             <div class="div_input">
-                <lable>Tipo da Receita:</lable>
+                <label>Tipo da Receita:</label>
                 <div>
                     <select>
                         <option>type 1</option>
@@ -32,19 +32,19 @@ root.innerHTML = `
                 </div>
             </div>
             <div class="div_input">
-                <lable>Tempo de preparo:</lable>
+                <label>Tempo de preparo:</label>
                 <div class="div_input">
                     <input type="text" id="input_tempo">
                 </div>
             </div>
             <div class="div_input">
-                <lable>Ingredientes:</lable>
+                <label>Ingredientes:</label>
                 <div class="div_input">
                     <textarea id="text_receita" cols="106" rows="5">
                     </textarea>
                 </div>
             <div class="div_input">
-                <lable>Preparo:</lable>
+                <label>Preparo:</label>
                 <div class="div_input">
                     <textarea id="text_receita" cols="106" rows="5">
                     </textarea>

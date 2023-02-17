@@ -1,34 +1,39 @@
-import EventCustom from "../eventCustom.js"
+import EventCustom from "../eventCustom.js";
 export default () => {
   const root = document.querySelector("#root");
-  const container = document.createElement("div");
-  const background = document.createElement("div");
-  const containerLogo = document.createElement("div");
-  const containerButton = document.createElement("div");
-  //const title = document.createElement("h1");
-  const button = document.createElement("button");
+  const backgroundInit = document.createElement("div");
+  backgroundInit.setAttribute("class", "backgroundInit");
+  root.appendChild(backgroundInit);
 
-  root.appendChild(background);
-  root.appendChild(container);
-  container.appendChild(containerLogo);
-  container.appendChild(containerButton);
-  //containerLogo.appendChild(title);
-  containerButton.appendChild(button);
+  const containerInit = document.createElement("div");
+  containerInit.setAttribute("class", "containerInit");
+  root.appendChild(containerInit);
 
-  background.setAttribute("class", "background-init");
-  container.setAttribute("class", "main-init");
-  containerLogo.setAttribute("class", "container-logo-init");
-  containerButton.setAttribute("class", "container-button-init");
-  //title.setAttribute("class", "title-init");
-  button.setAttribute("class", "button-init");
+  const containerLogoInit = document.createElement("div");
+  containerLogoInit.setAttribute("class", "containerLogoInit");
+  containerInit.appendChild(containerLogoInit);
 
-  button.addEventListener('click', ()=>{
-    const evento = EventCustom('/home')
-    root.dispatchEvent(evento) 
-  })
+  const containerButtonInit = document.createElement("div");
+  containerButtonInit.setAttribute("class", "containerButtonInit");
+  containerInit.appendChild(containerButtonInit);
+
+  const titleInit = document.createElement("h1");
+  titleInit.setAttribute("class", "titleInit");
+  containerInit.appendChild(titleInit);
+  titleInit.innerText = "Guia Gourmet Intergaláctico";
+
+  const buttonInit = document.createElement("button");
+  buttonInit.setAttribute("class", "button-init");
+  containerButtonInit.appendChild(buttonInit);
+  buttonInit.innerText = "Entrar";
+
+  buttonInit.addEventListener("click", () => {
+    const evento = EventCustom("/home");
+    root.dispatchEvent(evento);
+  });
 
   //title.textContent = "Guia Gourmet Intergaláctico";
-  button.textContent = "Entrar";
+  /* button.textContent = "Entrar"; */
 
-  return container;
+  return containerInit;
 };
