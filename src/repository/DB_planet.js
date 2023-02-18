@@ -3,16 +3,30 @@
 let planet = [
   {
     id: 0,
-    name: "Exemplo 1",
-    icon: "../../public/img/planet/p1.png",
+    name: "Arcano",
+    icon: "/img/planet/p1.png",
     background: "../../public/img/planet/p2.png",
     description: "esse planeta é só um teste!",
   },
   {
     id: 1,
-    name: "Exemplo 2",
-    icon: "../../public/img/planet/p2.png",
-    background: "../../public/img/planet/p2.png",
+    name: "Hyperion",
+    icon: "/img/planet/p2.png",
+    background: "/img/planet/p2.png",
+    description: "esse planeta é só um outro teste!",
+  },
+  {
+    id: 2,
+    name: "Silfrena",
+    icon: "/img/planet/p3.png",
+    background: "/public/img/planet/p2.png",
+    description: "esse planeta é só um outro teste!",
+  },
+  {
+    id: 3,
+    name: "Zephyrion",
+    icon: "/img/planet/p4.png",
+    background: "/img/planet/p2.png",
     description: "esse planeta é só um outro teste!",
   },
 ];

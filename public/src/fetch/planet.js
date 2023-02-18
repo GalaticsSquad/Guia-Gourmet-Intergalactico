@@ -1,3 +1,4 @@
+
 const get_planets = async ()=>{
     let req =  await fetch('http://localhost:3000/getplanet', {
         method: 'GET',
@@ -9,6 +10,7 @@ const get_planets = async ()=>{
     let json = await req.json()
     let DB = json.data
     console.log(DB)
+    return DB;
 } 
 
 const post_planets = async ()=>{
@@ -38,3 +40,5 @@ const patch_planets = async ()=>{
     let json = await req.json()
     console.log(json)
 } 
+
+export {get_planets, post_planets, patch_planets}
