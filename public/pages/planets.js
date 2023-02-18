@@ -1,25 +1,21 @@
 // import routes from "./routes.js";
-/* import insertHeader from './header.js' */
+import insertHeader from "./header.js";
 
-// export default () => {
-// root:
-export default function () {
+export default function (data) {
+  console.log("planets ",data);
+  const insertH = insertHeader()
 const root = document.querySelector("#root");
 
 const main_container = document.createElement("div");
 // Main container, background:
 const container = document.createElement("div");
-
 container.setAttribute("class", "main-container");
-const background = document.createElement("div");
 
 const header = document.createElement('header')
 container.appendChild(header);
+header.innerHTML = insertH
 
 main_container.appendChild(container);
-main_container.appendChild(background);
-
-background.setAttribute("class", "planet-background");
 
 // Receita:
 const recipeContainer = document.createElement("div");
@@ -122,46 +118,4 @@ templateRecipeTextSection.setAttribute("class", "template-text-section");
 templateRecipeText.setAttribute("class", "template-recipe-text");
 
 return main_container;
-
 }
-
-
-// };
-
-// let i_civil = 0;
-
-// td_buttonleft.addEventListener('click', function(){
-//     if(i_civil > 0){
-//         i_civil--;
-//     }
-//     console.log(i_civil);
-//     console.log(example.civilizations[i_civil]);
-//     td_civilName1.textContent = example.civilizations[i_civil];
-//     td_civilName2.textContent = example.civilizations[(i_civil+1)];
-//     td_civilName3.textContent = example.civilizations[(i_civil+2)];
-//     civilLogo1.src = example.logos[0];
-//     civilLogo2.src = example.logos[1];
-//     civilLogo3.src = example.logos[2];
-// });
-
-// td_buttonright.addEventListener('click', function(){
-//     if(i_civil < 1){
-//         i_civil++;
-//     }
-//     console.log(i_civil);
-//     console.log(example.logos[i_civil]);
-//     td_civilName1.textContent = example.civilizations[i_civil];
-//     td_civilName2.textContent = example.civilizations[(i_civil+1)];
-//     td_civilName3.textContent = example.civilizations[(i_civil+2)];
-//     civilLogo1.src = example.logos[i_civil];
-//     civilLogo2.src = example.logos[(i_civil+1)];
-//     civilLogo3.src = example.logos[(i_civil+2)];
-// });
-
-// civilLogo1.src = example.logos[0];
-// civilLogo2.src = example.logos[1];
-// civilLogo3.src = example.logos[2];
-
-// td_civilName1.textContent = example.civilizations[i_civil];
-// td_civilName2.textContent = example.civilizations[(i_civil+1)];
-// td_civilName3.textContent = example.civilizations[(i_civil+2)];

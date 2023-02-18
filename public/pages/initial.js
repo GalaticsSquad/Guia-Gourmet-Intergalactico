@@ -32,8 +32,5 @@ export default () => {
     root.dispatchEvent(evento);
   });
 
-  //title.textContent = "Guia Gourmet Intergaláctico";
-  /* button.textContent = "Entrar"; */
-
   return containerInit;
 };

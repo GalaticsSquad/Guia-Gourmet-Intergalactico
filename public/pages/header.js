@@ -1,4 +1,6 @@
-export default function insertMenu() {
+import EventCustom from "../eventCustom.js";
+
+export default function insertHeader() {
   // const header = document.createElement('header')
   const header = `
     <div id="menu"> 
@@ -14,24 +16,24 @@ export default function insertMenu() {
 
         <div class="barra">
             <nav>
-                <a href="">
-                    <div class="link">Home</div>
+                <a>
+                    <div class="linkHome">Home</div>
                 </a>
-                <a href="">
-                    <div class="link">Arcano</div>
+                <a>
+                    <div class="link"></div>
                 </a>
-                <a href="">
-                    <div class="link">Hyperion</div>
+                <a>
+                    <div class="link"></div>
                 </a>
-                <a href="">
-                    <div class="link">Silfrena</div>
+                <a>
+                    <div class="link"></div>
                 </a>
-                <a href="">
-                    <div class="link">Zephyrion</div>
+                <a>
+                    <div class="link"></div>
                 </a>
             </nav>
             <div class="containerLoginMenu">
-                <a href="" class="loginMenu">Login</a>
+                <a class="loginMenu">Login</a>
             </div>
         </div>
     </div>
@@ -39,5 +41,28 @@ export default function insertMenu() {
     <div class="containerLogoHeader"></div>   
 
     `;
-  return header;
+    return header;
+}
+
+export function logicHeader (data) {
+
+    const links = document.querySelectorAll('.link');
+    const buttonHome = document.querySelector ('.linkHome')
+    const buttonLogin = document.querySelector ('.loginMenu')
+
+    links[0].addEventListener("click", () => {
+        const evento = EventCustom(`/planets`);
+        root.dispatchEvent(evento);
+    });
+
+    let i = 0 // putting the names by fetch on nav
+    while (links.length > i) {
+        links[i].innerText = data[i].name
+        i++
+    }
+    
+    buttonLogin.addEventListener("click", () => {
+        const evento = EventCustom("/login");
+        root.dispatchEvent(evento);
+    });
 }
