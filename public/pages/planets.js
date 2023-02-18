@@ -1,9 +1,10 @@
 // import routes from "./routes.js";
 import insertHeader from "./header.js";
 
-export default function (data) {
-  console.log("planets ",data);
-  const insertH = insertHeader()
+export default function (dataPlanet, dateRecipe) {
+  console.log("dataPlanet ", dataPlanet)
+  console.log("dateRecipe ", dateRecipe)
+const insertH = insertHeader()
 const root = document.querySelector("#root");
 
 const main_container = document.createElement("div");
@@ -24,7 +25,7 @@ const recipeName = document.createElement("h3");
 const recipeImg = document.createElement("div");
 const textDiv = document.createElement("div");
 const ingredientSection = document.createElement("section");
-const ingredientUl = document.createElement("ol");
+const ingredientUl = document.createElement("ul");
 const methodSection = document.createElement("section");
 const methodText = document.createElement("p");
 const imgprato1 = document.createElement("img");
@@ -40,7 +41,7 @@ imgDiv.appendChild(recipeName);
 recipeName.innerHTML = "Mixtrous a lá Borroca";
 recipeImg.appendChild(imgprato1);
 imgprato1.setAttribute("class", "imagep1");
-// imgprato1.src = "images/prat1.png";
+imgprato1.src = "../img/recipe/prat1.png";
 
 recipeContainer.appendChild(imgDiv);
 imgDiv.appendChild(recipeImg);
@@ -82,7 +83,7 @@ const textPlanetDiv = document.createElement("div");
 const imgPlanetDiv = document.createElement("div");
 const textPlanet = document.createElement("p");
 const planeta1 = document.createElement("div");
-/* planeta1.src = ""; */
+planeta1.src = "";
 textPlanet.textContent =
   "Um planeta (do grego πλανήτης [planεːtεːs] viajante) é um corpo celeste que orbita uma estrela ou um remanescente de estrela, com massa suficiente para se tornar esférico pela sua própria gravidade, mas não ao ponto de causar fusão termonuclear, e que tenha limpado de planetesimais a sua região vizinha (dominância orbital).[1][2] O termo planeta é antigo, com ligações com a história, astrologia, ciência, mitologia e religião. Os planetas eram vistos por muitas culturas antigas como divinos ou emissários de deuses. À medida que o conhecimento científico evoluiu, a percepção humana sobre os planetas mudou, incorporando diversos tipos de objetos. Em 2006, a União Astronômica Internacional (UAI) adotou oficialmente uma resolução definindo planetas dentro do Sistema Solar, a qual tem sido elogiada e criticada, permanecendo em discussão entre alguns cientistas.";
 

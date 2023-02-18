@@ -2,7 +2,7 @@ import EventCustom from "../eventCustom.js";
 
 export default function insertHeader() {
   // const header = document.createElement('header')
-  const header = `
+    const header = `
     <div id="menu"> 
         <input type="checkbox" id="check" /> 
 
@@ -50,14 +50,14 @@ export function logicHeader (data) {
     const buttonHome = document.querySelector ('.linkHome')
     const buttonLogin = document.querySelector ('.loginMenu')
 
-    links[0].addEventListener("click", () => {
-        const evento = EventCustom(`/planets`);
-        root.dispatchEvent(evento);
-    });
-
     let i = 0 // putting the names by fetch on nav
     while (links.length > i) {
-        links[i].innerText = data[i].name
+        const planetName = data[i].name
+        links[i].innerText = planetName
+        links[i].addEventListener("click", () => {
+            const evento = EventCustom(`/${planetName}`);
+            root.dispatchEvent(evento);
+        });
         i++
     }
     

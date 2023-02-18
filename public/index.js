@@ -11,8 +11,6 @@ const root = document.querySelector("#root");
 root.addEventListener("onstatechange", function (event) {
   // root.innerHTML = ``;
   const url = event.detail.url;
-  // console.log("rota:", rota.getPages(url));
-  // root.appendChild(rota.getPages(url));
   window.history.pushState("", "", url);
   Route()
   window.dispatchEvent(new Event("popstate"));
@@ -20,10 +18,6 @@ root.addEventListener("onstatechange", function (event) {
 
 window.addEventListener("load", () => {
   Route()
-  // root.appendChild(rota.getPages("/"));
 });
-window.addEventListener("popstate", () => {
-  Route()
-  // root.appendChild(rota.getPages("/"));
-});
+
 

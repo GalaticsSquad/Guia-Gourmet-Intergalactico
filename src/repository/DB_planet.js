@@ -38,7 +38,7 @@ let planet = [
 let recipe = [
   {
     id: 0,
-    id_planet: 1,
+    id_planet: 0,
     name: "Prato Cibernético com Nanofungos e Glóbulos de Carga",
     description: "Um prato eletrizante",
     type: "Prato principal",

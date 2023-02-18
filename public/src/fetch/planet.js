@@ -9,7 +9,6 @@ const get_planets = async ()=>{
     })
     let json = await req.json()
     let DB = json.data
-    console.log(DB)
     return DB;
 } 
 
@@ -23,7 +22,6 @@ const post_planets = async ()=>{
         body: JSON.stringify(_body) 
     })
     let json = await req.json()
-    console.log(json)
 } 
 
 
@@ -38,7 +36,6 @@ const patch_planets = async ()=>{
         body: JSON.stringify(_body) 
     })
     let json = await req.json()
-    console.log(json)
 } 
 
 export {get_planets, post_planets, patch_planets}

@@ -27,7 +27,7 @@ export function renderHome (data) {
                                             <h3 class="recipeName">Recipe Left2</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
-                                            <ul>
+                                            <ul class="listHome">
                                                 <li class="recipeResume">Borroca é uma fruta muito
                                                 conhecida em Zephyrion,  seu 
                                                 gosto amargo, faz toda diferença 
@@ -47,7 +47,7 @@ export function renderHome (data) {
                                         <h3 class="recipeName">Recipe Left2</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
-                                            <ul>
+                                            <ul class="listHome">
                                                 <li class="recipeResume">Borroca é uma fruta muito
                                                 conhecida em Zephyrion,  seu 
                                                 gosto amargo, faz toda diferença 
@@ -251,13 +251,9 @@ export function logicHome() {
 
     /* CARROSEL */
 
-    console.log('carrosel')
     const items = document.querySelectorAll(".item");
     const button = document.querySelectorAll(".buttonCarrossel");
     const slides = document.querySelectorAll(".slide");
-
-    console.log("items length:", items.length);
-    console.log(slides.length);
 
     let current = 0;
     let prev = items.length - 1;
