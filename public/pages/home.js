@@ -1,10 +1,24 @@
 import insertHeader from "./header.js";
 
+
+//Recipe.name só pode ter 32 caracteres
+//Recipe.description pode ter até 100 caracteres
+
+
 // // @author {Carolina}
 // //@coauthor {João}
-export function renderHome (data) {
+export function renderHome (data, dataR) {
     const headerFake = insertHeader();
     const container = document.createElement("div");
+    let format_data = encontra_receita_do_planeta(data, dataR)
+    console.log("teste:", format_data)
+    const dig = dataR[2].name.substring(0,100)
+
+    const add_recipe = slides_Recipe(format_data)
+    const add_planet = slide_planets(format_data)
+    console.log("aqui:",add_planet)
+
+    console.log("relação",dig)
     container.className = "rootContainerHome"
     container.innerHTML = `    
         <header>${headerFake}</header>
@@ -13,27 +27,23 @@ export function renderHome (data) {
             <section class="containerSliderHome">
 
                 <div class="slides">
-
                     <div class="slide active">
                         <div class="slideContainer">
                             <div class="containerPlanetName">
-                                <h2 class="PlanetName">${data[0].name}</h2>
+                                <h2 class="PlanetName">${format_data[0].planeta.name}</h2>
                             </div>
                             <div class="recipes">
                                 <div class="containerRecipeLeft">
                                     <div class="recipeWrapper">
                                         <div class="recipePlate"></div>
                                         <div class="recipeNameContainer">
-                                            <h3 class="recipeName">Recipe Left2</h3>
+                                            <h3 class="recipeName">${format_data[0].receitas[0].name}</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
                                             <ul class="listHome">
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
+                                                <li class="recipeResume">${format_data[0].receitas[0].description}</li>
+                                                <li class="recipeType">${format_data[0].receitas[0].type}</li>
+                                                <li class="recipeTime">tempo de preparo: ${format_data[0].receitas[0].time}</li>
                                             </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
@@ -44,17 +54,14 @@ export function renderHome (data) {
                                 <div class="containerRecipeRight">
                                     <div class="recipeWrapper">
                                         <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
+                                        <h3 class="recipeName">${format_data[0].receitas[1].name}aaaaaaaaa aaaaa aaa</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
-                                            <ul class="listHome">
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
+                                        <ul class="listHome">
+                                            <li class="recipeResume">${format_data[0].receitas[1].description}</li>
+                                            <li class="recipeType">${format_data[0].receitas[1].type}</li>
+                                            <li class="recipeTime">tempo de preparo: ${format_data[0].receitas[1].time}</li>
+                                        </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
                                             <button class="recipeButton">Ver mais</button>
@@ -64,154 +71,10 @@ export function renderHome (data) {
                             </div>
                         </div>
                     </div>
-                    <div class="slide next">
-                        <div class="slideContainer">
-                            <div class="containerPlanetName">
-                                <h2 class="PlanetName">${data[1].name}</h2>
-                            </div>
-                            <div class="recipes">
-                                <div class="containerRecipeLeft">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="containerRecipeRight">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slideContainer">
-                            <div class="containerPlanetName">
-                                <h2 class="PlanetName">${data[2].name}</h2>
-                            </div>
-                            <div class="recipes">
-                                <div class="containerRecipeLeft">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="containerRecipeRight">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="slide prev">
-                        <div class="slideContainer">
-                            <div class="containerPlanetName">
-                                <h2 class="PlanetName">${data[3].name}</h2>
-                            </div>
-                            <div class="recipes">
-                                <div class="containerRecipeLeft">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="containerRecipeRight">
-                                    <div class="recipeWrapper">
-                                        <div class="recipeNameContainer">
-                                        <h3 class="recipeName">Recipe Left2</h3>
-                                        </div>
-                                        <div class="recipeInfoContainer">
-                                            <ul>
-                                                <li class="recipeResume">Borroca é uma fruta muito
-                                                conhecida em Zephyrion,  seu 
-                                                gosto amargo, faz toda diferença 
-                                                ao prato, elevando a experiência.</li>
-                                                <li class="recipeType">20 min de preparo</li>
-                                                <li class="recipeTime">Salada</li>
-                                            </ul>
-                                        </div>
-                                        <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
+                    
+                    ${add_recipe}
+                    
             
                 </div>
             
@@ -221,17 +84,10 @@ export function renderHome (data) {
                 
                 <div class="items">
                     <div class="item active">
-                        <img src="../img/planet/p1.png">
+                        <img src="${format_data[0].planeta.icon}">
                     </div>
-                    <div class=" item next">
-                        <img src="../img/planet/p2.png">
-                    </div>
-                    <div class="item">
-                        <img src="../img/planet/p3.png">
-                    </div>
-                    <div class="item prev">
-                        <img src="../img/planet/p4.png">
-                    </div>
+                    ${add_planet}
+
                     <div class="button-container">
                         <div class="buttonCarrossel"><i class="fas fa-angle-left"></i></div>
                         <div class="buttonCarrossel"><i class="fas fa-angle-right"></i></div>
@@ -242,6 +98,7 @@ export function renderHome (data) {
             <footer> <a href="https://github.com/GalaticsSquad/Guia-Gourmet-Intergalactico" class="textFooter">Copyright 2023 GalaticSquad - Carolina Liberato, Henrique Saiti, Eduardo Henrique, João Silva </a> </footer>
         </main>
         `;
+    
     return container;
 }
 
@@ -304,4 +161,113 @@ export function logicHome() {
         slides[prev].classList.add("prev");
         slides[next].classList.add("next");
     };
+}
+
+
+// conta a quantidade de digitos de uma string
+function contarDigitos(str) {
+    return (str.match(/[a-zA-B 0-9,.]/g) || []).length;
+  }
+
+function encontra_receita_do_planeta(data,dataR){
+    let vetor = []
+    for(let i=0;i<data.length;i++){
+        let find = dataR.filter(receita => receita.id_planet===data[i].id)
+        if(find.length===0){
+            let formatado={planeta:data[i],receitas: null}
+            vetor.push(formatado)
+            continue
+        }
+        let formatado = {planeta:data[i],receitas:find}
+        vetor.push(formatado)
+    }
+    return vetor
+}
+
+function slides_Recipe(data){
+    let slidesReceita = ``
+    // let slides = 'slide prev'
+    let slides = ['slide next','slide','slide prev']
+    
+    if(data.length<2){
+        return;
+    }
+    for(let i=1; i<data.length;i++){
+        if(data[i].receitas===null){
+            continue
+        }
+        let slideAux = ``
+        if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
+        slidesReceita = slidesReceita+ `
+                    <div class="${slideAux}">
+                        <div class="slideContainer">
+                            <div class="containerPlanetName">
+                                <h2 class="PlanetName">${data[i].planeta.name}</h2>
+                            </div>
+                            <div class="recipes">
+                                <div class="containerRecipeLeft">
+                                    <div class="recipeWrapper">
+                                        <div class="recipeNameContainer">
+                                        <h3 class="recipeName">${data[i].receitas[0].name}</h3>
+                                        </div>
+                                        <div class="recipeInfoContainer">
+                                            <ul class="listHome">
+                                                <li class="recipeResume">${data[i].receitas[0].description}</li>
+                                                <li class="recipeType">${data[i].receitas[0].type}</li>
+                                                <li class="recipeTime">tempo de preparo: ${data[i].receitas[0].time}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="recipeButtonContainer">
+                                            <button class="recipeButton">Ver mais</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="containerRecipeRight">
+                                    <div class="recipeWrapper">
+                                        <div class="recipeNameContainer">
+                                        <h3 class="recipeName">${data[i].receitas[1].name}</h3>
+                                        </div>
+                                        <div class="recipeInfoContainer">
+                                            <ul class="listHome">
+                                                <li class="recipeResume">${data[i].receitas[1].description}</li>
+                                                <li class="recipeType">${data[i].receitas[1].type}</li>
+                                                <li class="recipeTime">tempo de preparo: ${data[i].receitas[1].time}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="recipeButtonContainer">
+                                            <button class="recipeButton">Ver mais</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+    }
+    return slidesReceita;
+}
+
+function slide_planets (data) {
+    let slidePlanetas = ``
+    if(data.length<2){
+        return;
+    }
+    let slides = ['item next','item','item prev']
+    for(let i=1;i<data.length;i++){
+        if(data[i].receitas===null){
+            continue
+        }
+        let slideAux = ``
+        console.log("teste i:", i-1>2)
+        if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
+        if(data[i].receitas===null){
+            continue
+        }
+        slidePlanetas = slidePlanetas+`
+                                <div class="${slideAux}" >
+                                    <img src=${data[i].planeta.icon}>
+                                </div>
+                                `
+    }
+    return slidePlanetas;
 }
