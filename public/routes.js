@@ -1,16 +1,15 @@
 import initial from "/pages/initial.js";
 import { logicHeader } from "/pages/header.js";
 import { renderHome, logicHome } from "/pages/home.js";
-import renderPlanets from "/pages/planets.js";
-import renderLogin from "/pages/login.js";
+import { renderPlanets, logicPlanets } from "/pages/planets.js";
+import { renderLogin, logicLogin } from "/pages/login.js";
 // import recipe from "/pages/recipe.js";
 
-// import add from "/pages/add.js";
+import add from "/pages/add_planet_recipe.js";
 // import addPlanet from "/pages/addPlanet.js";
 // import addRecipe from "/pages/addrecipe.js";
 
 import { get_planets } from "./src/fetch/planet.js"
-/* import carrosel from "./src/carrosel.js"; */
 import { get_recipes } from "./src/fetch/recipes.js"
 
 
@@ -28,6 +27,7 @@ export default function Route() {
         root.innerHTML = ``
         root.appendChild(planeter);
         logicHeader(data[0])
+        logicPlanets(found)
       }
 
       if (path === "/") {
@@ -49,6 +49,14 @@ export default function Route() {
             root.innerHTML = ``
             root.appendChild(login);
             logicHeader(data[0])
+            logicLogin()
+      }
+
+      if (path === '/option') {
+        const adder = add(data);
+            let root = document.getElementById('root')
+            root.innerHTML = ``
+            root.appendChild(adder);
       }
 
   })

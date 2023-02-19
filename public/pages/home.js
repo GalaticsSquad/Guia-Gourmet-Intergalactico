@@ -21,8 +21,9 @@ export function renderHome (data, dataR) {
     console.log("relação",dig)
     container.className = "rootContainerHome"
     container.innerHTML = `    
+        <div class="backgroundInit"></div>
         <header>${headerFake}</header>
-        <main class="mainHome">
+        <main class="mainHome" >
 
             <section class="containerSliderHome">
 
@@ -54,7 +55,7 @@ export function renderHome (data, dataR) {
                                 <div class="containerRecipeRight">
                                     <div class="recipeWrapper">
                                         <div class="recipeNameContainer">
-                                        <h3 class="recipeName">${format_data[0].receitas[1].name}aaaaaaaaa aaaaa aaa</h3>
+                                        <h3 class="recipeName">${format_data[0].receitas[1].name}</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
                                         <ul class="listHome">

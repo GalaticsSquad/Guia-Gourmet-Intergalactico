@@ -7,7 +7,7 @@ export default function insertHeader() {
         <input type="checkbox" id="check" /> 
 
         <div class="containerNameHeader">
-            <h1 class="nameHeader">Guia Gourmet Intergaláctico</h1>
+            <h1 class="titleNameHeader">Guia Gourmet Intergaláctico</h1>
         </div>
 
         <label for="check" id="icone">
@@ -38,7 +38,10 @@ export default function insertHeader() {
         </div>
     </div>
 
-    <div class="containerLogoHeader"></div>   
+    <div class="containerLogoHeader">
+        <h1 class="titlePlanet"></h1>
+        <div class="LogoHeader"></div>  
+    </div>   
 
     `;
     return header;
@@ -60,9 +63,13 @@ export function logicHeader (data) {
         });
         i++
     }
-    
+    buttonHome.addEventListener("click", () => {
+        const evento = EventCustom("/home");
+        root.dispatchEvent(evento);
+    });
     buttonLogin.addEventListener("click", () => {
         const evento = EventCustom("/login");
         root.dispatchEvent(evento);
     });
+
 }

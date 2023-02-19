@@ -5,36 +5,36 @@ let planet = [
     id: 0,
     name: "Arcano",
     icon: "/img/planet/p1.png",
-    background: "../../public/img/planet/p2.png",
-    description: "esse planeta é só um teste!",
+    background: "../img/background/arcanoback.jpg",
+    description: "Saturno é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
   },
   {
     id: 1,
     name: "Hyperion",
     icon: "/img/planet/p2.png",
-    background: "/img/planet/p2.png",
-    description: "esse planeta é só um outro teste!",
+    background: "../img/background/hyperion.jpg",
+    description: "Saturno é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
   },
   {
     id: 2,
     name: "Silfrena",
     icon: "/img/planet/p3.png",
-    background: "/public/img/planet/p2.png",
-    description: "esse planeta é só um outro teste!",
+    background: "../img/background/backextra.jpg",
+    description: "Saturno é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
   },
   {
     id: 3,
     name: "Zephyrion",
     icon: "/img/planet/p4.png",
-    background: "/img/planet/p2.png",
-    description: "esse planeta é só um outro teste!",
+    background: "../img/background/Zephyrion.jpg",
+    description: "Saturno é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
   },
   {
     id: 4,
     name: "TESTE",
     icon: "/img/planet/p4.png",
     background: "/img/planet/p2.png",
-    description: "esse planeta é só um outro teste!",
+    description: "Saturno é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
   },
 ];
 //  types:
@@ -46,8 +46,8 @@ let recipe = [
   {
     id: 0,
     id_planet: 0,
-    name: "Prato Cibernético com Nanofungos ...",
-    description: "Um prato eletrizante",
+    name: "Prato Cibernético com Nanofungos",
+    description: "Um prato eletrizante com fungos deliciosos com planstas refrescantes, adicionado de um molho de ervas.",
     type: "Prato principal",
     time: "10 min",
     ingredients: [
@@ -67,8 +67,8 @@ let recipe = [
   {
     id: 1,
     id_planet: 0,
-    name: "Arroz de Mariscos Intergaláctico",
-    description: ", que seria perfeito para ser servido em um banquete alienígena de gala.123412312312312312312312131311231 ",
+    name: "Arroz de Mariscos",
+    description: "O Arroz de Mariscos Intergaláctico é um prato sofisticado e elegante, que seria perfeito para ser servido em um banquete alienígena de gala",
     type: "Prato principal",
     time: "30 min",
     ingredients: [
@@ -90,7 +90,7 @@ let recipe = [
     visit_count: 0,
   },
   {
-    id: 2,
+    id: 3,
     id_planet: 1,
     name: "Arroz de Mariscos Intergaláctico",
     description: "O Arroz de Mariscos Intergaláctico é um prato sofisticado e elegante, que seria perfeito para ser servido em um banquete alienígena de gala",

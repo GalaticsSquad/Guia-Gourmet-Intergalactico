@@ -27,10 +27,9 @@
     justify-content: center;
     align-items: center;
     color: #A2C65A;
-    z-index: -1;
 }
 
-.nameHeader { 
+.titleNameHeader { 
     width: 50%;
     text-align: right;
 }
@@ -125,8 +124,23 @@ header {
 }
 
 .containerLogoHeader {
+    display: flex;
     height: 90%;
-    width: 10%;
+    width: 300px;
+}
+
+.titlePlanet {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: #A2C65A;
+}
+
+.LogoHeader {
+    margin-left: 15px;
+    height: 100%;
+    width: 130px;
     background-image: url("img/logofinal.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -299,9 +313,9 @@ header {
 .containerSliderHome {
     height: 60%;
     width: 60%;
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .slideContainer {
@@ -363,7 +377,7 @@ header {
 
 .recipeNameContainer {
     height: 20%;
-    width: 60%;
+    /* width: 60%; */
     color:#A2C65A;
     border-bottom: 1px solid black;
     display: flex;
@@ -375,7 +389,6 @@ header {
 }
 
 .listHome li {
-    
     font-family: 'Poppins', sans-serif;
     font-size: 0.8em;
 }
@@ -391,7 +404,8 @@ header {
 }
 
 .recipeResume {
-    width: 80%;
+    height: 30%;
+    /* width: 80%; */
     padding-top: 10px;
 }
 
@@ -415,7 +429,7 @@ header {
     height: 400px;
     width: 800px;
     position: relative;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     user-select: none;
@@ -548,41 +562,49 @@ header {
 
 /* -------------------------- PLANETS -------------------------- */
 
+.backgroundPLanets {
+    background-attachment: fixed;
+    background-position: center;
+}
+
 .main-container{
     display: flex;
-    background-image: url('./img/background/back1.1.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 100%;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-}
-.recipe-img-div{
-    padding: 40px;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: -1;
 }
 
-h3 {
+.recipe-name {
     text-align: center;
+    height: 10%;
 }
 
+.recipe-img-div{
+    margin: 40px;
+}
 .recipe-container{
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 800px;
-    height: 400px;
+    /* height: 450px; */
     color: white;
-    background-color: #B44C11;
+    background-color: #39303087;
     border-radius: 20px;
-    margin: 100px;
+    margin: 50px; /*espaçamento entre os conteudos */
 }
 .imagep1{
-    object-fit: contain;
     width: 200px;
     height: 200px;
 }
+
 .recipe-method-section{
     margin: 15px;
+    margin-right: 23px;
 }
 .recipe-ingredients-section{
     margin: 0px 0px 30px 10px;
@@ -594,32 +616,104 @@ h3 {
 }
 
 .ingredientstitle{
+    margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.method-title {
+    margin-bottom: 15px;
+}
+
 .planet-info-container{
     width: 100%;
-    height: 300px;
-    background-color: #B44C11;
-    /* margin-top: 100px; */
+    height: 250px;
+    background-color: #39303087;
+    margin-top: 10px;
     display: flex;
     align-items: center;
 }
 
-.imgplaneta1{
-    background-image: url('img/p3.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 35px;
+.planet-image-div{
+    width: 20%;
+    height: 100%;
     opacity: 0.5;
-    width: 250px;
-    height: 300px;
-    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 75px;
 }
 .planet-text-div{
+    width: 80%;
     color: white;
     font-size: 20px;
     text-align: center;
     margin-left: 80px;
+}
+
+.recipe-list-container{
+    width: 1000px;
+    height: auto;
+    margin: 50px;    /*espaçamento entre os conteudos */
+    border-radius: 2rem;
+    background-color: #39303087;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.template-recipe-div{
+    width: 97%;
+    margin: 10px;
+    height: 200px;
+    border-radius: 2rem;
+    background-color: #ecebeb;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.template-image-div{
+    height: 85%;
+    width: 20%;
+}
+
+.template-text-section{
+    height: 65%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.template-recipe-title{
+    font-size: 25px;
+    color: #A2C65A
+}
+
+.template-recipe-text{
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.button_container_text{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.button_text{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    background-color: #A2C65A;
+    color: white;
 }
 
 
@@ -783,11 +877,12 @@ select {
 /* -------------------------- FOOTER -------------------------- */
 
 footer {
-    height: 5%;
+    height: 40px;
     width: 510px;
     background-color: #fff4d72d;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
+    /* margin: 0 auto; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -795,10 +890,16 @@ footer {
 }
 
 .textFooter {
+    /* margin: 0px 30px; */
     color: #D4D4D4;
     text-align: center;
     font-size: 0.7em;
     text-decoration: none;
+}
+
+.planetsFooter {
+    background-color: #fff4d72d;
+    margin: 0 auto;
 }
 
 /* -------------------------- Buttons ADD_Planet & ADD_Recipe -------------------------- */
