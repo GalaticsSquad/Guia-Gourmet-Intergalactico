@@ -1,6 +1,14 @@
-// export default () => {
-const root = document.querySelector("#root");
-root.innerHTML = `
+// // @author {Eduardo}
+// //@coauthor {Carolina,João}
+
+import insertHeader from "./header.js";
+
+export default function addRecipe () {
+    const header = insertHeader();
+    const container = document.createElement("div");
+    container.className = "rootContainerAddRecipes"
+    container.innerHTML = `
+    <header>${header}</header>
     <div class="container_planet_recipe">
         <form class="form_envio">
             <div class="div_input">
@@ -40,13 +48,13 @@ root.innerHTML = `
             <div class="div_input">
                 <label>Ingredientes:</label>
                 <div class="div_input">
-                    <textarea id="text_receita" cols="106" rows="5">
+                    <textarea id="text_receita" cols="100" rows="5">
                     </textarea>
                 </div>
             <div class="div_input">
                 <label>Preparo:</label>
                 <div class="div_input">
-                    <textarea id="text_receita" cols="106" rows="5">
+                    <textarea id="text_receita" cols="100" rows="5">
                     </textarea>
                 </div>
             </div>
@@ -56,4 +64,7 @@ root.innerHTML = `
         </form>
     </div>
     `;
-// };
+
+    return container
+}
+

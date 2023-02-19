@@ -5,9 +5,9 @@ import { renderPlanets, logicPlanets } from "/pages/planets.js";
 import { renderLogin, logicLogin } from "/pages/login.js";
 // import recipe from "/pages/recipe.js";
 
-import add from "/pages/add_planet_recipe.js";
-// import addPlanet from "/pages/addPlanet.js";
-// import addRecipe from "/pages/addrecipe.js";
+import { add_planet_recipe, logicOption } from "/pages/add_planet_recipe.js";
+import addPlanet from "/pages/addplanet.js";
+import addRecipe from "/pages/addrecipes.js";
 
 import { get_planets } from "./src/fetch/planet.js"
 import { get_recipes } from "./src/fetch/recipes.js"
@@ -44,19 +44,38 @@ export default function Route() {
       }
       
       if (path === '/login') {
-        const login = renderLogin(data);
-            let root = document.getElementById('root')
-            root.innerHTML = ``
-            root.appendChild(login);
-            logicHeader(data[0])
-            logicLogin()
+        const login = renderLogin();
+        let root = document.getElementById('root')
+        root.innerHTML = ``
+        root.appendChild(login);
+        logicHeader(data[0])
+        logicLogin()
       }
 
       if (path === '/option') {
-        const adder = add(data);
-            let root = document.getElementById('root')
-            root.innerHTML = ``
-            root.appendChild(adder);
+        const adder = add_planet_recipe();
+        let root = document.getElementById('root')
+        root.innerHTML = ``
+        root.appendChild(adder);
+        logicHeader(data[0])
+        logicOption()
+      }
+
+      if (path === '/addPlanet') {
+        const addPlat = addPlanet();
+        let root = document.getElementById('root')
+        root.innerHTML = ``
+        root.appendChild(addPlat);
+        logicHeader(data[0])
+        logicOption()
+      }
+
+      if (path === '/addRecipes') {
+        const addRec = addRecipe();
+        let root = document.getElementById('root')
+        root.innerHTML = ``
+        root.appendChild(addRec);
+        logicHeader(data[0])
       }
 
   })

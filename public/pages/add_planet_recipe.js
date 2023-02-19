@@ -1,25 +1,40 @@
 // @author {Eduardo}
-// @CoAuthor {João,Henrique}
+// @CoAuthor {João,Henrique,Carolina}
 
 import insertHeader from "./header.js";
+import EventCustom from "../eventCustom.js";
 
-export default function add_planet_recipe (data) {
+export function add_planet_recipe () {
 
 const headerFake = insertHeader();
-const container_class = document.querySelector(".rootContaineradd");
 const container = document.createElement("div");
 container.className = "rootContaineradd";
-container_class.innerHTML = `
-    <div class="container_planet_recipe">
-        <div class="cadastro_planet_recipe">
-            <div class="buttons_planet_recipe">
+/* const container_class = document.querySelector(".rootContaineradd") */
+container.innerHTML = `
+    <header>${headerFake}</header>
+    <div class="cadastro_planet_recipe">
+        <div class="buttons_planet_recipe">
 
-                <input type="button" class="button_p_r" id="buttonP" value="Adicionar Planeta">
+            <input type="button" class="button_p_r" id="buttonP" value="Adicionar Planeta">
 
-                <input type="button" class="button_p_r" id="buttonR" value="Adicionar Receita">
+            <input type="button" class="button_p_r" id="buttonR" value="Adicionar Receita">
 
-            </div>
         </div>
     </div>
     `;
+    return container
+}
+
+export function logicOption () {
+    const buttonPlat = document.querySelector("#buttonP");
+    const buttonRec = document.querySelector("#buttonR");
+
+    buttonPlat.addEventListener("click", () => {
+        const evento = EventCustom("/addPlanet");
+        root.dispatchEvent(evento);
+    });
+    buttonRec.addEventListener("click", () => {
+        const evento = EventCustom("/addRecipes");
+        root.dispatchEvent(evento);
+    });
 }

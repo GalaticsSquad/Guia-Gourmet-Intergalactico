@@ -10,7 +10,7 @@
 } */
 
 #root{
-    max-width: 2540px;
+    max-width: 2600px;
     margin: 0 auto;
 } 
 
@@ -719,6 +719,12 @@ header {
 
 /* -------------------------- ADDPLANETS -------------------------- */
 
+.rootContainerAddPlanets {
+    height: 100vh;
+    background: radial-gradient(circle at bottom, navy 0, black 100%);
+    overflow: hidden;
+}
+
 .container-addplanet {
     background-color: #fff;
     border-radius: 10px;
@@ -726,6 +732,14 @@ header {
     margin: 100px auto;
     width: 800px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#planet-name {
+    width: 100%;
 }
 
 .back-img{
@@ -744,7 +758,7 @@ header {
     padding: 10px;
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-bottom: 20px;
     box-sizing: border-box;
 }
@@ -760,7 +774,7 @@ header {
 .send-planet {
     background-color: #D9D9D9D9;
     color: #000000;
-    margin: 0 0 0 290px;
+    margin-top: 10px;
     font-size: 15px;
     padding: 15px 60px;
     border: none;
@@ -823,6 +837,12 @@ header {
 
 /* -------------------------- ADD RECIPES-------------------------- */
 
+.rootContainerAddRecipes {
+    height: 100vh;
+    background: radial-gradient(circle at bottom, navy 0, black 100%);
+    overflow: hidden;
+}
+
 .container_planet_recipe{
     background-color: #fff;
     border-radius: 10px;
@@ -866,7 +886,7 @@ label {
 }
 
 #input_image_planeta:hover {
-    background-color: #3c3ae4;
+    background-color: #A2C65A;
 }
     
 select {
@@ -916,7 +936,7 @@ footer {
     background-color: #fff;
     border-radius: 10px;
     padding: 40px;
-    margin: 100px auto;
+    margin: 200px auto;
     height: 300px;
     width: 350px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
@@ -924,7 +944,7 @@ footer {
 .buttons_planet_recipe {
     display: flex;
     min-height: 45%;
-    width: 612px;
+    width: 650px;
     height: 304px;
     display: flex;
     justify-content: space-evenly; 
