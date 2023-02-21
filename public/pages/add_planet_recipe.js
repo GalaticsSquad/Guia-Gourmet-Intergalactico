@@ -1,10 +1,22 @@
 // @author {Eduardo}
 // @CoAuthor {João,Henrique,Carolina}
 
-import insertHeader from "./header.js";
-import EventCustom from "../eventCustom.js";
+import {insertHeader, logicHeader}  from "./header.js";
+import {EventCustom} from "../eventCustom.js";
+import { get_planets } from "../src/fetch/planet.js"; 
 
-export function add_planet_recipe () {
+export default async function renderOption() {
+    const dataPlanet = await get_planets()
+    const option = add_planet_recipe ()
+    const root = document.getElementById('root')
+    root.innerHTML = ``
+    root.appendChild(option);
+    logicOption()
+    logicHeader(dataPlanet, dataRecipe)
+}
+
+
+function add_planet_recipe () {
 
 const headerFake = insertHeader();
 const container = document.createElement("div");
@@ -25,7 +37,7 @@ container.innerHTML = `
     return container
 }
 
-export function logicOption () {
+function logicOption () {
     const buttonPlat = document.querySelector("#buttonP");
     const buttonRec = document.querySelector("#buttonR");
 

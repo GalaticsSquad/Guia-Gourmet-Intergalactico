@@ -1,4 +1,4 @@
-import EventCustom from "../eventCustom.js";
+import {EventCustom} from "../eventCustom.js";
 export default () => {
   const root = document.querySelector("#root");
   const backgroundInit = document.createElement("div");
@@ -28,7 +28,7 @@ export default () => {
   buttonInit.innerText = "Entrar";
 
   buttonInit.addEventListener("click", () => {
-    const evento = EventCustom("/home");
+    const evento = EventCustom("/home", "2");
     root.dispatchEvent(evento);
   });
 

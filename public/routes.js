@@ -1,82 +1,107 @@
 import initial from "/pages/initial.js";
-import { logicHeader } from "/pages/header.js";
-import { renderHome, logicHome } from "/pages/home.js";
-import { renderPlanets, logicPlanets } from "/pages/planets.js";
-import { renderLogin, logicLogin } from "/pages/login.js";
-// import recipe from "/pages/recipe.js";
+import renderHome from "/pages/home.js";
+import renderPlanets from "/pages/planets.js";
+import renderLogin from "/pages/login.js";
+import renderOption from "/pages/add_planet_recipe.js";
+import renderAddPlanet from "/pages/addplanet.js";
+import renderAddRecipe from "/pages/addrecipes.js";
 
-import { add_planet_recipe, logicOption } from "/pages/add_planet_recipe.js";
-import addPlanet from "/pages/addplanet.js";
-import addRecipe from "/pages/addrecipes.js";
-
-import { get_planets } from "./src/fetch/planet.js"
-import { get_recipes } from "./src/fetch/recipes.js"
-
-
-export default function Route() { 
-  const dados  =  Promise.all([
-    get_planets(),
-    get_recipes()]).then( data => {
-      const path = window.location.pathname;
-      const pathUpdate = path.replace(/[/]/, "")
-      const found = data[0].find(planet => planet.name === pathUpdate)
-      if(found !== undefined) {
-        const filtered = data[1].filter(recipe => recipe.id_planet === found.id)
-        const planeter = renderPlanets(found, filtered);
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(planeter);
-        logicHeader(data[0])
-        logicPlanets(found)
-      }
-
-      if (path === "/") {
+export default async function Route(url, idPlanet, idRecipe) {
+  
+      if (url === "/") {
         initial()
       }
 
-      if (path === '/home') {
-        const homer = renderHome(data[0], data[1])
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(homer);
-        logicHome()
-        logicHeader(data[0])
+      if (url === '/home') {
+        await renderHome()
       }
       
-      if (path === '/login') {
-        const login = renderLogin();
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(login);
-        logicHeader(data[0])
-        logicLogin()
+      if (url === '/login') {
+        await renderLogin()
       }
 
-      if (path === '/option') {
-        const adder = add_planet_recipe();
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(adder);
-        logicHeader(data[0])
-        logicOption()
+      if (url === '/option') {
+        await renderOption()
       }
 
-      if (path === '/addPlanet') {
-        const addPlat = addPlanet();
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(addPlat);
-        logicHeader(data[0])
-        logicOption()
+      if (url === '/addPlanet') {
+        await renderAddPlanet()
       }
 
-      if (path === '/addRecipes') {
-        const addRec = addRecipe();
-        let root = document.getElementById('root')
-        root.innerHTML = ``
-        root.appendChild(addRec);
-        logicHeader(data[0])
+      if (url === '/addRecipes') {
+        await renderAddRecipe()
       }
+      
+      if(url.match(/planets/)){
+        await renderPlanets(idPlanet, idRecipe)
+      }
+      
+  }
+  // Promise.all([
+  //   get_planets(),
+  //   get_recipes()]).then( data => {
+      
+      
+  //     const urlReplaced = url.replace(/[/]/, "")
 
-  })
-}
+  //     const found = data[0].find(planet => planet.name === urlReplaced)
+
+  //     if(found !== undefined) {
+  //       const filtered = data[1].filter(recipe => recipe.id_planet === found.id)
+  //       const planeter = renderPlanets(found, filtered);
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(planeter);
+  //       logicHeader(data[0])
+  //       logicPlanets(found)
+  //     }
+
+  //     if (url === "/") {
+  //       initial()
+  //     }
+
+  //     if (url === '/home') {
+  //       const homer = renderHome(data[0], data[1])
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(homer);
+  //       logicHome()
+  //       logicHeader(data[0])
+  //     }
+      
+  //     if (url === '/login') {
+  //       const login = renderLogin();
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(login);
+  //       logicHeader(data[0])
+  //       logicLogin()
+  //     }
+
+  //     if (url === '/option') {
+  //       const adder = add_planet_recipe();
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(adder);
+  //       logicHeader(data[0])
+  //       logicOption()
+  //     }
+
+  //     if (url === '/addPlanet') {
+  //       const addPlat = addPlanet();
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(addPlat);
+  //       logicHeader(data[0])
+  //       logicOption()
+  //     }
+
+  //     if (url === '/addRecipes') {
+  //       const addRec = addRecipe();
+  //       let root = document.getElementById('root')
+  //       root.innerHTML = ``
+  //       root.appendChild(addRec);
+  //       logicHeader(data[0])
+  //     }
+
+  // })

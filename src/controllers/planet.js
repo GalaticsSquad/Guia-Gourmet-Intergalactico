@@ -6,7 +6,7 @@ const service = require("../services/planet");
 // @coauthor {Eduardo}
 
 // Planetas
-exports.getPlanetById = async (req, res) => {
+exports.getPlanet = async (req, res) => {
   console.log("Controller: /GET");
 
   const response = {
@@ -26,6 +26,32 @@ exports.getPlanetById = async (req, res) => {
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = "Erro interno do Servidor";
+
+    res.status(500).json(response);
+  }
+};
+
+exports.getPlanetById = async (req, res) => {
+  console.log("Controller: /GET");
+  let _id = req.params.id;
+
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  try {
+    const receita = await service.get_Planet_id(_id);
+    response.message = "Success";
+    response.data = receita;
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = error;
 
     res.status(500).json(response);
   }

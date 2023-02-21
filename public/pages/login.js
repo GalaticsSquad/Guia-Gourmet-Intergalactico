@@ -1,7 +1,18 @@
-import insertHeader from "./header.js";
-import EventCustom from "../eventCustom.js";
+import { insertHeader, logicHeader } from "./header.js";
+import {EventCustom} from "../eventCustom.js";
+import { get_planets } from "../src/fetch/planet.js";
 
-export function renderLogin (data) {
+export default async function renderLogin (){
+    const dataPlanet = await get_planets()
+    const login = Login();
+    let root = document.getElementById('root')
+    root.innerHTML = ``
+    root.appendChild(login);
+    logicHeader(dataPlanet, dataRecipe)
+    logicLogin()
+}
+
+function Login () {
     const headerFake = insertHeader();
     const container = document.createElement("div");
     container.className = "rootContainerlogin"
@@ -19,7 +30,7 @@ export function renderLogin (data) {
     return container
 }
 
-export function logicLogin () {
+function logicLogin () {
     const buttonEntry = document.querySelector("#login");
 
     buttonEntry.addEventListener("click", () => {

@@ -15,7 +15,8 @@ function authenticate(req, res, next) {
 // @coauthor {Eduardo}
 
 // Rotas dos planetas:
-router.get("/getplanet", controller.getPlanetById);
+router.get("/getplanet", controller.getPlanet);
+router.get("/getplanet/:id", controller.getPlanetById);
 router.post("/planet", authenticate, controller.addPlanet);
 router.patch("/planet/:id", authenticate, controller.editPlanet);
 

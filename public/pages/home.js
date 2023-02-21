@@ -1,24 +1,37 @@
-import insertHeader from "./header.js";
-
+import {insertHeader, logicHeader} from "./header.js";
+import { EventCustom } from "../eventCustom.js";
+import { get_planets } from "../src/fetch/planet.js";
+import { get_recipes } from "../src/fetch/recipes.js";
 
 //Recipe.name só pode ter 32 caracteres
 //Recipe.description pode ter até 100 caracteres
 
+// // @author {Carolina}
+// //@coauthor {Eduardo}
+
+export default async function renderHome() {
+    const dataPlanet = await get_planets()
+    const dataRecipe = await get_recipes()
+    const home = htmlHome (dataPlanet, dataRecipe)
+    const root = document.getElementById('root')
+    root.innerHTML = ``
+    root.appendChild(home);
+    console.log(dataRecipe)
+    logicHome(dataRecipe)
+    logicHeader(dataPlanet, dataRecipe)
+}
 
 // // @author {Carolina}
 // //@coauthor {João}
-export function renderHome (data, dataR) {
+ function htmlHome (dataPlanet, dataRecipe) {
     const headerFake = insertHeader();
     const container = document.createElement("div");
-    let format_data = encontra_receita_do_planeta(data, dataR)
-    console.log("teste:", format_data)
-    const dig = dataR[2].name.substring(0,100)
+    let format_data = encontra_receita_do_planeta(dataPlanet, dataRecipe)
+    const dig = dataRecipe[2].name.substring(0,100)
 
     const add_recipe = slides_Recipe(format_data)
     const add_planet = slide_planets(format_data)
-    console.log("aqui:",add_planet)
 
-    console.log("relação",dig)
     container.className = "rootContainerHome"
     container.innerHTML = `    
         <div class="backgroundInit"></div>
@@ -36,7 +49,6 @@ export function renderHome (data, dataR) {
                             <div class="recipes">
                                 <div class="containerRecipeLeft">
                                     <div class="recipeWrapper">
-                                        <div class="recipePlate"></div>
                                         <div class="recipeNameContainer">
                                             <h3 class="recipeName">${format_data[0].receitas[0].name}</h3>
                                         </div>
@@ -48,7 +60,7 @@ export function renderHome (data, dataR) {
                                             </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
+                                            <button class="recipeButton">${format_data[0].receitas[0].name}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +77,7 @@ export function renderHome (data, dataR) {
                                         </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
-                                            <button class="recipeButton">Ver mais</button>
+                                            <button class="recipeButton">${format_data[0].receitas[1].name}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +117,20 @@ export function renderHome (data, dataR) {
 
 // @author {Carolina}
 
-export function logicHome() {
+function logicHome(dataRecipe) {
+
+    const recipeButton = document.querySelectorAll('.recipeButton')
+    let i = 0
+    while (recipeButton.length > i) {
+        recipeButton[i].addEventListener('click', (event) => {
+            const recipeName = event.target.parentElement.parentElement.children[0].children[0].innerText
+            console.log(recipeName)
+            let receita = dataRecipe.find(recipe => recipe.name === recipeName)
+            const evento = EventCustom(`/planets`, receita.id_planet, receita.id) ;
+            root.dispatchEvent(evento);
+        })
+        i++
+    }
 
     /* CARROSEL */
 
@@ -259,16 +284,23 @@ function slide_planets (data) {
             continue
         }
         let slideAux = ``
-        console.log("teste i:", i-1>2)
         if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
         if(data[i].receitas===null){
             continue
         }
         slidePlanetas = slidePlanetas+`
-                                <div class="${slideAux}" >
-                                    <img src=${data[i].planeta.icon}>
-                                </div>
-                                `
+            <div class="${slideAux}" >
+                <img src=${data[i].planeta.icon}>
+            </div>`
     }
     return slidePlanetas;
+}
+
+
+function dispache(url){
+    console.log('ok')
+    console.log('dispache:', url)
+    // const root = document.getElementById('root')
+    // const event = EventCustom(url)
+    // root.dispatchEvent(event)
 }

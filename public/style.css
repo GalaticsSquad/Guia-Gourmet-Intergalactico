@@ -450,6 +450,7 @@ header {
 
 .slide.active {
     opacity: 10;
+    z-index: 2;
 }
 
 .slide.prev {
@@ -724,6 +725,9 @@ header {
     background: radial-gradient(circle at bottom, navy 0, black 100%);
     overflow: hidden;
 }
+#section-lista{
+    background-color: red;
+}
 
 .container-addplanet {
     background-color: #fff;
@@ -929,7 +933,7 @@ footer {
     height: 100vh;
     overflow: hidden;
 }
-.cadastro_planet_recipe {
+.cadastro_planet_recipe{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -937,8 +941,8 @@ footer {
     border-radius: 10px;
     padding: 40px;
     margin: 200px auto;
-    height: 300px;
-    width: 350px;
+    /* height: 300px; */
+    width: 500px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 .buttons_planet_recipe {

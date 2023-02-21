@@ -7,6 +7,19 @@ exports.getPlanet = async () => {
   const planets = dbPlanet.planet;
   return planets; //repository
 };
+exports.get_Planet_id = async (_id) =>{
+
+  let id = parseInt(_id);
+  let planet = dbPlanet.planet.find((planet) => planet.id === id);
+  if(!planet){
+    throw "Error: Receita não encontrada"
+  }
+  if(planet.delete === true){
+    throw "Error: Receita não encontrada"
+  }
+  return planet; //repository
+
+}
 // @author {Eduardo}
 exports.add_Planet = async (_name, _icon, _background, _description) => {
   let last_id = dbPlanet.planet[dbPlanet.planet.length - 1].id;
@@ -45,7 +58,7 @@ exports.getRecipe = async () => {
 // @author {Eduardo}
 exports.get_Recipe_id = async (_id) => {
   let id = parseInt(_id);
-  let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);
+  let recipe = dbPlanet.recipe.filter((recipe) => recipe.id_planet === id);
   if(!recipe){
     throw "Error: Receita não encontrada"
   }

@@ -11,13 +11,16 @@ const root = document.querySelector("#root");
 root.addEventListener("onstatechange", function (event) {
   // root.innerHTML = ``;
   const url = event.detail.url;
+  const idPlanet = event.detail.dataPlanet
+  const idRecipe = event.detail.dataRecipe
   window.history.pushState("", "", url);
-  Route()
+
+  Route(url,idPlanet, idRecipe)
   window.dispatchEvent(new Event("popstate"));
 });
 
 window.addEventListener("load", () => {
-  Route()
+  Route('/')
 });
 
 

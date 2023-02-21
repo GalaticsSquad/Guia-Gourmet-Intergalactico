@@ -10,8 +10,8 @@
     let DB = json.data
     return DB;
 }
- const get_recipes_id = async (id)=>{
-    let req =  await fetch(`http://localhost:3000/getrecipe/${id}`, {
+ const get_recipes_id_planet = async (id_Planet)=>{
+    let req =  await fetch(`http://localhost:3000/getrecipe/${id_Planet}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -66,4 +66,4 @@ const delete_recipes = async ()=>{
     console.log("delete",json)
 } 
 
-export {get_recipes, get_recipes_id, post_recipes, patch_recipes, delete_recipes};
+export {get_recipes, get_recipes_id_planet, post_recipes, patch_recipes, delete_recipes};

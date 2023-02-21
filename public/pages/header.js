@@ -1,6 +1,6 @@
-import EventCustom from "../eventCustom.js";
+import {EventCustom} from "../eventCustom.js";
 
-export default function insertHeader() {
+function insertHeader() {
   // const header = document.createElement('header')
     const header = `
     <div id="menu"> 
@@ -47,18 +47,20 @@ export default function insertHeader() {
     return header;
 }
 
-export function logicHeader (data) {
-
+function logicHeader (dataPlanet, dataRecipe) {
+    console.log(dataRecipe)
     const links = document.querySelectorAll('.link');
     const buttonHome = document.querySelector ('.linkHome')
     const buttonLogin = document.querySelector ('.loginMenu')
-
+    
     let i = 0 // putting the names by fetch on nav
     while (links.length > i) {
-        const planetName = data[i].name
+        const planetId = dataPlanet[i].id
+        const planetName = dataPlanet[i].name
+        const recipe  = dataRecipe.find(recipe => recipe.id_planet === planetId)
         links[i].innerText = planetName
         links[i].addEventListener("click", () => {
-            const evento = EventCustom(`/${planetName}`);
+            const evento = EventCustom(`/planets`, planetId, recipe.id) ;
             root.dispatchEvent(evento);
         });
         i++
@@ -73,3 +75,5 @@ export function logicHeader (data) {
     });
 
 }
+
+export {insertHeader, logicHeader}
