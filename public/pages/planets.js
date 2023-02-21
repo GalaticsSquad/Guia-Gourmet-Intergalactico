@@ -12,20 +12,21 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
   const dataPlanet_id = await get_planets_id(_idPlanet)
   const dataRecipe = await get_recipes_id_planet(_idPlanet) // pega as receitas de um planeta
   const allDataRecipe = await get_recipes()
-  const planeter = planets(dataPlanet_id, dataRecipe, _idRecipe);
+  const planeter = planets(dataPlanet_id[0], dataRecipe, _idRecipe);
   let root = document.getElementById('root')
   root.innerHTML = ``
   root.appendChild(planeter);
   logicHeader(dataPlanet, allDataRecipe)
-  logicPlanets(dataPlanet_id)
+  logicPlanets(dataPlanet_id[0])
   console.log("_idRecipe " , _idRecipe)
   console.log("_idPlanet " , _idPlanet)
-  /* console.log("dataPlanet " , dataPlanet)
-  console.log("dataRecipe " , dataRecipe) */
+  console.log("dataPlanet_id " , dataPlanet_id[0])
+  console.log("dataPlanet " , dataPlanet)
+  console.log("dataRecipe " , dataRecipe)
 }
 
 function planets (dataPlanet, dataRecipe, _idRecipe) {
-
+  
   const recipePrincipal = dataRecipe.find( recipe => recipe.id === _idRecipe  )
 
   const insertH = insertHeader()

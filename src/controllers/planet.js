@@ -1,14 +1,12 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
 
-
 // @author {Carolina}
 // @coauthor {Eduardo}
 
 // Planetas
 exports.getPlanet = async (req, res) => {
   console.log("Controller: /GET");
-
   const response = {
     message: "",
     data: null,
@@ -16,13 +14,12 @@ exports.getPlanet = async (req, res) => {
   };
 
   try {
-    const planets = await service.getPlanet();
+    const allPlanets = await service.getPlanet();
     response.message = "Success";
-    response.data = planets;
+    response.data = allPlanets;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = "Erro interno do Servidor";
@@ -33,7 +30,6 @@ exports.getPlanet = async (req, res) => {
 
 exports.getPlanetById = async (req, res) => {
   console.log("Controller: /GET");
-  let _id = req.params.id;
 
   const response = {
     message: "",
@@ -41,18 +37,25 @@ exports.getPlanetById = async (req, res) => {
     error: null,
   };
 
+  const _id = parseInt(req.params.id);
+  if (isNaN(_id)) { //verificar se é valido
+    console.log(TAG, "Parameter isNaN")
+    response.message = 'Informe um valor válido';
+    response.data = null;
+    response.error = 'Informe um valor válido'
+    res.status(400).json(response);
+    return;
+  }
   try {
-    const receita = await service.get_Planet_id(_id);
+    const planet = await service.get_Planet_id(_id);
     response.message = "Success";
-    response.data = receita;
+    response.data = planet;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = error;
-
     res.status(500).json(response);
   }
 };
@@ -134,7 +137,6 @@ exports.editPlanet = async (req, res) => {
 // Receitas
 exports.getRecipes = async (req, res) => {
   console.log("Controller: /GET");
-
   const response = {
     message: "",
     data: null,
@@ -148,11 +150,9 @@ exports.getRecipes = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = "Erro interno do Servidor";
-
     res.status(500).json(response);
   }
 };
@@ -160,14 +160,20 @@ exports.getRecipes = async (req, res) => {
 // @author {Eduardo}
 exports.getRecipeById = async (req, res) => {
   console.log("Controller: /GET");
-  let _id = req.params.id;
-
   const response = {
     message: "",
     data: null,
     error: null,
   };
-
+  const _id = parseInt(req.params.id);
+  if (isNaN(_id)) {
+    console.log(TAG, "Parameter isNaN")
+    response.message = 'Informe um valor válido';
+    response.data = null;
+    response.error = 'Informe um valor válido'
+    res.status(400).json(response);
+    return;
+  }
   try {
     const receita = await service.get_Recipe_id(_id);
     response.message = "Success";
@@ -175,11 +181,9 @@ exports.getRecipeById = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = error;
-
     res.status(500).json(response);
   }
 };

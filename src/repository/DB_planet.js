@@ -6,14 +6,14 @@ let planet = [
     name: "Arcano",
     icon: "/img/planet/p1.png",
     background: "../img/background/arcanoback.jpg",
-    description: "Arcano é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
+    description: "Arcano é um planeta extremamente misterioso apesar de seu pequeno porte. Segundo relatos recuperados, devido a escapes de energia arcana provenientes de seu núcleo altamente instável e radioativo fez com que a evolução neste pequeno planeta desse luz a criaturas místicas e flora de características incomuns aos seres humanos. Sendo assim, muitos dos ingredientes encontrados no planeta possuem propriedades diversificadas. Apesar do visual e da culinária exótica, o planeta não é o mais receptivo. Tudo chama muito atenção a vista, mas cuidado é sempre necessário ao experimentar novos ingredientes desconhecidos pela culinária local.",
   },
   {
     id: 1,
     name: "Hyperion",
     icon: "/img/planet/p2.png",
     background: "../img/background/hyperion.jpg",
-    description: "Hyperion é o sexto planeta a partir do Sol e o segundo maior do Sistema Solar atrás de Júpiter. Pertencente ao grupo dos gigantes gasosos, possui cerca de 95 massas terrestres e orbita a uma distância média de 9,5 unidades astronômicas. Possui um pequeno núcleo rochoso, circundado por uma espessa camada de hidrogênio metálico e hélio. A sua atmosfera, também composta principalmente de hidrogênio, apresenta faixas com fortes ventos, cuja energia provém tanto do calor recebido do Sol quanto da energia irradiada de seu centro. Entretanto, estas bandas possuem aspecto pouco proeminente, com coloração que varia do marrom ao amarelado, devido à espessa névoa que envolve o planeta, além das camadas de nuvens. Sazonalmente surgem grandes sistemas de tempestades, além de vórtices permanentes existentes nos polos. ",
+    description: "Hyperion é o planeta mais denso do sistema XKPL-042 e se localiza nos confins da galáxia. Sua aparência pode ser meio hostil devido a sua geografia rochosa, árida e calor intenso (e ocasionais vazamentos de lava na superfície). Por trás de seu visual ameaçador, o planeta esconde as mais diversas iguarias do sistema. Aos aventureiros intergaláticos que se propõe a desbravar os morros e colinas Hyperianas, uma experiência gastronômica única os aguarda. Uma das características mais distintas da culinária de Hyperion é o uso de especiarias e ervas exóticas que são encontradas apenas no planeta. Esses ingredientes conferem aos pratos de Hyperion um sabor distinto e saboroso que não é igualado por nenhuma outra culinária planetária.",
   },
   {
     id: 2,
@@ -67,7 +67,7 @@ let recipe = [
   {
     id: 1,
     id_planet: 0,
-    name: "misture delicadamente",
+    name: "Arroz de Mariscos Intergaláctico",
     description: "O Arroz de Mariscos Intergaláctico é um prato sofisticado e elegante, que seria perfeito para ser servido em um banquete alienígena de gala",
     type: "Prato principal",
     time: "30 min",

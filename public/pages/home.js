@@ -23,7 +23,7 @@ export default async function renderHome() {
 
 // // @author {Carolina}
 // //@coauthor {João}
- function htmlHome (dataPlanet, dataRecipe) {
+function htmlHome (dataPlanet, dataRecipe) {
     const headerFake = insertHeader();
     const container = document.createElement("div");
     let format_data = encontra_receita_do_planeta(dataPlanet, dataRecipe)

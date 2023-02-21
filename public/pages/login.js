@@ -1,14 +1,16 @@
 import { insertHeader, logicHeader } from "./header.js";
 import {EventCustom} from "../eventCustom.js";
 import { get_planets } from "../src/fetch/planet.js";
+import { get_recipes } from "../src/fetch/recipes.js";
 
 export default async function renderLogin (){
     const dataPlanet = await get_planets()
+    const allDataRecipe = await get_recipes()
     const login = Login();
     let root = document.getElementById('root')
     root.innerHTML = ``
     root.appendChild(login);
-    logicHeader(dataPlanet, dataRecipe)
+    logicHeader(dataPlanet, allDataRecipe)
     logicLogin()
 }
 

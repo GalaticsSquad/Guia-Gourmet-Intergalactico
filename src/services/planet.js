@@ -1,24 +1,31 @@
-const dbPlanet = require("../repository/DB_planet");
+// @author {Eduardo}
+// @coauthor {Carolina}
 
-// @author {Carolina}
-// @coauthor {Eduardo}
+const dbPlanet = require("../repository/db-gsquad");
+const TAG = "Service: ";
+
 //planet
 exports.getPlanet = async () => {
-  const planets = dbPlanet.planet;
-  return planets; //repository
+  try {
+    const allPlanets = await dbPlanet.getAllPlanets();
+    return allPlanets;
+    } catch (error) {
+      console.log(TAG, 'error caught');
+      throw error;
+    }
 };
+
 exports.get_Planet_id = async (_id) =>{
-
-  let id = parseInt(_id);
-  let planet = dbPlanet.planet.find((planet) => planet.id === id);
-  if(!planet){
-    throw "Error: Receita não encontrada"
+  try {
+    const planet = await dbPlanet.get_Planet_id(_id);
+    if(planet.delete === true){
+      throw "Error: Receita não encontrada"
+    }
+    return planet
+  } catch (error) {
+    console.log(TAG, 'error caught');
+    throw error;
   }
-  if(planet.delete === true){
-    throw "Error: Receita não encontrada"
-  }
-  return planet; //repository
-
 }
 // @author {Eduardo}
 exports.add_Planet = async (_name, _icon, _background, _description) => {
@@ -48,24 +55,64 @@ exports.edit_Planet = async (_id, body) => {
   Object.assign(planet, body);
   return planet;
 };
-// @author {Eduardo}
+
 //Recipes
 exports.getRecipe = async () => {
-  let recipes = dbPlanet.recipe.filter((recipe) => recipe.delete !== true);
-  return recipes; //repository
+  try {
+    const recipesReq = await dbPlanet.getAllRecipes();
+    /* const arrayIngredients = [] */
+    for(let i= 0; i<recipesReq.recipe.length;i++){
+      const arrayIngredient = []
+      const arrayDescription = []
+      let ingred = recipesReq.ingredients.filter( ingred => ingred.id_recipes === recipesReq.recipe[i].id)
+      let inst = recipesReq.instructions.filter( inst => inst.id_recipes === recipesReq.recipe[i].id)
+
+      for(let x of ingred){
+        arrayIngredient.push(x.ingredient)
+      }
+      recipesReq.recipe[i].ingredient = arrayIngredient
+      for(let x of inst){
+        arrayDescription.push(x.description)
+      }
+      recipesReq.recipe[i].instructions = arrayDescription
+    }
+    const recipe = recipesReq.recipe
+    return recipe;
+    } catch (error) {
+        console.log(TAG, 'error caught');
+        throw error;
+    }
 };
 
 // @author {Eduardo}
 exports.get_Recipe_id = async (_id) => {
-  let id = parseInt(_id);
-  let recipe = dbPlanet.recipe.filter((recipe) => recipe.id_planet === id);
-  if(!recipe){
-    throw "Error: Receita não encontrada"
+  try {
+    const recipeRequisition = await dbPlanet.get_Recipe_id(_id);
+    /* getting the ingredients and putting in the recipe */
+    const arrayIngredients = []
+    for (let i = 0; i < recipeRequisition[1].length; i++) { // get the ingredients and push into a array
+      arrayIngredients.push(recipeRequisition[1][i].ingredient)
+    }
+    for (let i = 0; i < recipeRequisition[0].length; i++) { // get the recipes and add the array of ingredients
+      recipeRequisition[0][i].ingredients = arrayIngredients
+    }
+     /* getting the instruction and putting in the recipe */
+    const arrayInstructions = []
+    for (let i = 0; i < recipeRequisition[2].length; i++) {
+      arrayInstructions.push(recipeRequisition[2][i].description)
+    }
+    for (let i = 0; i < recipeRequisition[0].length; i++) {
+      recipeRequisition[0][i].instructions = arrayInstructions
+    }
+    const recipe = recipeRequisition[0]
+    if(recipe.delete === true){
+      throw "Error: Receita não encontrada"
+    }
+    return recipe
+  } catch (error) {
+    console.log(TAG, 'error caught');
+    throw error;
   }
-  if(recipe.delete === true){
-    throw "Error: Receita não encontrada"
-  }
-  return recipe; //repository
 };
 // @author {Eduardo}
 exports.add_Recipe = async (

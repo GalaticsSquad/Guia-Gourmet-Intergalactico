@@ -1,4 +1,4 @@
-/* const { Pool } = require("pg");
+const { Pool } = require("pg");
 
 const pool = new Pool({
   user: process.env.PG_USER,
@@ -8,4 +8,4 @@ const pool = new Pool({
   port: process.env.PG_PORT,
 });
 
-module.exports = pool; */
+module.exports = pool;
