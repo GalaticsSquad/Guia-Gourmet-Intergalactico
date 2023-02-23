@@ -4,9 +4,11 @@
 import {insertHeader, logicHeader}  from "./header.js";
 import {EventCustom} from "../eventCustom.js";
 import { get_planets } from "../src/fetch/planet.js"; 
+import { get_recipes } from "../src/fetch/recipes.js";
 
 export default async function renderOption() {
     const dataPlanet = await get_planets()
+    const dataRecipe = await get_recipes()
     const option = add_planet_recipe ()
     const root = document.getElementById('root')
     root.innerHTML = ``

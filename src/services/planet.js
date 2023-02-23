@@ -51,6 +51,16 @@ exports.edit_SV_Planet = async (_id, body) => {
 }
 };
 
+exports.del_SV_Planet = async (_id) => {
+  try{
+    const planet = dbPlanet.del_RP_Planet(_id)
+    return planet;
+  }catch(erro){
+    console.log(erro)
+    return erro;
+  }
+};
+
 //Recipes
 exports.getRecipe = async () => {
   try {
@@ -156,12 +166,11 @@ exports.edit_SV_Recipe = async (_id, body) => {
 
 // @author {Eduardo}
 exports.del_Recipe = async (_id) => {
-  
-  // let recipe = dbPlanet.recipe.find((recipe) => recipe.id === id);
-  // if (!recipe) {
-  //   throw "Error: receita não encontrada";
-  // }
-  // let index = dbPlanet.recipe.indexOf(recipe);
-  const recipe = dbPlanet.del_RP_Recipe(_id)
-  return recipe;
+  try{
+    const recipe = dbPlanet.del_RP_Recipe(_id)
+    return recipe;
+  }catch(erro){
+    console.log(erro)
+    return erro;
+  }
 };

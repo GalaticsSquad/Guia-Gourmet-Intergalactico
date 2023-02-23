@@ -60,7 +60,7 @@ function htmlHome (dataPlanet, dataRecipe) {
                                             </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
-                                            <button class="recipeButton">${format_data[0].receitas[0].name}</button>
+                                            <button class="recipeButton">Ver mais</button>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@ function htmlHome (dataPlanet, dataRecipe) {
                                         </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
-                                            <button class="recipeButton">${format_data[0].receitas[1].name}</button>
+                                            <button class="recipeButton">Ver mais</button>
                                         </div>
                                     </div>
                                 </div>

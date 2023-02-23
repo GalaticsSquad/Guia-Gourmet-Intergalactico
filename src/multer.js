@@ -4,17 +4,17 @@ const path = require('path');
 module.exports = { 
     dest: path.resolve(__dirname, '..', 'public', 'img'), // Local de upload;
     storage: multer.diskStorage({ 
-        destination: (req, file, cb) => {
-            cb (null, path.resolve(__dirname, '..', 'public', 'img'));
+        destination: (req, file, callback) => {
+            callback (null, path.resolve(__dirname, '..', 'public', 'uploads'));
         },
-        filename: (req, file, cb) => {
+        filename: (req, file, callback) => {
             const fileName = file.originalname;
 
-            cb (null, fileName);
+            callback(null, fileName);
         }
     }),
 
-    fileFilter: (req, file, cb) => { // Filtrar formato de img por extensão;
+    fileFilter: (req, file, callback) => { // Filtrar formato de img por extensão;
         const allowedMimes = [
             'image/jpeg',
             'image/jpg',
@@ -22,7 +22,7 @@ module.exports = {
             'image/png'
         ];
         if (allowedMimes.includes(file.mimetype)) {
-            cb(null, true);
+            callback(null, true);
         }
     }        
 };

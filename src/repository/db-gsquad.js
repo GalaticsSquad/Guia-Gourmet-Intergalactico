@@ -6,7 +6,7 @@ TAG = "Repository: "
 exports.getAllPlanets = async () => {
     try {
         const query = [
-            {text: "SELECT * FROM planets"}
+            {text: "SELECT * FROM planets ORDER BY id ASC",}
         ]
         const response = await connection.executarQuerys(query)
         return response[0].rows
@@ -69,10 +69,11 @@ exports.edit_Planet = async (_id, body) => {
 exports.del_RP_Planet = async (_id)=>{
     try{
         const query = [{
-            text: 'DELETE FROM recipes WHERE id = $1',
+            text: 'DELETE FROM planets WHERE id = $1 RETURNING *',
             params: [_id]
         }]
         const response = await connection.executarQuerys(query)
+        console.log(response[0].rows)
         return response[0].rows
     }catch(error){
         console.log(TAG, 'error caught9')
@@ -134,15 +135,12 @@ exports.get_Recipe_id = async (_id) => { //necessário verificar o soft delete
 exports.add_RP_Recipe = async (_id_planet, _name, _description,  _type, _image, _time, _ingredients, _instructions) => {
     try {
         let querys = []
-        // tentar fazer o ROLLBACK em todas as querys
-        
         const query = {
             text: "INSERT INTO recipes (id_planet, name, description, type, time, image, visit_count) VALUES ($1, $2, $3, $4, $5, $6, 0) RETURNING *",
             params: [_id_planet, _name, _description,  _type, _time, _image]
         }
         querys.push(query)
-        /* const params = [_id_planet, _name, _description,  _type, _time, _image, ] */
-
+        
         for(let i=0; i<_ingredients.length;i++){
             const query_Ingredients = {
                 text: "INSERT INTO ingredients_recipes (id_recipes, ingredient) VALUES ((SELECT id FROM recipes WHERE name = $1), $2) RETURNING *",
@@ -158,7 +156,6 @@ exports.add_RP_Recipe = async (_id_planet, _name, _description,  _type, _image, 
             querys.push(query_Instructions)
         }
         const response_recipe = await connection.executarQuerys(querys)
-        console.log(response_recipe)
         return response_recipe[0].rows
     } catch (error) {
         console.log(TAG, 'error caught7');
@@ -208,7 +205,6 @@ exports.edit_RP_Recipe = async (_id, body)=>{
             query4.push(query)
         }
         const response = await connection.executarQuerys(query4)
-        
         return recipe[0].rows[0]
     } catch (error) {
         console.log(TAG, 'error caught8');

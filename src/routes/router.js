@@ -21,7 +21,7 @@ router.get("/getplanet", controller.getPlanet);
 router.get("/getplanet/:id", controller.getPlanetById);
 router.post("/addplanet", controller.addPlanet);
 router.patch("/editplanet/:id", controller.editPlanet);
-/* router.delete("/delplanet/:id", authenticate, controller.delPlanet); */
+router.delete("/delplanet/:id", controller.del_CT_Planet);
 
 // @author {Eduardo}
 // @coauthor {Carolina}
@@ -36,7 +36,8 @@ router.delete("/delrecipe/:id", controller.delRecipe);
 // Rota teste para upload de imagens;
 router.post("/img", multer(multerConfig).single('file'), (req, res) => {
   console.log(req.file)
-  return res.json({a: a})
+  console.log(req.body)
+  return res.json({teste: 'OK'});
 })
 
 module.exports = router;

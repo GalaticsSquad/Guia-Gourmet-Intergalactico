@@ -19,18 +19,6 @@ function insertHeader() {
                 <a>
                     <div class="linkHome">Home</div>
                 </a>
-                <a>
-                    <div class="link"></div>
-                </a>
-                <a>
-                    <div class="link"></div>
-                </a>
-                <a>
-                    <div class="link"></div>
-                </a>
-                <a>
-                    <div class="link"></div>
-                </a>
             </nav>
             <div class="containerLoginMenu">
                 <a class="loginMenu">Login</a>
@@ -47,22 +35,44 @@ function insertHeader() {
     return header;
 }
 
+{/* <a>
+    <div class="link"></div>
+</a>
+<a>
+    <div class="link"></div>
+</a>
+<a>
+    <div class="link"></div>
+</a>
+<a>
+    <div class="link"></div>
+</a> */}
+
 function logicHeader (dataPlanet, dataRecipe) {
-    console.log(dataRecipe)
-    const links = document.querySelectorAll('.link');
+    
     const buttonHome = document.querySelector ('.linkHome')
     const buttonLogin = document.querySelector ('.loginMenu')
+    const nav = document.querySelector('nav')
+
+
     
     let i = 0 // putting the names by fetch on nav
-    while (links.length > i) {
+    while (dataPlanet.length > i) {
         const planetId = dataPlanet[i].id
         const planetName = dataPlanet[i].name
-        const recipe  = dataRecipe.find(recipe => recipe.id_planet === planetId)
-        links[i].innerText = planetName
-        links[i].addEventListener("click", () => {
-            const evento = EventCustom(`/planets`, planetId, recipe.id) ;
+        const recipe  = dataRecipe.filter(recipe => recipe.id_planet === planetId)
+        /* console.log("recipe", recipe) */
+        if (recipe.length >= 2) {
+            const tagA = document.createElement('a');
+            nav.appendChild(tagA);
+            const divLink = document.createElement('div');
+            tagA.appendChild(divLink);
+            divLink.setAttribute('class', 'link')
+            divLink.innerText = planetName
+            divLink.addEventListener("click", () => {
+            const evento = EventCustom(`/planets`, planetId, recipe[0].id) ;
             root.dispatchEvent(evento);
-        });
+        })};
         i++
     }
     buttonHome.addEventListener("click", () => {

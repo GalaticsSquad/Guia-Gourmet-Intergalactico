@@ -134,6 +134,33 @@ exports.editPlanet = async (req, res) => {
   }
 };
 
+// @author {Carolina}
+exports.del_CT_Planet = async (req, res) => {
+  console.log("Controller: /DELETE");
+  let id = parseInt(req.params.id);
+
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+
+  try {
+    const planet = await service.del_SV_Planet(id);
+    response.message = "Success";
+    response.data = planet;
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = error;
+
+    res.status(500).json(response);
+  }
+};
+
 // @author {Eduardo}
 // Receitas
 exports.getRecipes = async (req, res) => {
@@ -193,19 +220,31 @@ exports.getRecipeById = async (req, res) => {
 // @coauthor {Henrique}
 exports.add_CT_Recipe = async (req, res) => {
   console.log("Controller: /POST");
+  console.log(req.body)
   const { id_planet,
           name,
           description,
           type,
           image,
+          visit_count,
           time,
-          ingredients,
+          ingredient,
           instructions} = req.body;
   const response = {
     message: "",
     data: null,
     error: null,
   };
+
+  console.log(id_planet,
+    name,
+    description,
+    type,
+    image,
+    visit_count,
+    time,
+    ingredient,
+    instructions)
 
   try {
     if (!id_planet) {
@@ -226,12 +265,12 @@ exports.add_CT_Recipe = async (req, res) => {
     if (!time) {
       throw "Error: Favor inserir as time de preparo da receita!";
     }
-    // if (!ingredients) {
-    //   throw "Error: Favor inserir a ingredients da receita!";
-    // }
-    // if (!instructions) {
-    //   throw "Error: Favor inserir a INstructions da receita!";
-    // }
+    if (ingredient == "") {
+      throw "Error: Favor inserir a ingredients da receita!";
+    }
+    if (instructions == "") {
+      throw "Error: Favor inserir a INstructions da receita!";
+    }
     let recipe = await service.add_SV_Recipe(
       id_planet,
       name,
@@ -239,7 +278,7 @@ exports.add_CT_Recipe = async (req, res) => {
       type,
       image,
       time,
-      ingredients,
+      ingredient,
       instructions);
     response.message = "Sucess";
     response.data = recipe;
