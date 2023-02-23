@@ -84,7 +84,15 @@ exports.addPlanet = async (req, res) => {
     if (!description) {
       throw "Error: Por favor insira a descrição do planeta.";
     }
-
+    // const name2 = name.replace(/ /g, "")
+    // const name2 = name.replace(/ /i, "")
+    const nameRegister = await service.get_SV_planet_name(name)
+    console.log("aqui:",nameRegister)
+    
+    if(nameRegister.length != 0 ){
+      throw "Error: já existe um planeta cadastrado com esse nome"
+    }
+      
     const planet = await service.add_Planet(name, icon, background, description);
     response.message = "Sucess";
     response.data = planet;
@@ -94,7 +102,7 @@ exports.addPlanet = async (req, res) => {
     console.log(error);
     response.message = "Erro interno do Servidor";
     response.data = null;
-    response.error = "Erro interno do Servidor";
+    response.error = error;
     res.status(500).json(response);
   }
 };

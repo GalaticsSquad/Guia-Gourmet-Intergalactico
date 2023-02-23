@@ -8,18 +8,17 @@ import { get_recipes } from "../src/fetch/recipes.js";
 export default async function renderAddRecipe() {
     const dataPlanet = await get_planets()
     const dataRecipe = await get_recipes()
-    console.log(dataRecipe)
-    // const gentable = registerrecipe(dataRecipe);
-    const addRecipe = addRecipeHTML()
+    const addRecipe = addRecipeHTML(dataRecipe)
     const root = document.getElementById('root')
     root.innerHTML = ``
     root.appendChild(addRecipe);
     logicHeader(dataPlanet, dataRecipe)
 }
 
-function addRecipeHTML() {
+function addRecipeHTML(data) {
     const header = insertHeader();
     const container = document.createElement("div");
+    const gentable = registerrecipe(data);
     container.className = "rootContainerAddRecipes"
     container.innerHTML = `
     <header>${header}</header>
@@ -99,6 +98,7 @@ function addRecipeHTML() {
                 </tr>
             </thead>
             <tbody id="tbody">
+            ${gentable}
             </tbody>
         </table>
     </section>body">
@@ -111,28 +111,30 @@ function addRecipeHTML() {
 
     return container
 }
-// function registerrecipe(dataRecipe) {
-//     let table_recipe = "";
-//     data.forEach((recipe) => {
-//       let ingredients_recipes = "";
-//       recipe.ingredients.forEach((Ing) => ingredients_recipes += `${Ing}`);
+
+
+function registerrecipe(data) {
+    let table_recipe = "";
+    data.forEach((recipe) => {
+      let ingredients_recipes = "";
+      recipe.ingredient.forEach((Ing) => ingredients_recipes += `${Ing}`);
   
-//       let preparation_recipes = "";
-//       recipe.instructions.forEach((prep) => preparation_recipes += `${prep}`);
+      let preparation_recipes = "";
+      recipe.instructions.forEach((prep) => preparation_recipes += `${prep}`);
   
-//       table_recipe += `<tr>
-//         <td>${recipe.id}</td>
-//         <td>${recipe.id_planet}</td>
-//         <td>${recipe.name}</td>
-//         <td>${recipe.image}</td>
-//         <td>${recipe.time}</td>
-//         <td>${ingredients_recipes}</td>
-//         <td>${preparation_recipes}</td>
-//         <td>${recipe.type}</td>
-//         <td>${recipe.description}</td>
-//         <td><img/ src="../img/lapis.png"></td>
-//         <td><img/ src="../img/excluir.png"></td>
-//         </tr>`;
-//     });
-//     return table_recipe;
-//   }
+      table_recipe += `<tr>
+        <td>${recipe.id}</td>
+        <td>${recipe.id_planet}</td>
+        <td>${recipe.name}</td>
+        <td>${recipe.image}</td>
+        <td>${recipe.time}</td>
+        <td>${ingredients_recipes}</td>
+        <td>${preparation_recipes}</td>
+        <td>${recipe.type}</td>
+        <td>${recipe.description}</td>
+        <td><img/ src="../img/lapis.png"></td>
+        <td><img/ src="../img/excluir.png"></td>
+        </tr>`;
+    });
+    return table_recipe;
+  }

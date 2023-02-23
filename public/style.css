@@ -550,7 +550,6 @@ header {
 
 .backgroundPLanets {
     background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -707,12 +706,13 @@ header {
 /* -------------------------- ADDPLANETS -------------------------- */
 
 .rootContainerAddPlanets {
-    height: 100vh;
+    /* height: 100vh; */
     background: radial-gradient(circle at bottom, navy 0, black 100%);
     overflow: hidden;
 }
 #section-lista{
-    background-color: red;
+    background-color: rgb(183, 181, 181);
+    margin-top: 15px;
 }
 
 .container-addplanet {
@@ -773,7 +773,15 @@ header {
 }
 
 .send-planet:hover {
-    background-color: #3c3ae4;
+    background-color: #A2C65A;
+}
+tr{
+    height: 40px;
+}
+
+td {
+    height: 100px;
+    overflow-y: visible;
 }
 
 /* -------------------------- LOGIN -------------------------- */

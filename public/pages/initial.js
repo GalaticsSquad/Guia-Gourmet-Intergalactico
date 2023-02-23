@@ -28,9 +28,14 @@ export default () => {
   buttonInit.innerText = "Entrar";
 
   buttonInit.addEventListener("click", () => {
-    const evento = EventCustom("/home", "2");
+    const evento = EventCustom("/home");
     root.dispatchEvent(evento);
   });
+
+  /* window.onpopstate = (event) => {
+    console.log(event)
+    console.log(event.state)
+} */
 
   return containerInit;
 };

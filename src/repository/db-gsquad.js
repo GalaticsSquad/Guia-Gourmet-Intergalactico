@@ -19,7 +19,7 @@ exports.getAllPlanets = async () => {
 exports.get_Planet_id = async (_id) => {
     try {
         const query =[
-            {text: "SELECT * FROM planets WHERE id = $1",
+            {text: "SELECT * FROM planets WHERE id = $1 ORDER BY id ASC",
             params: [_id]}
         ]
         const response = await connection.executarQuerys(query)
@@ -78,6 +78,23 @@ exports.del_RP_Planet = async (_id)=>{
     }catch(error){
         console.log(TAG, 'error caught9')
         throw error
+    }
+}
+
+exports.get_RP_name = async (name) =>{
+    // const name = req.params.name
+
+    try {
+        const query = [
+            {text: "SELECT name FROM planets WHERE name=$1",
+            params: [name]}]
+
+        const response = await connection.executarQuerys(query)
+        // res.status(200).json({teste: response[0].rows})
+        return response[0].rows
+    } catch (error) {
+        console.log(TAG, 'error caught1');
+        throw error;
     }
 }
 

@@ -61,6 +61,16 @@ exports.del_SV_Planet = async (_id) => {
   }
 };
 
+exports.get_SV_planet_name = (name) =>{
+  try {
+    const name_planet = dbPlanet.get_RP_name(name)
+    return name_planet;
+  } catch (error) {
+    console.log(error)
+    return error;
+  }
+}
+
 //Recipes
 exports.getRecipe = async () => {
   try {

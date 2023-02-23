@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 
 module.exports = { 
-    dest: path.resolve(__dirname, '..', 'public', 'img'), // Local de upload;
+    dest: path.resolve(__dirname, '..', 'public', 'uploads'), // Local de upload;
     storage: multer.diskStorage({ 
         destination: (req, file, callback) => {
             callback (null, path.resolve(__dirname, '..', 'public', 'uploads'));

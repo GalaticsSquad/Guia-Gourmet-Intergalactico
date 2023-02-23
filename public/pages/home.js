@@ -119,6 +119,8 @@ function htmlHome (dataPlanet, dataRecipe) {
 
 function logicHome(dataRecipe) {
 
+    
+
     const recipeButton = document.querySelectorAll('.recipeButton')
     let i = 0
     while (recipeButton.length > i) {

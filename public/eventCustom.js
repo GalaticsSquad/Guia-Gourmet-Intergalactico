@@ -1,6 +1,7 @@
 function EventCustom(urlP, dataPlanet, dataRecipe){
-    const event = new CustomEvent("onstatechange", {detail:{url : urlP, dataPlanet:dataPlanet, dataRecipe:dataRecipe}})
-    //console.log(event)
+    const event = new CustomEvent("onstatechange", {
+        detail:{url : urlP, dataPlanet:dataPlanet, dataRecipe:dataRecipe}
+    })
     return event;
 }
 

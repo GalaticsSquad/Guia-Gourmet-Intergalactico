@@ -16,7 +16,8 @@ root.addEventListener("onstatechange", function (event) {
   window.history.pushState("", "", url);
 
   Route(url,idPlanet, idRecipe)
-  window.dispatchEvent(new Event("popstate"));
+  const customEvent = new Event("popstate")
+  window.dispatchEvent(customEvent);
 });
 
 window.addEventListener("load", () => {
