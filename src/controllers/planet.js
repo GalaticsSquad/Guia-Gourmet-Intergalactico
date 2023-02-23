@@ -85,17 +85,16 @@ exports.addPlanet = async (req, res) => {
       throw "Error: Por favor insira a descrição do planeta.";
     }
 
-    let planet = await service.add_Planet(name, icon, background, description);
+    const planet = await service.add_Planet(name, icon, background, description);
     response.message = "Sucess";
     response.data = planet;
     res.status(200).json(response);
+
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = "Erro interno do Servidor";
-
     res.status(500).json(response);
   }
 };
@@ -103,32 +102,34 @@ exports.addPlanet = async (req, res) => {
 // @author {Eduardo}
 exports.editPlanet = async (req, res) => {
   console.log("Controller: /PATCH");
-  let _id = req.params.id;
-  let _body = req.body;
-  delete _body.password;
-
-  if (_body.id !== undefined) {
-    delete _body.id;
-  }
-
   const response = {
     message: "",
     data: null,
     error: null,
   };
 
+  const _id = parseInt(req.params.id);
+  const _body = req.body;
+  /* delete _body.password; */
+  if (isNaN(_id)) {
+    console.log(TAG, "Parameter isNaN")
+    response.message = 'Informe um valor válido';
+    response.data = null;
+    response.error = 'Informe um valor válido'
+    res.status(400).json(response);
+    return;
+  }
+
   try {
-    const receitas = await service.edit_Planet(_id, _body);
+    const planet = await service.edit_SV_Planet(_id, _body);
     response.message = "Success";
-    response.data = receitas;
+    response.data = planet;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = "Erro interno do Servidor";
-
     res.status(500).json(response);
   }
 };
@@ -190,10 +191,16 @@ exports.getRecipeById = async (req, res) => {
 
 // @author {Eduardo}
 // @coauthor {Henrique}
-exports.addRecipe = async (req, res) => {
+exports.add_CT_Recipe = async (req, res) => {
   console.log("Controller: /POST");
-  const { name, description, type, time, ingredients, instructions, image } =
-    req.body;
+  const { id_planet,
+          name,
+          description,
+          type,
+          image,
+          time,
+          ingredients,
+          instructions} = req.body;
   const response = {
     message: "",
     data: null,
@@ -201,6 +208,9 @@ exports.addRecipe = async (req, res) => {
   };
 
   try {
+    if (!id_planet) {
+      throw "Error: Favor inserir o id do planeta!";
+    }
     if (!name) {
       throw "Error: Favor inserir o nome da receita!";
     }
@@ -210,27 +220,27 @@ exports.addRecipe = async (req, res) => {
     if (!type) {
       throw "Error: Favor inserir o tipo da receita!";
     }
-    if (!time) {
+    if (!image) {
       throw "Error: Favor inserir o tempo de preparo da receita!";
     }
-    if (!ingredients) {
-      throw "Error: Favor inserir as instruções de preparo da receita!";
+    if (!time) {
+      throw "Error: Favor inserir as time de preparo da receita!";
     }
-    if (!instructions) {
-      throw "Error: Favor inserir a descrição da receita!";
-    }
-    if (!image) {
-      throw "Error: Favor inserir a imagem da receita!";
-    }
-    let recipe = await service.add_Recipe(
+    // if (!ingredients) {
+    //   throw "Error: Favor inserir a ingredients da receita!";
+    // }
+    // if (!instructions) {
+    //   throw "Error: Favor inserir a INstructions da receita!";
+    // }
+    let recipe = await service.add_SV_Recipe(
+      id_planet,
       name,
       description,
       type,
+      image,
       time,
       ingredients,
-      instructions,
-      image
-    );
+      instructions);
     response.message = "Sucess";
     response.data = recipe;
     res.status(200).json(response);
@@ -246,11 +256,11 @@ exports.addRecipe = async (req, res) => {
 };
 
 // @author {Eduardo}
-exports.editRecipe = async (req, res) => {
+exports.edit_CT_Recipe = async (req, res) => {
   console.log("Controller: /PATCH");
   let _id = req.params.id;
   let _body = req.body;
-  delete _body.password;
+  // delete _body.password;
 
   if (_body.id !== undefined) {
     delete _body.id;
@@ -263,9 +273,9 @@ exports.editRecipe = async (req, res) => {
   };
 
   try {
-    const receita = await service.edit_Recipe(_id, _body);
+    const recipe = await service.edit_SV_Recipe(_id, _body);
     response.message = "Success";
-    response.data = receita;
+    response.data = recipe;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -281,7 +291,8 @@ exports.editRecipe = async (req, res) => {
 // @author {Eduardo}
 exports.delRecipe = async (req, res) => {
   console.log("Controller: /DELETE");
-  let _id = req.params.id;
+  /* let _id = req.params.id; */
+  let id = parseInt(req.params.id);
 
   const response = {
     message: "",
@@ -290,7 +301,7 @@ exports.delRecipe = async (req, res) => {
   };
 
   try {
-    const receitas = await service.del_Recipe(_id);
+    const receitas = await service.del_Recipe(id);
     response.message = "Success";
     response.data = receitas;
     res.status(200).json(response);

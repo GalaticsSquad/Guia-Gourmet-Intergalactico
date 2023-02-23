@@ -1,57 +1,41 @@
-
-// {
-          
-//     const urlReplaced = url.replace(/[/]/, "")
-
-//     const found = data[0].find(planet => planet.name === urlReplaced)
-
-//     if(found !== undefined) {
-//       const filtered = data[1].filter(recipe => recipe.id_planet === found.id)
-//       const planeter = renderPlanets(found, filtered);
-//       let root = document.getElementById('root')
-//       root.innerHTML = ``
-//       logicHeader(data[0])
-//       logicPlanets(found)
-//     }
-// }
-
-
 const get_planets = async ()=>{
-    let req =  await fetch('http://localhost:3000/getplanet', {
+    const req =  await fetch('http://localhost:3000/getplanet', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
         body: null,
     })
-    let json = await req.json()
-    let DB = json.data
+    const json = await req.json()
+    const DB = json.data
     return DB;
 } 
 
 const get_planets_id = async (id)=>{
-    let req =  await fetch(`http://localhost:3000/getplanet/${id}`, {
+    const req =  await fetch(`http://localhost:3000/getplanet/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
         body: null,
     })
-    let json = await req.json()
-    let DB = json.data
+    const json = await req.json()
+    const DB = json.data
     return DB;
 }
 
-const post_planets = async ()=>{
-    let _body = {password: 123 , name:"teste nome", icon: "teste icon", background: "teste back", description: "teste description"}
-    let req =  await fetch('http://localhost:3000/planet', {
+const post_planets = async (_name, _icon, _background, _description)=>{
+    const _body = {name:_name, icon: _icon, background: _background, description: _description}
+    const req =  await fetch('http://localhost:3000/addplanet', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(_body) 
     })
-    let json = await req.json()
+    const json = await req.json()
+    const DB = json.data
+    return DB; 
 } 
 
 
