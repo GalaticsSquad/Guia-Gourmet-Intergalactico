@@ -228,15 +228,14 @@ exports.getRecipeById = async (req, res) => {
 // @coauthor {Henrique}
 exports.add_CT_Recipe = async (req, res) => {
   console.log("Controller: /POST");
-  console.log(req.body)
+  console.log(TAG, req.body)
   const { id_planet,
           name,
           description,
           type,
           image,
-          visit_count,
           time,
-          ingredient,
+          ingredients,
           instructions} = req.body;
   const response = {
     message: "",
@@ -249,11 +248,12 @@ exports.add_CT_Recipe = async (req, res) => {
     description,
     type,
     image,
-    visit_count,
     time,
-    ingredient,
+    ingredients,
     instructions)
 
+
+    console.log("CONTROLER Ingredient:", ingredients)
   try {
     if (!id_planet) {
       throw "Error: Favor inserir o id do planeta!";
@@ -273,7 +273,7 @@ exports.add_CT_Recipe = async (req, res) => {
     if (!time) {
       throw "Error: Favor inserir as time de preparo da receita!";
     }
-    if (ingredient == "") {
+    if (ingredients == "") {
       throw "Error: Favor inserir a ingredients da receita!";
     }
     if (instructions == "") {
@@ -286,7 +286,7 @@ exports.add_CT_Recipe = async (req, res) => {
       type,
       image,
       time,
-      ingredient,
+      ingredients,
       instructions);
     response.message = "Sucess";
     response.data = recipe;

@@ -86,7 +86,7 @@ exports.get_RP_name = async (name) =>{
 
     try {
         const query = [
-            {text: "SELECT name FROM planets WHERE name=$1",
+            {text: "SELECT name FROM planets WHERE name=$1 ",
             params: [name]}]
 
         const response = await connection.executarQuerys(query)
@@ -104,7 +104,7 @@ exports.getAllRecipes = async () => {
     const querys = []
     try {
         const query = {
-            text: 'SELECT * FROM recipes'}
+            text: 'SELECT * FROM recipes ORDER BY id ASC'}
         querys.push(query)
         const query2 = {
             text:'SELECT ingredient, id_recipes FROM ingredients_recipes'}
@@ -128,7 +128,7 @@ exports.get_Recipe_id = async (_id) => { //necessário verificar o soft delete
     const querys = []
     try {
         const query = {
-            text: 'SELECT * FROM recipes WHERE id_planet = $1',
+            text: 'SELECT * FROM recipes WHERE id_planet = $1 ORDER BY id ASC',
             params: [_id]}
         querys.push(query)
         const query2 = {
@@ -150,6 +150,17 @@ exports.get_Recipe_id = async (_id) => { //necessário verificar o soft delete
 
 
 exports.add_RP_Recipe = async (_id_planet, _name, _description,  _type, _image, _time, _ingredients, _instructions) => {
+    console.log("Repository: /POST");
+
+    console.log("repository:",_id_planet,
+      _name,
+      _description,
+      _type,
+      _image,
+      _time,
+      _ingredients,
+      _instructions)
+
     try {
         let querys = []
         const query = {

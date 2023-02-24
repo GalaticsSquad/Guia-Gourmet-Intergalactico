@@ -24,5 +24,5 @@ module.exports = {
         if (allowedMimes.includes(file.mimetype)) {
             callback(null, true);
         }
-    }        
+    }  
 };

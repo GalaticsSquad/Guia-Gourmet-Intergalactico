@@ -44,4 +44,9 @@ router.post("/img", multer(multerConfig).array('file'), (req, res) => {
  res.json({teste: 'OK'});
 })
 
+router.post("/img2", multer(multerConfig).single('file'), (req, res) => {
+  console.log(req.file)
+  console.log(req.body)
+ res.json({teste: 'OK'});
+})
 module.exports = router;

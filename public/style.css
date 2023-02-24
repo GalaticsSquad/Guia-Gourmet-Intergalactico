@@ -708,7 +708,7 @@ header {
 .rootContainerAddPlanets {
     /* height: 100vh; */
     background: radial-gradient(circle at bottom, navy 0, black 100%);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 #section-lista{
     background-color: rgb(183, 181, 181);
@@ -719,8 +719,9 @@ header {
     background-color: #fff;
     border-radius: 10px;
     padding: 40px;
-    margin: 100px auto;
-    width: 800px;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 900px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
@@ -775,13 +776,37 @@ header {
 .send-planet:hover {
     background-color: #A2C65A;
 }
-tr{
-    height: 40px;
+
+.material-symbols-rounded {
+    cursor: pointer;
+}
+
+#tb_description {
+    max-height: 80px;
+    overflow-y: scroll;
+    text-overflow: clip;
+}
+table {
+border-collapse: collapse;
+width: 100%;
+}
+
+td, th {
+padding: 8px;
+text-align: left;
+vertical-align: top;
+border: 1px solid #ddd;
+}
+
+th {
+background-color: #f2f2f2;
+font-weight: bold;
 }
 
 td {
-    height: 100px;
-    overflow-y: visible;
+word-wrap: break-word;
+max-width: 300px;
+max-height: 50px;
 }
 
 /* -------------------------- LOGIN -------------------------- */
@@ -836,17 +861,18 @@ td {
 /* -------------------------- ADD RECIPES-------------------------- */
 
 .rootContainerAddRecipes {
-    height: 100vh;
+    /* height: 100vh; */
     background: radial-gradient(circle at bottom, navy 0, black 100%);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .container_planet_recipe{
     background-color: #fff;
     border-radius: 10px;
     padding: 40px;
-    margin: 100px auto;
-    width: 800px;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 1000px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
@@ -888,8 +914,40 @@ label {
 }
     
 select {
-    width: 30%;
+    width: 40%;
     font-size: 15px;
+    margin-bottom: 20px;
+}
+
+#input_name {
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.envio_button {
+    background-color: #D9D9D9D9;
+    color: #000000;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 15px 60px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.envio_button:hover {
+    background-color: #A2C65A;
+}
+
+.input_description, .input_ingredients {
+    width: 60%;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin: 0 auto;
 }
 
 /* -------------------------- FOOTER -------------------------- */
@@ -900,7 +958,6 @@ footer {
     background-color: #fff4d72d;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    /* margin: 0 auto; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -908,7 +965,6 @@ footer {
 }
 
 .textFooter {
-    /* margin: 0px 30px; */
     color: #D4D4D4;
     text-align: center;
     font-size: 0.7em;

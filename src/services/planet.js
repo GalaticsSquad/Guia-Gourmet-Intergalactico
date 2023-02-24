@@ -131,27 +131,35 @@ exports.get_Recipe_id = async (_id) => {
 };
 // @author {Eduardo}
 exports.add_SV_Recipe = async (
-  _id_planet,
-  _name,
-  _description,
-  _type,
-  _image,
-  _time,
-  _ingredients,
-  _instructions) => {
-
+  id_planet,
+  name,
+  description,
+  type,
+  image,
+  time,
+  ingredients,
+  instructions) => {
+    // console.log("Service: /POST");
+    // console.log("Service:", id_planet,
+    //   name,
+    //   description,
+    //   type,
+    //   image,
+    //   time,
+    //   ingredients,
+    //   instructions)
   
   // let last_id = dbPlanet.recipe[dbPlanet.recipe.length - 1].id;
   try {
     const recipeReq = dbPlanet.add_RP_Recipe(
-      _id_planet,
-      _name,
-      _description,
-      _type,
-      _image,
-      _time,
-      _ingredients,
-      _instructions)
+      id_planet,
+      name,
+      description,
+      type,
+      image,
+      time,
+      ingredients,
+      instructions)
 
     return recipeReq;
   } catch (err) {
