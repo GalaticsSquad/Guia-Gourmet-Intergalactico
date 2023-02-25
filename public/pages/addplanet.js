@@ -55,7 +55,7 @@ function addplanet (data) {
                     <textarea name="" id="planet_description" cols="100" required rows="8" maxlength="800"></textarea>
                 </div>
                 <p class="textErrorPlanets"></p>
-                <div id="buttonErrorContainerPlanets">
+                <div class="buttonContainerPlanets">
                     <input type="submit" class="send-planet" value="Adicionar Planeta">
                     <input type="button" class="exitEdit" value="Cancelar edição">
                 </div>
@@ -103,6 +103,7 @@ function uploadImages() {
     const imageIcon = document.querySelector('#imageicon')
     const description = document.querySelector('#planet_description')
     const sendPlanet = document.querySelector('.send-planet')
+    const exitEdit = document.querySelector('.exitEdit')
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -134,7 +135,6 @@ function uploadImages() {
                 tbody.innerHTML = ''
                 tbody.innerHTML = registerplanet(dataPlanet.data)
                 addEvent(dataPlanet.data)
-                reStyleInputFile
                 textError.innerHTML = `Planeta adicionado com sucesso!`;
                 textError.style.color = 'green';
                 setTimeout(() => {
@@ -192,6 +192,7 @@ function uploadImages() {
                 tbody.innerHTML = registerplanet(dataPlanet.data)
                 addEvent(dataPlanet.data)
                 reStyleInputFile()
+                exitEdit.style.display = "none"
                 textError.innerHTML = `Planeta editado com sucesso!`;
                 textError.style.color = 'green';
                 setTimeout(() => {
@@ -270,6 +271,7 @@ function addEvent(dataPlanet) {
         imagebackground.value=``
         reStyleInputFile()
         exitEdit.style.display = "none"
+        sendPlanet.value = "Adicionar Planeta"
     })
 }
 

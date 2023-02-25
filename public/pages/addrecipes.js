@@ -13,7 +13,7 @@ export default async function renderAddRecipe() {
     root.innerHTML = ``
     root.appendChild(addRecipe);
     logic_recipe(dataRecipe)
-    upload_receitaImg()
+    /* upload_receitaImg() */
     logicHeader(dataPlanet.data, dataRecipe.data)
 }
 
@@ -102,9 +102,10 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                     <button class="exlAllDescriptions">Excluir todos as instruções</button>
                 </div>
             </div>
-            <div class="buttonErrorContainer">
-                <p class="textError"></p>
+            <p class="textError"></p>
+            <div class="buttonContainerRecipe">
                 <input type="submit" class="envio_button" value="Adicionar receita">
+                <input type="button" class="exitEdit" value="Cancelar edição">
             </div>
             <section>
                 <table id="table" class="tableAddRecipes">
@@ -169,23 +170,24 @@ function add_options_planet(dataPlanet){
     return options;
 }
 
+let index = 0
+
 function logic_recipe(dataRecipe){
     let ingredients = []
     let instructions = []
-    let findRecipe = 0
-    let index = 0
     const button_Ingredient = document.querySelector('.addIngredient')
     const button_Description = document.querySelector('.addDescription')
     const name_recipe = document.querySelector('#input_name')
     const input_tempo = document.querySelector('#input_tempo')
     const input_ingredients = document.querySelector('.input_ingredients')
     const input_instructions = document.querySelector('.input_instructions')
-    const input_description = document.querySelector('.food_description')
     const showListDes = document.querySelector('.showListDes')
     const showListIng = document.querySelector('.showListIng')
     const exlAllIngredient = document.querySelector('.exlAllIngredient')
     const exlAllDescriptions = document.querySelector('.exlAllDescriptions')
     const buttonEnv = document.querySelector('.envio_button')
+    const id_planet = document.querySelector('#planet_select').value
+    const description = document.querySelector('.food_description')
 
     input_tempo.addEventListener('input', (event)=>{
         event.preventDefault();
@@ -208,7 +210,8 @@ function logic_recipe(dataRecipe){
     input_ingredients.addEventListener('input', (event)=>{
         event.preventDefault();
         input_ingredients.value = input_ingredients.value.replace(/[\031-\037]/g, "")
-        input_ingredients.value = input_ingredients.value.replace(/[\041-\055]/g, "")
+        input_ingredients.value = input_ingredients.value.replace(/[\041-\047]/g, "")
+        input_ingredients.value = input_ingredients.value.replace(/[\052-\055]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\072-\100]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\133-\140]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\173-\277]/g, "")
@@ -217,7 +220,8 @@ function logic_recipe(dataRecipe){
     input_instructions.addEventListener('input', (event)=>{
         event.preventDefault();
         input_ingredients.value = input_ingredients.value.replace(/[\031-\037]/g, "")
-        input_ingredients.value = input_ingredients.value.replace(/[\041-\055]/g, "")
+        input_ingredients.value = input_ingredients.value.replace(/[\041-\047]/g, "")
+        input_ingredients.value = input_ingredients.value.replace(/[\052-\055]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\072-\100]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\133-\140]/g, "")
         input_ingredients.value = input_ingredients.value.replace(/[\173-\277]/g, "")
@@ -246,6 +250,9 @@ function logic_recipe(dataRecipe){
                 showListIng.appendChild(liIng)
                 liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${ingredients[i]}`
             }
+            addEventLi(ingredients, instructions)
+            console.log(index)
+            console.log(ingredients)
         }
     })
     
@@ -263,7 +270,6 @@ function logic_recipe(dataRecipe){
             }
         }
         if (button_Description.innerText == 'Editar instrução') {
-            console.log(index)
             instructions.splice(index, 1, input_instructions.value)
             input_instructions.value = ''
             showListDes.innerHTML= ''
@@ -272,6 +278,7 @@ function logic_recipe(dataRecipe){
                 showListDes.appendChild(liDes)
                 liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${instructions[i]}`
             }
+            addEventLi(ingredients, instructions)
         }
     })
 
@@ -284,115 +291,179 @@ function logic_recipe(dataRecipe){
         event.preventDefault();
         showListIng.innerHTML = ''
     })
-    
-    
     buttonEnv.addEventListener('click', (event)=>{
-        event.preventDefault();
-        const id_planet = document.querySelector('#planet_select').value
-        const name = document.querySelector('#input_name').value
-        const description = document.querySelector('.food_description').value
-        const type = document.querySelector('#type_select').value
-        const time = document.querySelector('#input_tempo').value
-        const nameRG = name.replace(/ /g, "")
-        const image = `../img/recipe/receita-${nameRG}.png`
-        post_recipes(id_planet, name, description, type, image, time, ingredients, instructions)
-        //Reset
-        name = ''
-        description = ''
-        type = ''
-        time = ''
-        showListIng.innerHTML = ''
-        showListDes.innerHTML = ''
+        if (buttonEnv.value === "Adicionar receita") {
+            event.preventDefault();
+            
+            const type = document.querySelector('#type_select').value
+            const time = document.querySelector('#input_tempo').value
+            const nameRG = name_recipe.value.replace(/ /g, "")
+            const image = `../img/recipe/receita-${nameRG}.png`
+            post_recipes(id_planet, name_recipe.value, description.value, type, image, time, ingredients, instructions)
+            //Reset
+            name = ''
+            description = ''
+            type = ''
+            time = ''
+            showListIng.innerHTML = ''
+            showListDes.innerHTML = ''
+        }
+        if (buttonEnv.value == "Editar receita") {
+            event.preventDefault();
+            const id_planet = document.querySelector('#planet_select').value
+            const name = document.querySelector('#input_name').value
+            const description = document.querySelector('.food_description').value
+            const type = document.querySelector('#type_select').value
+            const time = document.querySelector('#input_tempo').value
+            const nameRG = name.replace(/ /g, "")
+            const image = `../img/recipe/receita-${nameRG}.png`
+            post_recipes(id_planet, name, description, type, image, time, ingredients, instructions)
+            //Reset
+            name = ''
+            description = ''
+            type = ''
+            time = ''
+            showListIng.innerHTML = ''
+            showListDes.innerHTML = ''
+        }
     })
 
-    addEventEditDel(dataRecipe)
-    function addEventEditDel(dataRecipe) {
-        const buttonEditDel = document.querySelectorAll('#editDelRecipeIcon')
-        buttonEditDel.forEach(button => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-                if (event.target.innerText === "edit") {
-                    button.value = "Editar receita"
-                    const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
-                    findRecipe = dataRecipe.data.find(recipe => recipe.id===cellId)
-                    console.log(findRecipe)
-                    name_recipe.value = findRecipe.name
-                    input_tempo.value = findRecipe.type
-                    input_description.value = findRecipe.description
-                    showListIng.innerHTML = ''
-                    button_Ingredient.innerText = 'Editar ingrediente'
-                    button_Description.innerText = 'Editar instrução'
-                    buttonEnv.value = 'Editar receita'
-                    exlAllDescriptions.style.display = 'none'
-                    exlAllIngredient.style.display = 'none'
-                    for (let i = 0; i < findRecipe.ingredient.length; i++) {
-                        ingredients.push(findRecipe.ingredient[i])
-                        const liIng = document.createElement('li')
-                        showListIng.appendChild(liIng)
-                        liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${findRecipe.ingredient[i]}`
-                    }
-                    showListDes.innerHTML = ''
-                    for (let i = 0; i < findRecipe.instructions.length; i++) {
-                        instructions.push(findRecipe.instructions[i])
-                        const liDes = document.createElement('li')
-                        showListDes.appendChild(liDes)
-                        liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${findRecipe.instructions[i]}`
-                    }
-                    const editLiIng = document.querySelectorAll('#editLiIng')
-                    editLiIng.forEach(li => {
-                        li.addEventListener('click', (event) => {
-                            const gerLiIng = event.target.nextSibling.textContent
-                            input_ingredients.value = gerLiIng
-                            index = ingredients.indexOf(gerLiIng)
-                        })
-                    });
-                    const editLiDes = document.querySelectorAll('#editLiDes')
-                    editLiDes.forEach(li => {
-                        li.addEventListener('click', (event) => {
-                            const getLiDes = event.target.nextSibling.textContent
-                            input_instructions.value = getLiDes
-                            index = instructions.indexOf(getLiDes)
-                        })
-                    });
-                }
-
-                if (event.target.innerText === "delete") {
-                    const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
-                    console.log(cellId)
-                    reRenderTable(cellId)
-                }
-        })});
-        const tbody = document.querySelector('#tbody')
-        async function reRenderTable (cellId) {
-            await delete_recipes(cellId)
-            const dataRecipe = get_recipes()
-            tbody.innerHTML = registerrecipe(dataRecipe.data)
-            addEventEditDel(dataRecipe.data)
-        }
-    }
+    addEventEditDel(dataRecipe, ingredients, instructions)
 }
 
-/* function upload_receitaImg() {
-    const form = document.querySelector('.form_envio')      
+function addEventEditDel(dataRecipe, ingredients, instructions) {
+    const arrayTypes = ["Salada", "Sobremesa", "Prato principal", "Entrada"]
+    let findRecipe = 0
+    const button_Ingredient = document.querySelector('.addIngredient')
+    const button_Description = document.querySelector('.addDescription')
+    const name_recipe = document.querySelector('#input_name')
+    const input_tempo = document.querySelector('#input_tempo')
+    const input_description = document.querySelector('.food_description')
+    const input_type = document.querySelector('#type_select')
+    const showListDes = document.querySelector('.showListDes')
+    const showListIng = document.querySelector('.showListIng')
+    const exlAllIngredient = document.querySelector('.exlAllIngredient')
+    const exlAllDescriptions = document.querySelector('.exlAllDescriptions')
+    const buttonEnv = document.querySelector('.envio_button')
+    const buttonEditDel = document.querySelectorAll('#editDelRecipeIcon')
+    const exitEdit = document.querySelector('.exitEdit')
+    buttonEditDel.forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.innerText === "edit") {
+            button.value = "Editar receita"
+            const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
+            findRecipe = dataRecipe.data.find(recipe => recipe.id===cellId)
+            console.log(findRecipe)
+            name_recipe.value = findRecipe.name
+            console.log(input_type)
+            console.log(input_type.option)
+            input_tempo.value = findRecipe.time
+            input_description.value = findRecipe.description
+            showListIng.innerHTML = ''
+            button_Ingredient.innerText = 'Editar ingrediente'
+            button_Description.innerText = 'Editar instrução'
+            buttonEnv.value = 'Editar receita'
+            exlAllDescriptions.style.display = 'none'
+            exlAllIngredient.style.display = 'none'
+            exitEdit.style.display = 'block'
+            for (let i = 0; i < findRecipe.ingredient.length; i++) {
+                ingredients.push(findRecipe.ingredient[i])
+                const liIng = document.createElement('li')
+                showListIng.appendChild(liIng)
+                liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${findRecipe.ingredient[i]}`
+            }
+            showListDes.innerHTML = ''
+            for (let i = 0; i < findRecipe.instructions.length; i++) {
+                instructions.push(findRecipe.instructions[i])
+                const liDes = document.createElement('li')
+                showListDes.appendChild(liDes)
+                liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${findRecipe.instructions[i]}`
+            }
+            addEventLi(ingredients, instructions)
+            exitEdit.addEventListener ('click', () => {
+                name_recipe.value = ''             
+                input_description.value = ''             
+                input_type.value = 0             
+                input_tempo.value = ''             
+                showListIng.innerHTML = ''             
+                showListDes.innerHTML = '' 
+                buttonEnv.value = 'Adicionar receita'
+                exitEdit.style.display = 'none'
+                exlAllDescriptions.style.display = 'initial'
+                exlAllIngredient.style.display = 'initial'
+            })
+        }
 
-        // Upload da imagem receita
+        if (event.target.innerText === "delete") {
+            const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
+            reRenderDelTable(cellId)
+        }
+    })});
+    
+    
+}
+
+async function reRenderDelTable (cellId) {
+    const tbody = document.querySelector('#tbody')
+    await delete_recipes(cellId)
+    const dataRecipe = get_recipes()
+    tbody.innerHTML = registerrecipe(dataRecipe.data)
+    addEventEditDel(dataRecipe.data)
+}
+
+function addEventLi(ingredients, instructions) {
+    const input_ingredients = document.querySelector('.input_ingredients')
+    const input_instructions = document.querySelector('.input_instructions')
+    const editLiIng = document.querySelectorAll('#editLiIng')
+    editLiIng.forEach(li => {
+        li.addEventListener('click', (event) => {
+            const gerLiIng = event.target.nextSibling.textContent
+            input_ingredients.value = gerLiIng
+            index = ingredients.indexOf(gerLiIng)
+        })
+    });
+    const editLiDes = document.querySelectorAll('#editLiDes')
+    editLiDes.forEach(li => {
+        li.addEventListener('click', (event) => {
+            const getLiDes = event.target.nextSibling.textContent
+            input_instructions.value = getLiDes
+            index = instructions.indexOf(getLiDes)
+        })
+    });
+}
+
+
+function upload_receitaImg() {
+    const submitButton = document.querySelector('.envio_button')
+    const form = document.querySelector('.form_envio')  
+    const recipeName = document.querySelector('#input_name')    
+    const planet = 
+
+    
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const name = document.querySelector('#input_name').value;
-        const imageRecipe = document.querySelector('#input_image_receita')
+        if (submitButton.value === 'Adicionar Receita') {
+            const name = document.querySelector('#input_name')
+            const imageRecipe = document.querySelector('#input_image_receita')
+    
+            const formData = new FormData();    
+            submitButton.disabled = true;
+            const nameRG = name.value.replace(/ /g, "")    
+                formData.append('file', imageRecipe.files[0], `receita-${nameRG}.png`);
 
-        const formData = new FormData();    
-
-        const nameRG = name.replace(/ /g, "")    
-            formData.append('file', imageRecipe.files[0], `receita-${nameRG}.png`);
-
-        fetch('/img2', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-        });
-} */
+    
+            fetch('/addrecipe', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(submitButton.disabled = false)
+                .catch(error => console.error(error));
+             }
+        if (submitButton.value === 'Editar Receita') {
+            
+        }     
+    });   
+}
