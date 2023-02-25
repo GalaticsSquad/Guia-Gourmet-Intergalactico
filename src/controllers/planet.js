@@ -135,39 +135,37 @@ exports.edit_CT_Planet = async (req, res) => {
     let oldPath = path.join(__dirname, req.body.old_icon);
     let newPath = path.join(__dirname, "../../public/"+new_icon);
 
-
-
-    fs.rename(oldPath, newPath, (err) => {
-      if (err) throw err;
-      console.log('Arquivo renomeado com sucesso!');
-    });
-
     let new_back = background.replace("../", "")
     let oldPath_back = path.join(__dirname, req.body.old_background);
     let newPath_back = path.join(__dirname, "../../public/"+new_back);
 
-    fs.rename(oldPath_back, newPath_back, (err) => {
-      if (err) throw err;
-      console.log('Arquivo renomeado com sucesso!');
-    });
+    // fs.rename(oldPath, newPath, (err) => {
+    //   if (err) throw err;
+    //   console.log('Arquivo renomeado com sucesso!');
+    // });
+
+    // fs.rename(oldPath_back, newPath_back, (err) => {
+    //   if (err) throw err;
+    //   console.log('Arquivo renomeado com sucesso!');
+    // });
 
     if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
       throw 'ERROR: não é permitido alterar esse planeta'
     }
-    // if (!name) {
-    //   throw "Error: Por favor insira o nome do planeta.";
-    // }
-    // if (!icon) {
-    //   throw "Error: Por favor insira o icone do planeta.";
-    // }
-    // if (!background) {
-    //   throw "Error: Por favor insira o background do planeta.";
-    // }
-    // if (!description) {
-    //   throw "Error: Por favor insira a descrição do planeta.";
-    // }
+    if (!name) {
+      throw "Error: Por favor insira o nome do planeta.";
+    }
+    if (!icon) {
+      throw "Error: Por favor insira o icone do planeta.";
+    }
+    if (!background) {
+      throw "Error: Por favor insira o background do planeta.";
+    }
+    if (!description) {
+      throw "Error: Por favor insira a descrição do planeta.";
+    }
     if(name==="" || name===" "){
-      throw "Error: nome da receita não é válido"
+      throw "Error: nome do Planeta não é válido"
     }
   
     /* delete _body.password; */
@@ -179,7 +177,7 @@ exports.edit_CT_Planet = async (req, res) => {
       res.status(400).json(response);
       return;
     }
-    const planet = await service.edit_SV_Planet(_id, name, icon, background, description);
+    const planet = await service.edit_SV_Planet(_id, name, icon, background, description, oldPath, newPath, newPath_back, oldPath_back);
     response.message = "Success";
     response.data = planet;
     // response.data = 'CONTROLER RESPONSE';

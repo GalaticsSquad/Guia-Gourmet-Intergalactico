@@ -103,10 +103,10 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 </div>
             </div>
             <div class="buttonErrorContainer">
-                <p class="textError">Deu algum erro!</p>
+                <p class="textError"></p>
                 <input type="submit" class="envio_button" value="Adicionar receita">
             </div>
-            <section id="section-lista">
+            <section>
                 <table id="table" class="tableAddRecipes">
                     <thead>
                         <tr id="table-heading">
@@ -367,7 +367,7 @@ function logic_recipe(dataRecipe){
             await delete_recipes(cellId)
             const dataRecipe = get_recipes()
             tbody.innerHTML = registerrecipe(dataRecipe.data)
-            addEvent()
+            addEventEditDel(dataRecipe.data)
         }
     }
 }

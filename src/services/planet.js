@@ -1,6 +1,6 @@
 // @author {Eduardo}
 // @coauthor {Carolina}
-
+const fs = require('fs');
 const dbPlanet = require("../repository/db-gsquad");
 const TAG = "Service: ";
 
@@ -38,9 +38,19 @@ exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
   }
 };
 // @author {Eduardo}
-exports.edit_SV_Planet = async (_id, name, icon, background, description) => {
+exports.edit_SV_Planet = async (_id, name, icon, background, description, oldPath, newPath, newPath_back, oldPath_back) => {
   
   try {
+
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
+
+    fs.rename(oldPath_back, newPath_back, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
     const body = {name:name, icon:icon, background:background, description:description}
     // console.log(body);
     const editPlanet = await dbPlanet.edit_RP_Planet(_id, body);

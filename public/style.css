@@ -706,21 +706,19 @@ header {
 /* -------------------------- ADDPLANETS -------------------------- */
 
 .rootContainerAddPlanets {
-    /* height: 100vh; */
     background: radial-gradient(circle at bottom, navy 0, black 100%);
-    /* overflow: hidden; */
 }
 #section-lista{
-    margin-top: 15px;
+    margin: 20px auto auto auto;
 }
 
-.container-addplanet {
+.formTableAddPlanetContainer {
     background-color: #fff;
     border-radius: 10px;
     padding: 40px;
     margin: 0 auto;
-    margin-top: 100px;
-    width: 900px;
+    margin-top: 50px;
+    width: 90%;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
@@ -728,8 +726,33 @@ header {
     justify-content: space-around;
 }
 
+.container-addplanet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .mini_table {
-    background-color: #D9D9D9D9;
+    background-color: #FFFFFF;
+}
+
+.tbodyAddplanet {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.tbodyAddplanet tr td, .tbodyAddplanet tr td p {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tbodyAddplanet:nth-child(odd) {
+    background-color: #D7D7D7;
+}
+
+.tbodyAddplanet tr td p {
+    display: grid;
+    align-items: center;
 }
 
 #planet-name {
@@ -749,6 +772,7 @@ header {
 }
 
 .input-name-planet {
+    font-size: 1em;
     padding: 10px;
     width: 100%;
     border: 1px solid #ccc;
@@ -793,6 +817,8 @@ header {
 
 .material-symbols-rounded {
     cursor: pointer;
+    text-decoration: none;
+    color: #000000;
 }
 
 table {
@@ -801,7 +827,6 @@ table {
     width: 100%;
     border-radius: 5px;
     height: auto;
-    overflow: scroll;
 }
 
 .editplanet_table{
@@ -822,6 +847,12 @@ th,tr,td{
     height: 150px;
     width: cover;
     overflow-y: scroll;
+}
+
+.textErrorPlanets {
+    margin-top: 20px;
+    color: red;
+    text-align: center;
 }
 
 
@@ -885,7 +916,7 @@ th,tr,td{
     border-radius: 10px;
     padding: 40px;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 50px;
     width: 90%;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -1024,8 +1055,8 @@ select {
 }
 
 .tableAddRecipes {
+    margin-top: 20px;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
     font-size: 0.9em;
 }
 
@@ -1055,6 +1086,10 @@ select {
     height: 150px;
     width: cover;
     overflow-y: auto;
+}
+
+.exitEdit {
+    display: none;
 }
 
 /* -------------------------- FOOTER -------------------------- */
