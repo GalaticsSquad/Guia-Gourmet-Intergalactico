@@ -12,13 +12,12 @@ import { get_recipes } from "../src/fetch/recipes.js";
 export default async function renderHome() {
     const dataPlanet = await get_planets()
     const dataRecipe = await get_recipes()
-    const home = htmlHome (dataPlanet, dataRecipe)
+    const home = htmlHome (dataPlanet.data, dataRecipe.data)
     const root = document.getElementById('root')
     root.innerHTML = ``
     root.appendChild(home);
-    // console.log(dataRecipe)
-    logicHome(dataRecipe)
-    logicHeader(dataPlanet, dataRecipe)
+    logicHome(dataRecipe.data)
+    logicHeader(dataPlanet.data, dataRecipe.data)
 }
 
 // // @author {Carolina}
@@ -27,7 +26,6 @@ function htmlHome (dataPlanet, dataRecipe) {
     const headerFake = insertHeader();
     const container = document.createElement("div");
     let format_data = encontra_receita_do_planeta(dataPlanet, dataRecipe)
-    console.log(format_data)
     const dig = dataRecipe[2].name.substring(0,100)
 
     const add_recipe = slides_Recipe(format_data)
@@ -127,7 +125,6 @@ function logicHome(dataRecipe) {
     while (recipeButton.length > i) {
         recipeButton[i].addEventListener('click', (event) => {
             const recipeName = event.target.parentElement.parentElement.children[0].children[0].innerText
-            console.log(recipeName)
             let receita = dataRecipe.find(recipe => recipe.name === recipeName)
             const evento = EventCustom(`/planets`, receita.id_planet, receita.id) ;
             root.dispatchEvent(evento);
@@ -214,7 +211,6 @@ function encontra_receita_do_planeta(data,dataR){
 }
 
 function slides_Recipe(data){
-    console.log("alldata",data)
     let slidesReceita = ``
     // let slides = 'slide prev'
     let slides = ['slide next','slide','slide prev']
@@ -230,7 +226,6 @@ function slides_Recipe(data){
         let slideAux = ``
         if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
         
-        console.log("recipe", i, data[i].receitas[0].name)
         slidesReceita = slidesReceita+ `
                     <div class="${slideAux}">
                         <div class="slideContainer">

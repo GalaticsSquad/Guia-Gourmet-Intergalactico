@@ -14,7 +14,7 @@ export default async function renderOption() {
     root.innerHTML = ``
     root.appendChild(option);
     logicOption()
-    logicHeader(dataPlanet, dataRecipe)
+    logicHeader(dataPlanet.data, dataRecipe.data)
 }
 
 

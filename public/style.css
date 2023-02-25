@@ -382,7 +382,7 @@ header {
     line-height: 1.8em;
 }
 
-.listHome li:nth-child(2), li:nth-child(3) {
+.listHome li:nth-child(2), .listHome li:nth-child(3) {
     height: 30px;
     margin-left: 20px;
     line-height: 2.3em;
@@ -711,7 +711,6 @@ header {
     /* overflow: hidden; */
 }
 #section-lista{
-    background-color: rgb(183, 181, 181);
     margin-top: 15px;
 }
 
@@ -727,6 +726,10 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+
+.mini_table {
+    background-color: #D9D9D9D9;
 }
 
 #planet-name {
@@ -755,11 +758,22 @@ header {
 }
 .input-addplanet {
     padding: 1px;
-    width: 60%;
+    width: 45%;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 20px;
     box-sizing: border-box;
+}
+
+.label-check{
+    width: 30%;
+    text-align: center;
+    display: none;
+}
+
+.input_check {
+    height: 20px;
+    display: none;
 }
 
 .send-planet {
@@ -781,33 +795,35 @@ header {
     cursor: pointer;
 }
 
-#tb_description {
-    max-height: 80px;
-    overflow-y: scroll;
-    text-overflow: clip;
-}
 table {
-border-collapse: collapse;
-width: 100%;
+    border-collapse: collapse;
+    border: #000000 1px solid;
+    width: 100%;
+    border-radius: 5px;
+    height: auto;
+    overflow: scroll;
 }
 
-td, th {
-padding: 8px;
-text-align: left;
-vertical-align: top;
-border: 1px solid #ddd;
+.editplanet_table{
+    height: 150px;
+    padding: 10px;
 }
 
-th {
-background-color: #f2f2f2;
-font-weight: bold;
+#tb_description {
+    height: 100px;
+    width: 30%;
 }
 
-td {
-word-wrap: break-word;
-max-width: 300px;
-max-height: 50px;
+th,tr,td{
+    border: 1px solid black;
 }
+
+#description_p {
+    height: 150px;
+    width: cover;
+    overflow-y: scroll;
+}
+
 
 /* -------------------------- LOGIN -------------------------- */
 .rootContainerlogin{
@@ -861,9 +877,7 @@ max-height: 50px;
 /* -------------------------- ADD RECIPES-------------------------- */
 
 .rootContainerAddRecipes {
-    /* height: 100vh; */
     background: radial-gradient(circle at bottom, navy 0, black 100%);
-    /* overflow: hidden; */
 }
 
 .container_planet_recipe{
@@ -872,31 +886,40 @@ max-height: 50px;
     padding: 40px;
     margin: 0 auto;
     margin-top: 100px;
-    width: 1000px;
+    width: 90%;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-.back-img{
-    display: flex;
-    width: 100%;
-}
 .label-back-img{
     width: 20%;
 }
+
 label {
     margin-bottom: 10px;
     color: #000000;
 }
 
-#input_image_receita,#input_tempo {
-    padding: 10px;
+.inputFileContainer, .inputImgTypeContainer, .nameTypeContainer  {
+    display: flex;
     width: 100%;
+}
+
+.nameContainer, .typeContainer,.inputImgContainer, .inputTypeContainer {
+    width: 50%;
+}
+
+#input_image_receita,#input_tempo, #input_name, .food_description {
+    padding: 10px;
+    width: 90%;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 20px;
     box-sizing: border-box;
 }
 
+#input_image_receita {
+    width: 90%;
+}
 
 #input_image_planeta {
     background-color: #D9D9D9D9;
@@ -908,23 +931,37 @@ label {
     border-radius: 15px;
     cursor: pointer;
 }
-
-#input_image_planeta:hover {
-    background-color: #A2C65A;
-}
     
 select {
-    width: 40%;
+    padding-left: 8px;
+    margin-left: 10px;
+    width: 20%;
     font-size: 15px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.food_description {
+    width: 95%;
+    margin-bottom: 20px;
+    padding: 0;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.addIngredient {
     margin-bottom: 20px;
 }
 
-#input_name {
-    width: 30%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.showListIngContainer, .showListDesContainer {
     margin-bottom: 20px;
-    box-sizing: border-box;
+    font-size: 0.8em;
+    list-style-type: none;
+    list-style: none;
+}
+
+.showListIngContainer li, .showListDesContainer li {
+    list-style-type: none;
 }
 
 .envio_button {
@@ -942,12 +979,82 @@ select {
     background-color: #A2C65A;
 }
 
-.input_description, .input_ingredients {
-    width: 60%;
+.ingDesContainer {
+    display: flex;
+    width: 100%;
+}
+
+#type_select {
+    width: 40%;
+}
+
+.ingContainer, .desContainer {
+    width: 50%;
+    flex-direction: column;
+}
+
+.input_instructions, .input_ingredients {
+    width: 90%;
     height: 40px;
-    border-radius: 5px;
     padding-left: 10px;
-    margin: 0 auto;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.addDescription, .addIngredient, .exlAllIngredient, .exlAllDescriptions {
+    padding: 5px;
+}
+
+.exlAllIngredient, .exlAllDescriptions {
+    margin-left: 10px;
+}
+
+.buttonErrorContainer {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    justify-content: end;
+    align-items: center;
+    flex-direction: column;
+}
+
+.textError {
+    color: red;
+}
+
+.tableAddRecipes {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+#table-heading {
+    background-color: #D7D7D7;
+}
+
+.tbodyAddRecipes tr td, .tbodyAddRecipes tr td p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+}
+
+.tbodyAddRecipes tr td p {
+    display: grid;
+    align-items: center;
+}
+
+#table-heading tr th, .tbodyAddRecipes tr td {
+    width: min-content;
+}
+
+.tbodyAddRecipe:nth-child(odd) {
+    background-color: #D7D7D7;
+}
+
+#description_p, #ingredients_r, #preparation_r, #description_r{
+    height: 150px;
+    width: cover;
+    overflow-y: auto;
 }
 
 /* -------------------------- FOOTER -------------------------- */

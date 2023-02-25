@@ -10,7 +10,7 @@ export default async function renderLogin (){
     let root = document.getElementById('root')
     root.innerHTML = ``
     root.appendChild(login);
-    logicHeader(dataPlanet, allDataRecipe)
+    logicHeader(dataPlanet.data, allDataRecipe.data)
     logicLogin()
 }
 

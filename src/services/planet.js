@@ -5,9 +5,9 @@ const dbPlanet = require("../repository/db-gsquad");
 const TAG = "Service: ";
 
 //planet
-exports.getPlanet = async () => {
+exports.get_SV_Planet = async () => {
   try {
-    const allPlanets = await dbPlanet.getAllPlanets();
+    const allPlanets = await dbPlanet.get_RP_AllPlanets();
     return allPlanets;
     } catch (error) {
       console.log(TAG, 'error caught');
@@ -15,12 +15,12 @@ exports.getPlanet = async () => {
     }
 };
 
-exports.get_Planet_id = async (_id) =>{
+exports.get_SV_Planet_id = async (_id) =>{
   try {
-    const planetById = await dbPlanet.get_Planet_id(_id);
-    if(planetById.delete === true){
-      throw "Error: Receita não encontrada"
-    }
+    const planetById = await dbPlanet.get_RP_Planet_id(_id);
+    // if(planetById.delete === true){
+    //   throw "Error: Receita não encontrada"
+    // }
     return planetById
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -28,9 +28,9 @@ exports.get_Planet_id = async (_id) =>{
   }
 }
 // @author {Eduardo}
-exports.add_Planet = async (_name, _icon, _background, _description) => {
+exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
   try {
-    const addPlanet = await dbPlanet.add_Planet(_name, _icon, _background, _description);
+    const addPlanet = await dbPlanet.add_RP_Planet(_name, _icon, _background, _description);
     return addPlanet;
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -38,11 +38,12 @@ exports.add_Planet = async (_name, _icon, _background, _description) => {
   }
 };
 // @author {Eduardo}
-exports.edit_SV_Planet = async (_id, body) => {
+exports.edit_SV_Planet = async (_id, name, icon, background, description) => {
   
   try {
-    console.log(body);
-    const editPlanet = await dbPlanet.edit_Planet(_id, body);
+    const body = {name:name, icon:icon, background:background, description:description}
+    // console.log(body);
+    const editPlanet = await dbPlanet.edit_RP_Planet(_id, body);
   /* Object.assign(editPlanet, body); */
   return editPlanet;
 } catch (error) {
@@ -72,9 +73,9 @@ exports.get_SV_planet_name = (name) =>{
 }
 
 //Recipes
-exports.getRecipe = async () => {
+exports.get_SV_Recipe = async () => {
   try {
-    const recipesReq = await dbPlanet.getAllRecipes();
+    const recipesReq = await dbPlanet.get_RP_AllRecipes();
     
     for(let i= 0; i<recipesReq.recipe.length;i++){
       const arrayIngredient = []
@@ -100,9 +101,9 @@ exports.getRecipe = async () => {
 };
 
 // @author {Eduardo}
-exports.get_Recipe_id = async (_id) => {
+exports.get_SV_Recipe_id = async (_id) => {
   try {
-    const recipeRequisition = await dbPlanet.get_Recipe_id(_id);
+    const recipeRequisition = await dbPlanet.get_RP_Recipe_id(_id);
     /* getting the ingredients and putting in the recipe */
     const arrayIngredients = []
     for (let i = 0; i < recipeRequisition[1].length; i++) { // get the ingredients and push into a array
@@ -172,7 +173,7 @@ exports.add_SV_Recipe = async (
 // @author {Eduardo}
 exports.edit_SV_Recipe = async (_id, body) => {
   try{
-    let id = parseInt(_id);
+    // let id = parseInt(_id);
     const recipe = dbPlanet.edit_RP_Recipe(_id, body)
     return recipe;
   }catch(erro){
@@ -183,7 +184,7 @@ exports.edit_SV_Recipe = async (_id, body) => {
 
 
 // @author {Eduardo}
-exports.del_Recipe = async (_id) => {
+exports.del_SV_Recipe = async (_id) => {
   try{
     const recipe = dbPlanet.del_RP_Recipe(_id)
     return recipe;

@@ -3,7 +3,7 @@
 const connection = require('./db-connection')
 TAG = "Repository: "
 
-exports.getAllPlanets = async () => {
+exports.get_RP_AllPlanets = async () => {
     try {
         const query = [
             {text: "SELECT * FROM planets ORDER BY id ASC",}
@@ -16,7 +16,7 @@ exports.getAllPlanets = async () => {
     }
 };
 
-exports.get_Planet_id = async (_id) => {
+exports.get_RP_Planet_id = async (_id) => {
     try {
         const query =[
             {text: "SELECT * FROM planets WHERE id = $1 ORDER BY id ASC",
@@ -30,7 +30,7 @@ exports.get_Planet_id = async (_id) => {
     }
 };
 
-exports.add_Planet = async (_name, _icon, _background, _description) => {
+exports.add_RP_Planet = async (_name, _icon, _background, _description) => {
     try {
         const query =[{
             text: "INSERT INTO planets (name, icon, background, description) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -44,7 +44,7 @@ exports.add_Planet = async (_name, _icon, _background, _description) => {
     }
 };
 
-exports.edit_Planet = async (_id, body) => {
+exports.edit_RP_Planet = async (_id, body) => {
     try {
         const query =[{
             text:'SELECT * FROM planets WHERE id = $1',
@@ -100,7 +100,7 @@ exports.get_RP_name = async (name) =>{
 
 /* ------------------------------RECIPES------------------------------------ */
 
-exports.getAllRecipes = async () => {
+exports.get_RP_AllRecipes = async () => {
     const querys = []
     try {
         const query = {
@@ -124,7 +124,7 @@ exports.getAllRecipes = async () => {
     }
 };
 
-exports.get_Recipe_id = async (_id) => { //necessário verificar o soft delete
+exports.get_RP_Recipe_id = async (_id) => { //necessário verificar o soft delete
     const querys = []
     try {
         const query = {
@@ -215,7 +215,7 @@ exports.edit_RP_Recipe = async (_id, body)=>{
         recipe[0].rows[0].instructions = arrayInstructions
         
         Object.assign(recipe[0].rows[0], body);
-        const { id, id_planet, name, description, type, image, visit_count, time, ingredient, instructions } = recipe[0].rows[0]
+        const { id_planet, name, description, type, image, visit_count, time, ingredient, instructions } = recipe[0].rows[0]
         
         const query4 =[{
             text: 'UPDATE recipes SET id_planet = $2, name = $3, description = $4, type = $5,  image = $6, visit_count = $7, time = $8  WHERE id = $1 RETURNING *',

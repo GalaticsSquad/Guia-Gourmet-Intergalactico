@@ -20,33 +20,37 @@ const teste = require('../repository/db-gsquad.js')
 // @author {Carolina}
 // @coauthor {Eduardo}
 // Rotas dos planetas:
-router.get("/getplanet", controller.getPlanet);
-router.get("/getplanet/:id", controller.getPlanetById);
-router.post("/addplanet", controller.addPlanet);
-router.patch("/editplanet/:id", controller.editPlanet);
+router.get("/getplanet", controller.get_CT_Planet);
+router.get("/getplanet/:id", controller.get_CT_PlanetById);
+router.post("/addplanet", multer(multerConfig).array('file'), controller.add_CT_Planet);
+router.patch("/editplanet_text/:id", controller.edit_CT_Planet);
+router.patch("/editplanet/:id", multer(multerConfig).array('file'), controller.edit_CT_Planet);
 router.delete("/delplanet/:id", controller.del_CT_Planet);
 
 // @author {Eduardo}
 // @coauthor {Carolina}
 // Rotas das receitas:
-router.get("/getrecipe", controller.getRecipes);
-router.get("/getrecipe/:id", controller.getRecipeById);
+router.get("/getrecipe", controller.get_CT_Recipes);
+router.get("/getrecipe/:id", controller.get_CT_RecipeById);
 router.post("/addrecipe", controller.add_CT_Recipe);
 router.patch("/editrecipe/:id", controller.edit_CT_Recipe);
-router.delete("/delrecipe/:id", controller.delRecipe);
-router.get("/name/:name", teste.get_RP_name);
+router.delete("/delrecipe/:id", controller.del_CT_Recipe);
 
 
-// Rota teste para upload de imagens;
+// router.get("/name/:name", teste.get_RP_name);
+
+
+// Rota para upload de imagens;
 router.post("/img", multer(multerConfig).array('file'), (req, res) => {
   console.log(req.file)
   console.log(req.body)
- res.json({teste: 'OK'});
+ res.json({upload: 'OK'});
 })
 
 router.post("/img2", multer(multerConfig).single('file'), (req, res) => {
   console.log(req.file)
   console.log(req.body)
- res.json({teste: 'OK'});
+ res.json({upload: 'OK'});
 })
+
 module.exports = router;

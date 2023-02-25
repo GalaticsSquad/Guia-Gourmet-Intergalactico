@@ -7,8 +7,8 @@ const get_planets = async ()=>{
         body: null,
     })
     const json = await req.json()
-    const DB = json.data
-    return DB;
+    // const DB = json.data
+    return json;
 } 
 
 const get_planets_id = async (id)=>{
@@ -20,8 +20,8 @@ const get_planets_id = async (id)=>{
         body: null,
     })
     const json = await req.json()
-    const DB = json.data
-    return DB;
+    // const DB = json.data
+    return json;
 }
 
 const post_planets = async (_name, _icon, _background, _description)=>{
@@ -34,15 +34,14 @@ const post_planets = async (_name, _icon, _background, _description)=>{
         body: JSON.stringify(_body) 
     })
     const json = await req.json()
-    const DB = json.data
-    return DB; 
+    return json; 
 } 
 
 
-const patch_planets = async ()=>{
-    let id = 1;
-    let _body = {password: 123, icon: "teste icon", background: "teste back", description: "teste description"}
-    let req =  await fetch(`http://localhost:3000/planet/${id}`, {
+const patch_planets = async (_id, _name, _icon, _background, _description)=>{
+    // let id = 1;
+    let _body = {name: _name, icon: _icon , background: _background, description: _description}
+    let req =  await fetch(`http://localhost:3000/editplanet/${_id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -50,6 +49,18 @@ const patch_planets = async ()=>{
         body: JSON.stringify(_body) 
     })
     let json = await req.json()
+    return json
 } 
 
-export {get_planets, post_planets, patch_planets, get_planets_id}
+const del_planets = async (_id)=>{
+    let req =  await fetch(`http://localhost:3000/delplanet/${_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    let json = await req.json()
+    return json
+} 
+
+export {get_planets, post_planets, patch_planets, get_planets_id, del_planets}

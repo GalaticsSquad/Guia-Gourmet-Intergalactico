@@ -1,20 +1,23 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
+const fs = require('fs');
+const path = require('path');
 
 // @author {Carolina}
 // @coauthor {Eduardo}
 
 // Planetas
-exports.getPlanet = async (req, res) => {
+exports.get_CT_Planet = async (req, res) => {
   console.log("Controller: /GET");
   const response = {
     message: "",
     data: null,
     error: null,
   };
+  console.log(req.body)
 
   try {
-    const allPlanets = await service.getPlanet();
+    const allPlanets = await service.get_SV_Planet();
     response.message = "Success";
     response.data = allPlanets;
     res.status(200).json(response);
@@ -28,7 +31,7 @@ exports.getPlanet = async (req, res) => {
   }
 };
 
-exports.getPlanetById = async (req, res) => {
+exports.get_CT_PlanetById = async (req, res) => {
   console.log("Controller: /GET");
 
   const response = {
@@ -37,17 +40,22 @@ exports.getPlanetById = async (req, res) => {
     error: null,
   };
 
-  const _id = parseInt(req.params.id);
-  if (isNaN(_id)) { //verificar se é valido
-    console.log(TAG, "Parameter isNaN")
-    response.message = 'Informe um valor válido';
-    response.data = null;
-    response.error = 'Informe um valor válido'
-    res.status(400).json(response);
-    return;
-  }
+  
+
   try {
-    const planet = await service.get_Planet_id(_id);
+    const _id = parseInt(req.params.id);
+    if (isNaN(_id)) { //verificar se é valido
+      console.log(TAG, "Parameter isNaN")
+      response.message = 'Informe um valor válido';
+      response.data = null;
+      response.error = 'Informe um valor válido'
+      res.status(400).json(response);
+      return;
+    }
+    const planet = await service.get_SV_Planet_id(_id);
+    if(planet.length===0){
+      throw 'Error: planeta não encontrado'
+    }
     response.message = "Success";
     response.data = planet;
     res.status(200).json(response);
@@ -62,7 +70,7 @@ exports.getPlanetById = async (req, res) => {
 
 // @author {Eduardo}
 
-exports.addPlanet = async (req, res) => {
+exports.add_CT_Planet = async (req, res) => {
   console.log("Controller: /POST");
   const { name, icon, background, description } = req.body;
   const response = {
@@ -70,7 +78,7 @@ exports.addPlanet = async (req, res) => {
     data: null,
     error: null,
   };
-
+  console.log("teste body:", req.body)
   try {
     if (!name) {
       throw "Error: Por favor insira o nome do planeta.";
@@ -87,13 +95,13 @@ exports.addPlanet = async (req, res) => {
     // const name2 = name.replace(/ /g, "")
     // const name2 = name.replace(/ /i, "")
     const nameRegister = await service.get_SV_planet_name(name)
-    console.log("aqui:",nameRegister)
+
     
     if(nameRegister.length != 0 ){
       throw "Error: já existe um planeta cadastrado com esse nome"
     }
       
-    const planet = await service.add_Planet(name, icon, background, description);
+    const planet = await service.add_SV_Planet(name, icon, background, description);
     response.message = "Sucess";
     response.data = planet;
     res.status(200).json(response);
@@ -108,7 +116,7 @@ exports.addPlanet = async (req, res) => {
 };
 
 // @author {Eduardo}
-exports.editPlanet = async (req, res) => {
+exports.edit_CT_Planet = async (req, res) => {
   console.log("Controller: /PATCH");
   const response = {
     message: "",
@@ -116,28 +124,71 @@ exports.editPlanet = async (req, res) => {
     error: null,
   };
 
-  const _id = parseInt(req.params.id);
-  const _body = req.body;
-  /* delete _body.password; */
-  if (isNaN(_id)) {
-    console.log(TAG, "Parameter isNaN")
-    response.message = 'Informe um valor válido';
-    response.data = null;
-    response.error = 'Informe um valor válido'
-    res.status(400).json(response);
-    return;
-  }
-
   try {
-    const planet = await service.edit_SV_Planet(_id, _body);
+
+    let _id = parseInt(req.params.id);
+    let { name, icon, background, description } = req.body;
+    
+    console.log("NAME: ", req.body)
+
+    let new_icon = icon.replace("../", "")
+    let oldPath = path.join(__dirname, req.body.old_icon);
+    let newPath = path.join(__dirname, "../../public/"+new_icon);
+
+
+
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
+
+    let new_back = background.replace("../", "")
+    let oldPath_back = path.join(__dirname, req.body.old_background);
+    let newPath_back = path.join(__dirname, "../../public/"+new_back);
+
+    fs.rename(oldPath_back, newPath_back, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
+
+    if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
+      throw 'ERROR: não é permitido alterar esse planeta'
+    }
+    // if (!name) {
+    //   throw "Error: Por favor insira o nome do planeta.";
+    // }
+    // if (!icon) {
+    //   throw "Error: Por favor insira o icone do planeta.";
+    // }
+    // if (!background) {
+    //   throw "Error: Por favor insira o background do planeta.";
+    // }
+    // if (!description) {
+    //   throw "Error: Por favor insira a descrição do planeta.";
+    // }
+    if(name==="" || name===" "){
+      throw "Error: nome da receita não é válido"
+    }
+  
+    /* delete _body.password; */
+    if (isNaN(_id)) {
+      console.log(TAG, "Parameter isNaN")
+      response.message = 'Informe um valor válido';
+      response.data = null;
+      response.error = 'Informe um valor válido'
+      res.status(400).json(response);
+      return;
+    }
+    const planet = await service.edit_SV_Planet(_id, name, icon, background, description);
     response.message = "Success";
     response.data = planet;
+    // response.data = 'CONTROLER RESPONSE';
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
     response.message = "Erro interno do Servidor";
     response.data = null;
-    response.error = "Erro interno do Servidor";
+    response.error = error;
     res.status(500).json(response);
   }
 };
@@ -147,6 +198,8 @@ exports.del_CT_Planet = async (req, res) => {
   console.log("Controller: /DELETE");
   let id = parseInt(req.params.id);
 
+
+
   const response = {
     message: "",
     data: null,
@@ -154,6 +207,9 @@ exports.del_CT_Planet = async (req, res) => {
   };
 
   try {
+    if( id === 1 || id === 2 || id === 3 || id === 4){
+      throw 'ERROR: não é permitido deletar esse planeta'
+    }
     const planet = await service.del_SV_Planet(id);
     response.message = "Success";
     response.data = planet;
@@ -171,7 +227,7 @@ exports.del_CT_Planet = async (req, res) => {
 
 // @author {Eduardo}
 // Receitas
-exports.getRecipes = async (req, res) => {
+exports.get_CT_Recipes = async (req, res) => {
   console.log("Controller: /GET");
   const response = {
     message: "",
@@ -180,7 +236,7 @@ exports.getRecipes = async (req, res) => {
   };
 
   try {
-    const receitas = await service.getRecipe();
+    const receitas = await service.get_SV_Recipe();
     response.message = "Success";
     response.data = receitas;
     res.status(200).json(response);
@@ -194,7 +250,7 @@ exports.getRecipes = async (req, res) => {
 };
 
 // @author {Eduardo}
-exports.getRecipeById = async (req, res) => {
+exports.get_CT_RecipeById = async (req, res) => {
   console.log("Controller: /GET");
   const response = {
     message: "",
@@ -202,16 +258,17 @@ exports.getRecipeById = async (req, res) => {
     error: null,
   };
   const _id = parseInt(req.params.id);
-  if (isNaN(_id)) {
-    console.log(TAG, "Parameter isNaN")
-    response.message = 'Informe um valor válido';
-    response.data = null;
-    response.error = 'Informe um valor válido'
-    res.status(400).json(response);
-    return;
-  }
+
   try {
-    const receita = await service.get_Recipe_id(_id);
+    if (isNaN(_id)) {
+      console.log(TAG, "Parameter isNaN")
+      response.message = 'Informe um valor válido';
+      response.data = null;
+      response.error = 'Informe um valor válido'
+      res.status(400).json(response);
+      return;
+    }
+    const receita = await service.get_SV_Recipe_id(_id);
     response.message = "Success";
     response.data = receita;
     res.status(200).json(response);
@@ -228,7 +285,6 @@ exports.getRecipeById = async (req, res) => {
 // @coauthor {Henrique}
 exports.add_CT_Recipe = async (req, res) => {
   console.log("Controller: /POST");
-  console.log(TAG, req.body)
   const { id_planet,
           name,
           description,
@@ -243,17 +299,8 @@ exports.add_CT_Recipe = async (req, res) => {
     error: null,
   };
 
-  console.log(id_planet,
-    name,
-    description,
-    type,
-    image,
-    time,
-    ingredients,
-    instructions)
 
 
-    console.log("CONTROLER Ingredient:", ingredients)
   try {
     if (!id_planet) {
       throw "Error: Favor inserir o id do planeta!";
@@ -309,9 +356,7 @@ exports.edit_CT_Recipe = async (req, res) => {
   let _body = req.body;
   // delete _body.password;
 
-  if (_body.id !== undefined) {
-    delete _body.id;
-  }
+
 
   const response = {
     message: "",
@@ -320,6 +365,9 @@ exports.edit_CT_Recipe = async (req, res) => {
   };
 
   try {
+    if (_body.id !== undefined) {
+      delete _body.id;
+    }
     const recipe = await service.edit_SV_Recipe(_id, _body);
     response.message = "Success";
     response.data = recipe;
@@ -336,10 +384,10 @@ exports.edit_CT_Recipe = async (req, res) => {
 };
 
 // @author {Eduardo}
-exports.delRecipe = async (req, res) => {
+exports.del_CT_Recipe = async (req, res) => {
   console.log("Controller: /DELETE");
   /* let _id = req.params.id; */
-  let id = parseInt(req.params.id);
+  
 
   const response = {
     message: "",
@@ -348,7 +396,8 @@ exports.delRecipe = async (req, res) => {
   };
 
   try {
-    const receitas = await service.del_Recipe(id);
+    let id = parseInt(req.params.id);
+    const receitas = await service.del_SV_Recipe(id);
     response.message = "Success";
     response.data = receitas;
     res.status(200).json(response);
