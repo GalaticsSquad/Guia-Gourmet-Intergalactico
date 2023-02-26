@@ -13,9 +13,11 @@ export default async function renderAddRecipe() {
     root.innerHTML = ``
     root.appendChild(addRecipe);
     logic_recipe(dataRecipe)
-    /* upload_receitaImg() */
+    upload_receitaImg()
     logicHeader(dataPlanet.data, dataRecipe.data)
 }
+let ingredients = []
+let instructions = []
 
 function addRecipeHTML(dataRecipe, dataPlanet) {
     const header = insertHeader();
@@ -29,8 +31,8 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
         <form class="form_envio" method='POST' action='/img2'>
             <div class="div_input">
                 <label class ="labelRecipe">Selecione o planeta que deseja adicionar a receita:</label>
-                <select id="planet_select">
-                        <option value="0">Selecione o planeta:</option>
+                <select id="planet_select" required>
+                        <option value="">Selecione o planeta:</option>
                         ${add_OP_planets}
                 </select>
             </div>
@@ -38,17 +40,17 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 <div class="inputImgContainer">
                     <label>Imagem da receita:</label>
                     <div class="div_image">
-                        <input type="file" id="input_image_receita">
+                        <input type="file" id="input_image_receita" required>
                     </div>
                 </div>
                 <div class="inputTypeContainer">
                     <label>Tipo da Receita:</label>
-                    <select id="type_select">
-                    <option value="0">Selecione o tipo:</option>
-                    <option value="Salada">Salada</option>
-                    <option value="Sobremesa">Sobremesa</option>
-                    <option value="Prato Principal">Prato Principal</option>
-                    <option value="Entrada">Entrada</option>
+                    <select id="type_select" required>
+                        <option value="">Selecione o tipo:</option>
+                        <option value="Salada">Salada</option>
+                        <option value="Sobremesa">Sobremesa</option>
+                        <option value="Prato Principal">Prato Principal</option>
+                        <option value="Entrada">Entrada</option>
                     </select>
             </div>
             </div>
@@ -57,13 +59,13 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 <div class="nameContainer">
                     <label>Nome da receita:</label>
                     <div class="div_input">
-                        <input type="text" class="inputText" id="input_name" maxlength="32">
+                        <input type="text" class="inputText" id="input_name" maxlength="32" required>
                     </div>
                 </div>
                 <div class="typeContainer">
                     <label>Tempo de preparo:</label>
                     <div class="div_input">
-                        <input type="text"  class="inputText" id="input_tempo" maxlength="11">
+                        <input type="text"  class="inputText" id="input_tempo" maxlength="11" required>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
             <div class="div_input">
                 <label>Descrição do Prato:</label>
                 <div class="div_input">
-                    <input type="text"  class="food_description"" maxlength="50">
+                    <input type="text"  class="food_description"" maxlength="50" required>
                 </textarea>
                 </div>
             </div>
@@ -80,7 +82,7 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 <div class="ingContainer">
                     <label>Adicione um ingrediente por vez:</label>
                     <div class="div_input">
-                        <input type="text" class="input_ingredients" maxlength="100">
+                        <input type="text" class="input_ingredients" maxlength="100" >
                     </div>
                     <div class="showListIngContainer">
                         <ul class="showListIng">
@@ -92,7 +94,7 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 <div class="desContainer">
                     <label>Adicione as instruções do preparo em ordem:</label>
                     <div class="div_input">
-                        <input type="text" class="input_instructions" maxlength="100">
+                        <input type="text" class="input_instructions" maxlength="100" > 
                     </div>
                     <div class="showListDesContainer">
                         <ul class="showListDes">
@@ -173,8 +175,7 @@ function add_options_planet(dataPlanet){
 let index = 0
 
 function logic_recipe(dataRecipe){
-    let ingredients = []
-    let instructions = []
+
     const button_Ingredient = document.querySelector('.addIngredient')
     const button_Description = document.querySelector('.addDescription')
     const name_recipe = document.querySelector('#input_name')
@@ -291,44 +292,9 @@ function logic_recipe(dataRecipe){
         event.preventDefault();
         showListIng.innerHTML = ''
     })
-    buttonEnv.addEventListener('click', (event)=>{
-        if (buttonEnv.value === "Adicionar receita") {
-            event.preventDefault();
-            
-            const type = document.querySelector('#type_select').value
-            const time = document.querySelector('#input_tempo').value
-            const nameRG = name_recipe.value.replace(/ /g, "")
-            const image = `../img/recipe/receita-${nameRG}.png`
-            post_recipes(id_planet, name_recipe.value, description.value, type, image, time, ingredients, instructions)
-            //Reset
-            name = ''
-            description = ''
-            type = ''
-            time = ''
-            showListIng.innerHTML = ''
-            showListDes.innerHTML = ''
-        }
-        if (buttonEnv.value == "Editar receita") {
-            event.preventDefault();
-            const id_planet = document.querySelector('#planet_select').value
-            const name = document.querySelector('#input_name').value
-            const description = document.querySelector('.food_description').value
-            const type = document.querySelector('#type_select').value
-            const time = document.querySelector('#input_tempo').value
-            const nameRG = name.replace(/ /g, "")
-            const image = `../img/recipe/receita-${nameRG}.png`
-            post_recipes(id_planet, name, description, type, image, time, ingredients, instructions)
-            //Reset
-            name = ''
-            description = ''
-            type = ''
-            time = ''
-            showListIng.innerHTML = ''
-            showListDes.innerHTML = ''
-        }
-    })
 
     addEventEditDel(dataRecipe, ingredients, instructions)
+
 }
 
 function addEventEditDel(dataRecipe, ingredients, instructions) {
@@ -438,32 +404,75 @@ function upload_receitaImg() {
     const submitButton = document.querySelector('.envio_button')
     const form = document.querySelector('.form_envio')  
     const recipeName = document.querySelector('#input_name')    
-    const planet = 
+    const id_planet = document.querySelector('#planet_select')    
+    const image_receita = document.querySelector('#input_image_receita')    
+    const type = document.querySelector('#type_select')    
+    const time = document.querySelector('#input_tempo')    
+    const description = document.querySelector('.food_description')
+
+    const textError = document.querySelector('.textError')
+ 
+
 
     
     form.addEventListener('submit', (event) => {
         event.preventDefault();
+        const formData = new FormData();   
+        const nameRG = recipeName.value.replace(/ /g, "")   
+        if (submitButton.value === 'Adicionar receita') {
 
-        if (submitButton.value === 'Adicionar Receita') {
-            const name = document.querySelector('#input_name')
-            const imageRecipe = document.querySelector('#input_image_receita')
-    
-            const formData = new FormData();    
-            submitButton.disabled = true;
-            const nameRG = name.value.replace(/ /g, "")    
-                formData.append('file', imageRecipe.files[0], `receita-${nameRG}.png`);
+            // console.log("ingredients:",Ingredients)
+            // console.log("instructions:",Instructions)
+            formData.append('file', image_receita.files[0], `receita-${nameRG}.png`);
+            formData.append('id_planet', `${id_planet.value}`)
+            formData.append('name', `${recipeName.value}`)
+            formData.append('description', description.value)
+            formData.append('type', type.vale)
+            formData.append('image', `receita-${nameRG}.png`)
+            formData.append('time', time.value)
+            formData.append('ingredients', ingredients)
+            formData.append('instructions', instructions)
+            // submitButton.disabled = true;
+        //     const nameRG = name.value.replace(/ /g, "")    
+        //         formData.append('file', imageRecipe.files[0], `receita-${nameRG}.png`);
 
     
             fetch('/addrecipe', {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(submitButton.disabled = false)
-                .catch(error => console.error(error));
-             }
-        if (submitButton.value === 'Editar Receita') {
-            
+            .then(response => response.json())
+            .then((response)=>{
+                if(response.error!==null){
+                    throw 'Error'
+                }})
+            .then(() =>{
+                return get_recipes()})
+            .then( dataRecipe =>{
+                //está adicionando falta reinderizar a tabela de novo
+                
+                textError.innerHTML = `Receita adicionada com sucesso!`;
+                textError.style.color = 'green';
+                setTimeout(() => {
+                    textError.innerHTML = ''
+                }, 5000);
+                submitButton.disabled = false
+                recipeName.value = ``
+                image_receita.value = ``
+                time.value = ``
+                description.value = ``
+                id_planet.value = ""
+                type.value = ""
+                ingredients = []
+                instructions = []
+            })
+            .catch(error => {
+                submitButton.disabled = false
+                console.error(error)});
+             
+        // if (submitButton.value === 'Editar Receita') {
+            // }
         }     
     });   
 }
+
