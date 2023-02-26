@@ -33,7 +33,7 @@ router.delete("/delplanet/:id", controller.del_CT_Planet);
 router.get("/getrecipe", controller.get_CT_Recipes);
 router.get("/getrecipe/:id", controller.get_CT_RecipeById);
 router.post("/addrecipe", multer(multerConfig).single('file'), controller.add_CT_Recipe);
-router.patch("/editrecipe/:id", controller.edit_CT_Recipe);
+router.patch("/editrecipe/:id", multer(multerConfig).single('file'),controller.edit_CT_Recipe);
 router.delete("/delrecipe/:id", controller.del_CT_Recipe);
 
 

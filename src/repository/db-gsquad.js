@@ -125,23 +125,31 @@ exports.get_RP_AllRecipes = async () => {
 };
 
 exports.get_RP_Recipe_id = async (_id) => { //necessário verificar o soft delete
-    const querys = []
+    const query_Ingredients = []
+    const query_Instructions = []
     try {
-        const query = {
+        const query = [{
             text: 'SELECT * FROM recipes WHERE id_planet = $1 ORDER BY id ASC',
-            params: [_id]}
-        querys.push(query)
-        const query2 = {
-            text:'SELECT ingredient FROM ingredients_recipes WHERE id_recipes = $1',
-            params: [_id]}
-        querys.push(query2)
-        const query3 = {
-            text: 'SELECT description FROM instructions_recipes WHERE id_recipes = $1',
-            params: [_id]}
-        querys.push(query3)
-        const response = await connection.executarQuerys(querys)
-        
-        return [response[0].rows, response[1].rows, response[2].rows]
+            params: [_id]}]
+        const response = await connection.executarQuerys(query)
+        console.log("tamanho do vetor rows:", response[0].rows.length)
+        for(let i =0 ; i<response[0].rows.length; i++){
+            const query2 = {
+                text:'SELECT id_recipes, ingredient FROM ingredients_recipes WHERE id_recipes = $1',
+                params: [response[0].rows[i].id]}
+            query_Ingredients.push(query2)
+
+        }
+
+        for(let i =0 ; i<response[0].rows.length; i++){
+            const query3 = {
+                text: 'SELECT id_recipes, description FROM instructions_recipes WHERE id_recipes = $1',
+                params: [response[0].rows[i].id]}
+            query_Instructions.push(query3)
+        }
+        const response2 = await connection.executarQuerys(query_Ingredients)
+        const response3 = await connection.executarQuerys(query_Instructions)
+        return [response[0].rows, response2, response3]
     } catch (error) {
         console.log(TAG, 'error caught6');
         throw error;
@@ -213,8 +221,10 @@ exports.edit_RP_Recipe = async (_id, body)=>{
         recipe[0].rows[0].ingredient = arrayIngredients
         const arrayInstructions = resInstructions[0].rows.map(x => x.description);
         recipe[0].rows[0].instructions = arrayInstructions
+      
         
         Object.assign(recipe[0].rows[0], body);
+    
         const { id_planet, name, description, type, image, visit_count, time, ingredient, instructions } = recipe[0].rows[0]
         
         const query4 =[{

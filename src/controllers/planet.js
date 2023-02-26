@@ -1,6 +1,5 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
-const fs = require('fs');
 const path = require('path');
 
 // @author {Carolina}
@@ -39,9 +38,6 @@ exports.get_CT_PlanetById = async (req, res) => {
     data: null,
     error: null,
   };
-
-  
-
   try {
     const _id = parseInt(req.params.id);
     if (isNaN(_id)) { //verificar se é valido
@@ -129,8 +125,6 @@ exports.edit_CT_Planet = async (req, res) => {
     let _id = parseInt(req.params.id);
     let { name, icon, background, description } = req.body;
     
-    console.log("NAME: ", req.body)
-
     let new_icon = icon.replace("../", "")
     let oldPath = path.join(__dirname, req.body.old_icon);
     let newPath = path.join(__dirname, "../../public/"+new_icon);
@@ -138,16 +132,6 @@ exports.edit_CT_Planet = async (req, res) => {
     let new_back = background.replace("../", "")
     let oldPath_back = path.join(__dirname, req.body.old_background);
     let newPath_back = path.join(__dirname, "../../public/"+new_back);
-
-    // fs.rename(oldPath, newPath, (err) => {
-    //   if (err) throw err;
-    //   console.log('Arquivo renomeado com sucesso!');
-    // });
-
-    // fs.rename(oldPath_back, newPath_back, (err) => {
-    //   if (err) throw err;
-    //   console.log('Arquivo renomeado com sucesso!');
-    // });
 
     if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
       throw 'ERROR: não é permitido alterar esse planeta'
@@ -195,8 +179,6 @@ exports.edit_CT_Planet = async (req, res) => {
 exports.del_CT_Planet = async (req, res) => {
   console.log("Controller: /DELETE");
   let id = parseInt(req.params.id);
-
-
 
   const response = {
     message: "",
@@ -296,8 +278,10 @@ exports.add_CT_Recipe = async (req, res) => {
     data: null,
     error: null,
   };
-
-
+  const arrayIngredient = ingredients.split(",")
+  const arrayInstructions = instructions.split(",")
+  // console.log("ingredients:", arrayIngredient)
+  // console.log("instructions:", arrayInstructions)
 
   try {
     if (!id_planet) {
@@ -331,8 +315,8 @@ exports.add_CT_Recipe = async (req, res) => {
       type,
       image,
       time,
-      ingredients,
-      instructions);
+      arrayIngredient,
+      arrayInstructions);
     response.message = "Sucess";
     response.data = recipe;
     res.status(200).json(response);
@@ -350,11 +334,10 @@ exports.add_CT_Recipe = async (req, res) => {
 // @author {Eduardo}
 exports.edit_CT_Recipe = async (req, res) => {
   console.log("Controller: /PATCH");
-  let _id = req.params.id;
-  let _body = req.body;
+  let _id = parseInt(req.params.id);
+  console.log("body", req.body)
+  let {id_planet, name, description, type, image, time, ingredients, instructions, old_image} = req.body;
   // delete _body.password;
-
-
 
   const response = {
     message: "",
@@ -362,21 +345,39 @@ exports.edit_CT_Recipe = async (req, res) => {
     error: null,
   };
 
+  if (isNaN(_id)) {
+    console.log("Controller: Parameter isNaN")
+    response.message = 'Informe um valor válido';
+    response.data = null;
+    response.error = 'Informe um valor válido'
+    res.status(400).json(response);
+    return;
+  }
+
   try {
-    if (_body.id !== undefined) {
-      delete _body.id;
-    }
-    const recipe = await service.edit_SV_Recipe(_id, _body);
+    console.log('ingredients:',ingredients)
+    const arrayIngredient = ingredients.split(",")
+    const arrayInstructions = instructions.split(",")
+    const recipe = await service.edit_SV_Recipe(
+      _id, 
+      id_planet, 
+      name, 
+      description, 
+      type, 
+      image, 
+      time, 
+      arrayIngredient, 
+      arrayInstructions, 
+      old_image);
+
     response.message = "Success";
     response.data = recipe;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = error;
-
     res.status(500).json(response);
   }
 };
@@ -384,9 +385,6 @@ exports.edit_CT_Recipe = async (req, res) => {
 // @author {Eduardo}
 exports.del_CT_Recipe = async (req, res) => {
   console.log("Controller: /DELETE");
-  /* let _id = req.params.id; */
-  
-
   const response = {
     message: "",
     data: null,
@@ -395,17 +393,23 @@ exports.del_CT_Recipe = async (req, res) => {
 
   try {
     let id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      console.log("Controller: Parameter isNaN")
+      response.message = 'Informe um valor válido';
+      response.data = null;
+      response.error = 'Informe um valor válido'
+      res.status(400).json(response);
+      return;
+    }
     const receitas = await service.del_SV_Recipe(id);
     response.message = "Success";
     response.data = receitas;
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
-
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = error;
-
     res.status(500).json(response);
   }
 };

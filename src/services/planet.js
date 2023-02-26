@@ -1,6 +1,7 @@
 // @author {Eduardo}
 // @coauthor {Carolina}
 const fs = require('fs');
+const path = require('path');
 const dbPlanet = require("../repository/db-gsquad");
 const TAG = "Service: ";
 
@@ -114,26 +115,24 @@ exports.get_SV_Recipe = async () => {
 exports.get_SV_Recipe_id = async (_id) => {
   try {
     const recipeRequisition = await dbPlanet.get_RP_Recipe_id(_id);
-    /* getting the ingredients and putting in the recipe */
-    const arrayIngredients = []
-    for (let i = 0; i < recipeRequisition[1].length; i++) { // get the ingredients and push into a array
-      arrayIngredients.push(recipeRequisition[1][i].ingredient)
+    console.log(TAG, "GET/ RecipeById")
+
+    for (let i = 0; i < recipeRequisition[1].length; i++) { /* getting the ingredients and putting in the recipe */
+      const arrayIngredientsofRow = []
+      recipeRequisition[1][i].rows.map((row)=> {
+        arrayIngredientsofRow.push(row.ingredient)
+      })
+      recipeRequisition[0][i].ingredients = arrayIngredientsofRow
     }
-    for (let i = 0; i < recipeRequisition[0].length; i++) { // get the recipes and add the array of ingredients
-      recipeRequisition[0][i].ingredients = arrayIngredients
-    }
-     /* getting the instructions and putting in the recipe */
-    const arrayInstructions = []
-    for (let i = 0; i < recipeRequisition[2].length; i++) {
-      arrayInstructions.push(recipeRequisition[2][i].description)
-    }
-    for (let i = 0; i < recipeRequisition[0].length; i++) {
-      recipeRequisition[0][i].instructions = arrayInstructions
-    }
+    for (let i = 0; i < recipeRequisition[2].length; i++) { /* getting the ingredients and putting in the recipe */
+    const arrayIngredientsofRow = []
+    recipeRequisition[2][i].rows.map((row)=> {
+      console.log("map", row.description)
+      arrayIngredientsofRow.push(row.description)
+    })
+    recipeRequisition[0][i].instructions = arrayIngredientsofRow
+  }
     const recipe = recipeRequisition[0]
-    if(recipe.delete === true){
-      throw "Error: Receita não encontrada"
-    }
     return recipe
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -181,10 +180,30 @@ exports.add_SV_Recipe = async (
 
 
 // @author {Eduardo}
-exports.edit_SV_Recipe = async (_id, body) => {
+exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, time, ingredients, instructions, old_image) => {
   try{
+    const body = {
+      id: _id,
+      id_planet: id_planet,
+      name: name,
+      description: description,
+      type: type,
+      image: image,
+      time: time,
+      ingredients: ingredients,
+      instructions: instructions
+    }
     // let id = parseInt(_id);
-    const recipe = dbPlanet.edit_RP_Recipe(_id, body)
+    const recipe = await dbPlanet.edit_RP_Recipe(_id, body)
+    if(old_image!==undefined){
+      let oldPath = path.join(__dirname, "../../public/"+old_image);
+      let newPath = path.join(__dirname, "../../public/"+image)
+      fs.rename(oldPath, newPath, (err) => {
+        if (err) throw err;
+        console.log('Arquivo renomeado com sucesso!');
+      });
+    }
+
     return recipe;
   }catch(erro){
     console.log(erro)
@@ -196,7 +215,7 @@ exports.edit_SV_Recipe = async (_id, body) => {
 // @author {Eduardo}
 exports.del_SV_Recipe = async (_id) => {
   try{
-    const recipe = dbPlanet.del_RP_Recipe(_id)
+    const recipe = await dbPlanet.del_RP_Recipe(_id)
     return recipe;
   }catch(erro){
     console.log(erro)

@@ -8,7 +8,7 @@
 #root{
     
     margin: 0 auto;
-    overflow-x: hidden;
+/*     overflow-x: hidden; */
 } 
 
 /* -------------------------- MENU -------------------------- */
@@ -82,11 +82,11 @@ nav a{
 	opacity: 0;
 	margin-top: 200px;
     cursor: pointer;
+    padding: 0;
 }
 
 .link:hover, .linkHome:hover{
 	background-color: #02027e;
-    padding: 20px;
 }
 
 #check:checked ~ .barra nav a .link, #check:checked ~ .barra nav a .linkHome{
@@ -96,7 +96,7 @@ nav a{
     padding: 20px;
 }
 #check:checked ~ .barra{
-    transform: translateX(300px);
+    transform: translate(300px, 0);
 }
 
 .containerLoginMenu {
@@ -590,6 +590,14 @@ header {
     height: 200px;
 }
 
+.recipe-text-div {
+    width: 60%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .recipe-method-section{
     margin: 15px;
     margin-right: 23px;
@@ -1058,7 +1066,9 @@ select {
 }
 
 .textError {
+    margin-top: 20px;
     color: red;
+    text-align: center;
 }
 
 .tableAddRecipes {
@@ -1095,8 +1105,10 @@ select {
     overflow-y: auto;
 }
 
-.exitEdit {
-    display: none;
+.material-symbols-outlined {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
 }
 
 /* -------------------------- FOOTER -------------------------- */

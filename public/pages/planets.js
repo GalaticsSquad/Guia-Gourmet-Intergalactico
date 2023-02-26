@@ -26,8 +26,10 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
 }
 
 function planets (dataPlanet, dataRecipe, _idRecipe) {
-  
+  console.log("dataRecipe ", dataRecipe)
+  console.log(" _idRecipe ", _idRecipe)
   const recipePrincipal = dataRecipe.find( recipe => recipe.id === _idRecipe  )
+  console.log("recipePrincipal ", recipePrincipal)
 
   const insertH = insertHeader()
 
@@ -53,7 +55,6 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   const ingredientSection = document.createElement("section");
   const ingredientUl = document.createElement("ul");
   const methodSection = document.createElement("section");
-  const methodText = document.createElement("p");
   const imgprato1 = document.createElement("img");
   const methodTitle = document.createElement("h3");
   const ingredientstitle = document.createElement("h3");
@@ -67,7 +68,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   recipeName.innerHTML = recipePrincipal.name;
   recipeImg.appendChild(imgprato1);
   imgprato1.setAttribute("class", "imagep1");
-  imgprato1.src = recipePrincipal.image;
+  imgprato1.src = `../uploads/${recipePrincipal.image}`;
 
   recipeContainer.appendChild(imgDiv);
   imgDiv.appendChild(recipeImg);
@@ -77,12 +78,15 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   ingredientSection.appendChild(ingredientUl);
   textDiv.appendChild(methodSection);
   methodSection.appendChild(methodTitle);
-  methodSection.appendChild(methodText);
 
   ingredientstitle.textContent = "Ingredientes:";
   methodTitle.setAttribute("class", "method-title");
   methodTitle.textContent = "Modo De Preparo";
-  methodText.textContent = recipePrincipal.instructions;
+  recipePrincipal.instructions.forEach(instruction => {
+    const methodText = document.createElement("p");
+    methodSection.appendChild(methodText);
+    methodText.textContent = instruction;
+  });
 
   recipeContainer.setAttribute("class", "recipe-container");
   imgDiv.setAttribute("class", "recipe-img-div");
@@ -145,7 +149,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     recipeListContainer.setAttribute("class", "recipe-list-container");
     templateRecipeDiv.setAttribute("class", "template-recipe-div");
     templateRecipeImgDiv.setAttribute("class", "template-image-div");
-    templateRecipeImgDiv.setAttribute("src", `../${plate.image}`);
+    templateRecipeImgDiv.setAttribute("src", `../uploads/${plate.image}`);
     templateRecipeTextSection.setAttribute("class", "template-text-section");
     templateRecipeTitle.setAttribute("class", "template-recipe-title");
     templateRecipeTitle.innerText = plate.name;

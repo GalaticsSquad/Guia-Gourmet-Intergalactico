@@ -56,8 +56,8 @@ function addplanet (data) {
                 </div>
                 <p class="textErrorPlanets"></p>
                 <div class="buttonContainerPlanets">
-                    <input type="submit" class="send-planet" value="Adicionar Planeta">
-                    <input type="button" class="exitEdit" value="Cancelar edição">
+                    <input type="submit" class="send-planet" value="Adicionar planeta">
+                    <input type="button" class="exitEdit" value="Adicionar uma receita">
                 </div>
             </form>
             <section id="section-lista">
@@ -82,6 +82,12 @@ function addplanet (data) {
 
 function logic_addPlanet(dataPlanet){
     const name = document.querySelector('.input-name-planet')
+    const root = document.querySelector('#root')
+    const exitEdit = document.querySelector('.exitEdit')
+    const description = document.querySelector('#planet_description')
+    const imagebackground = document.querySelector('#imagebackground')
+    const imageicon = document.querySelector('#imageicon')
+    const sendPlanet = document.querySelector('.send-planet')
     addEvent(dataPlanet)
     name.addEventListener('input', (event)=>{
         event.preventDefault();
@@ -90,6 +96,24 @@ function logic_addPlanet(dataPlanet){
         name.value = name.value.replace(/[\072-\100]/g, "")
         name.value = name.value.replace(/[\133-\140]/g, "")
         name.value = name.value.replace(/[\173-\277]/g, "")
+    })
+
+    exitEdit.addEventListener('click', () => {
+        if (exitEdit.value == "Adicionar uma receita") {
+            const evento = EventCustom("/addRecipes");
+            root.dispatchEvent(evento);
+        }
+        if (exitEdit.value == "Cancelar edição") {
+            name.value=``
+            description.value = ``
+            imageicon.value = ``
+            imagebackground.value=``
+            reStyleInputFile()
+            exitEdit.value = "Adicionar uma receita"
+            sendPlanet.value = "Adicionar Planeta"
+            imagebackground.setAttribute("required")
+            imageicon.setAttribute("required")
+        }
     })
 }
 
@@ -104,13 +128,15 @@ function uploadImages() {
     const description = document.querySelector('#planet_description')
     const sendPlanet = document.querySelector('.send-planet')
     const exitEdit = document.querySelector('.exitEdit')
+    const root = document.querySelector('#root')
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-
+        root.style.cursor = 'wait'
+        enviarPlanet.style.cursor = 'wait'
+        enviarPlanet.disabled = true
         const formData = new FormData();  
         const nameRG = name.value.replace(/ /g, "")   
-
         if(enviarPlanet.value === 'Adicionar Planeta') {
             formData.append('file', imageBackground.files[0], `background-${nameRG}.png`);
             formData.append('file', imageIcon.files[0], `icon-${nameRG}.png`);
@@ -118,8 +144,6 @@ function uploadImages() {
             formData.append('background', `../uploads/background-${nameRG}.png`)
             formData.append('icon', `../uploads/icon-${nameRG}.png`)
             formData.append('description', description.value)
-            enviarPlanet.disabled = true;
-            
             fetch('/addplanet', {
                 method: 'POST',
                 body: formData
@@ -127,7 +151,13 @@ function uploadImages() {
             .then(response => response.json())
             .then((response)=>{
                 if(response.error!==null){
-                    throw 'Error'
+                    textError.innerHTML = `Algo deu errado!`;
+                    textError.style.color = 'red';
+                    setTimeout(() => {
+                        textError.innerHTML = ''
+                    }, 5000);
+                    enviarPlanet.disabled = false
+                    root.style.cursor = 'auto'
                 }})
             .then(() =>{
                 return get_planets()})
@@ -140,7 +170,8 @@ function uploadImages() {
                 setTimeout(() => {
                     textError.innerHTML = ''
                 }, 5000);
-                
+                enviarPlanet.style.cursor = 'auto'
+                root.style.cursor = 'auto'
                 enviarPlanet.disabled = false
                 name.value=``
                 description.value = ``
@@ -152,7 +183,9 @@ function uploadImages() {
                 setTimeout(() => {
                     textError.innerHTML = ''
                 }, 5000);
+                enviarPlanet.style.cursor = 'auto'
                 enviarPlanet.disabled = false
+                root.style.cursor = 'auto'
                 console.error(error)});
         }
 
@@ -173,7 +206,6 @@ function uploadImages() {
             formData.append('description', description.value)
             formData.append('old_icon', "../../public/"+old_icon)
             formData.append('old_background', "../../public/"+old_back)
-            console.log('ID:', id)
 
             fetch(`/editplanet/${id.id}`, {
                 method: 'PATCH',
@@ -182,7 +214,13 @@ function uploadImages() {
             .then(response => response.json())
             .then((response)=>{
                 if(response.error!==null){
-                    throw 'Error'
+                    textError.innerHTML = `Algo deu errado!`;
+                    textError.style.color = 'red';
+                    setTimeout(() => {
+                    textError.innerHTML = ''
+                    }, 5000);
+                    enviarPlanet.disabled = false
+                    root.style.cursor = 'auto'
                 }})
             .then(() =>{
                 return get_planets()})
@@ -192,12 +230,13 @@ function uploadImages() {
                 tbody.innerHTML = registerplanet(dataPlanet.data)
                 addEvent(dataPlanet.data)
                 reStyleInputFile()
-                exitEdit.style.display = "none"
+                exitEdit.value = "Adicionar uma receita"
                 textError.innerHTML = `Planeta editado com sucesso!`;
                 textError.style.color = 'green';
                 setTimeout(() => {
                     textError.innerHTML = ''
                 }, 5000);
+                root.style.cursor = 'auto'
                 enviarPlanet.disabled = false
                 sendPlanet.value = "Adicionar Planeta"
                 name.value=``
@@ -211,6 +250,7 @@ function uploadImages() {
                     textError.innerHTML = ''
                 }, 5000);
                 enviarPlanet.disabled = false
+                root.style.cursor = 'auto'
                 console.error(error)});
         }
     });      
@@ -253,26 +293,16 @@ function addEvent(dataPlanet) {
                 name.value = findPlanet.name
                 description.value = findPlanet.description
                 id = findPlanet
+                exitEdit.value = "Cancelar edição"
                 imagebackground.removeAttribute("required")
                 imageicon.removeAttribute("required")
                 styleInputFile()
-                exitEdit.style.display = "block"
             }
             if (event.target.innerText === "delete") {
                 const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
                 reRenderDelTable(cellId)
             }
     })});
-
-    exitEdit.addEventListener('click', () => {
-        name.value=``
-        description.value = ``
-        imageicon.value = ``
-        imagebackground.value=``
-        reStyleInputFile()
-        exitEdit.style.display = "none"
-        sendPlanet.value = "Adicionar Planeta"
-    })
 }
 
 async function reRenderDelTable (cellId) {
@@ -287,7 +317,7 @@ async function reRenderDelTable (cellId) {
         textError.style.color = 'green';
         setTimeout(() => {
             textError.innerHTML = ''
-        }, 5000);
+        }, 4000);
     } catch (error) {
         textError.innerText = "Error: " + error.message
         textError.style.color = 'red';
