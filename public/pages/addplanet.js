@@ -39,14 +39,12 @@ function addplanet (data) {
                 <div class="back-img">
                     <label class="label-back-img" for="check_back">Imagem do Fundo:</label>
                     <input type="file" class="input-addplanet" id="imagebackground" name="username" required>
-
                     <label class="label-check" class="label_icon" for="check_back">Deseja alterar o background?</label>
                     <input type="checkbox" class="input_check" class="check_back"  name="check_back">
                 </div>
                 <div class="back-img">
                     <label class="label-back-img" for="img do icone">Imagem do icone:</label >
                     <input type="file" class="input-addplanet" id="imageicon" name="username" required>
-
                     <label class="label-check" for="check_icon">Deseja alterar o ícone?</label>
                     <input type="checkbox" class="input_check" class="check_icon" name="check_icon">
                 </div>
@@ -95,7 +93,7 @@ function logic_addPlanet(dataPlanet){
         name.value = name.value.replace(/[\041-\057]/g, "")
         name.value = name.value.replace(/[\072-\100]/g, "")
         name.value = name.value.replace(/[\133-\140]/g, "")
-        name.value = name.value.replace(/[\173-\277]/g, "")
+        name.value = name.value.replace(/[\173-\377]/g, "")
     })
 
     exitEdit.addEventListener('click', () => {
@@ -110,9 +108,9 @@ function logic_addPlanet(dataPlanet){
             imagebackground.value=``
             reStyleInputFile()
             exitEdit.value = "Adicionar uma receita"
-            sendPlanet.value = "Adicionar Planeta"
-            imagebackground.setAttribute("required")
-            imageicon.setAttribute("required")
+            sendPlanet.value = "Adicionar planeta"
+            imagebackground.required= true
+            imageicon.required=true
         }
     })
 }
@@ -134,30 +132,29 @@ function uploadImages() {
         event.preventDefault();
         root.style.cursor = 'wait'
         enviarPlanet.style.cursor = 'wait'
-        enviarPlanet.disabled = true
+        // enviarPlanet.disabled = true
         const formData = new FormData();  
-        const nameRG = name.value.replace(/ /g, "")   
-        if(enviarPlanet.value === 'Adicionar Planeta') {
+        const nameRG = name.value.replace(/ /g, "") 
+
+
+        if(enviarPlanet.value === 'Adicionar planeta') {
             formData.append('file', imageBackground.files[0], `background-${nameRG}.png`);
             formData.append('file', imageIcon.files[0], `icon-${nameRG}.png`);
             formData.append('name', `${name.value}`)
             formData.append('background', `../uploads/background-${nameRG}.png`)
             formData.append('icon', `../uploads/icon-${nameRG}.png`)
             formData.append('description', description.value)
+
             fetch('/addplanet', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then((response)=>{
+                console.log(response)
                 if(response.error!==null){
-                    textError.innerHTML = `Algo deu errado!`;
-                    textError.style.color = 'red';
-                    setTimeout(() => {
-                        textError.innerHTML = ''
-                    }, 5000);
-                    enviarPlanet.disabled = false
-                    root.style.cursor = 'auto'
+                    throw `Error: ${response.error}!`;
+
                 }})
             .then(() =>{
                 return get_planets()})
@@ -178,7 +175,7 @@ function uploadImages() {
                 imageIcon.value = ``
                 imageBackground.value=``})
             .catch(error => {
-                textError.innerHTML = `Algo deu errado!`;
+                textError.innerHTML = `${error}!`;
                 textError.style.color = 'red';
                 setTimeout(() => {
                     textError.innerHTML = ''
@@ -190,22 +187,30 @@ function uploadImages() {
         }
 
         if (enviarPlanet.value === 'Editar planeta') {
+            
 
             if(imageBackground.files.length!==0){
                 formData.append('file', imageBackground.files[0], `background-${nameRG}.png`);
-            }
-            if(imageIcon.files.length !== 0) {
-                formData.append('file', imageIcon.files[0], `icon-${nameRG}.png`);
-            }
+            }else{
             let old_back = id.background.replace("../", "")
-            let old_icon = id.icon.replace("../", "")
+            formData.append('old_background', "../../public/"+old_back)
+            }
+              
             
+            if(imageIcon.files.length !== 0) {
+            formData.append('file', imageIcon.files[0], `icon-${nameRG}.png`);
+            }else{
+            let old_icon = id.icon.replace("../", "")
+            formData.append('old_icon', "../../public/"+old_icon)
+            }
+
+
+        
             formData.append('name', name.value)
             formData.append('icon', `../uploads/icon-${nameRG}.png`)
             formData.append('background', `../uploads/background-${nameRG}.png`)
             formData.append('description', description.value)
-            formData.append('old_icon', "../../public/"+old_icon)
-            formData.append('old_background', "../../public/"+old_back)
+    
 
             fetch(`/editplanet/${id.id}`, {
                 method: 'PATCH',
@@ -214,13 +219,7 @@ function uploadImages() {
             .then(response => response.json())
             .then((response)=>{
                 if(response.error!==null){
-                    textError.innerHTML = `Algo deu errado!`;
-                    textError.style.color = 'red';
-                    setTimeout(() => {
-                    textError.innerHTML = ''
-                    }, 5000);
-                    enviarPlanet.disabled = false
-                    root.style.cursor = 'auto'
+                    throw `Error: ${response.error}!`;
                 }})
             .then(() =>{
                 return get_planets()})
@@ -236,20 +235,22 @@ function uploadImages() {
                 setTimeout(() => {
                     textError.innerHTML = ''
                 }, 5000);
+                enviarPlanet.style.cursor = 'auto'
                 root.style.cursor = 'auto'
                 enviarPlanet.disabled = false
-                sendPlanet.value = "Adicionar Planeta"
+                sendPlanet.value = "Adicionar planeta"
                 name.value=``
                 description.value = ``
                 imageIcon.value = ``
                 imageBackground.value=``})
             .catch(error => {
-                textError.innerHTML = `Algo deu errado!`;
+                textError.innerHTML = `${error}`;
                 textError.style.color = 'red';
                 setTimeout(() => {
                     textError.innerHTML = ''
                 }, 5000);
                 enviarPlanet.disabled = false
+                enviarPlanet.style.cursor = 'auto'
                 root.style.cursor = 'auto'
                 console.error(error)});
         }

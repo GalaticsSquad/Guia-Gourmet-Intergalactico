@@ -230,76 +230,24 @@ function logic_recipe(dataRecipe){
         input_instructions.value = input_instructions.value.replace(/[\133-\140]/g, "")
         input_instructions.value = input_instructions.value.replace(/[\173-\277]/g, "")
     })
-
-    button_Ingredient.addEventListener('click', (event)=>{
-        if (button_Ingredient.innerText == 'Adicionar ingrediente') {
-            event.preventDefault();
-            showListIng.innerHTML = ''
-            ingredients.push(input_ingredients.value)
-            input_ingredients.value = ``
-            for (let i = 0; i < ingredients.length; i++) {
-                const liIng = document.createElement('li')
-                showListIng.appendChild(liIng)
-                liIng.innerHTML = ingredients[i]
-            }
-        }
-
-        if (button_Ingredient.innerText == 'Editar ingrediente') {
-            event.preventDefault()
-            ingredients.splice(index, 1, input_ingredients.value)
-            input_ingredients.value = ''
-            showListIng.innerHTML= ''
-            for (let i = 0; i < instructions.length-2; i++) {
-                const liIng = document.createElement('li')
-                showListIng.appendChild(liIng)
-                liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${ingredients[i]}`
-            }
-            addEventLi()
-        }
-    })
     
-    button_Description.addEventListener('click', (event)=>{
-        event.preventDefault();
-        if (button_Description.innerText == 'Adicionar instrução') {
-            showListDes.innerHTML = ''
-            instructions.push(input_instructions.value)
-            input_instructions.value = ``
-            for (let i = 0; i < instructions.length; i++) {
-                const liDes = document.createElement('li')
-                showListDes.appendChild(liDes)
-                liDes.innerHTML = instructions[i]
-            }
-        }
-        if (button_Description.innerText == 'Editar instrução') {
-            instructions.splice(index, 1, input_instructions.value)
-            input_instructions.value = ''
-            showListDes.innerHTML= ''
-            for (let i = 0; i < instructions.length; i++) {
-                const liDes = document.createElement('li')
-                showListDes.appendChild(liDes)
-                liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${instructions[i]}`
-            }
-            addEventLi()
-        }
-    })
-
-    exlAllIngredient.addEventListener('click', (event)=>{
+    
+    exlAllIngredient.addEventListener('click', (event)=>{ //Limpar lista de ingredientes adicionados
         event.preventDefault();
         showListIng.innerHTML = ''
     })
 
-    exlAllDescriptions.addEventListener('click', (event)=>{
+    exlAllDescriptions.addEventListener('click', (event)=>{ //Limpar lista de instruções adicionadas
         event.preventDefault();
         showListIng.innerHTML = ''
     })
 
     exitEdit.addEventListener ('click', () => {
-        if (exitEdit.value == "Adicionar um planeta") {
-            console.log('ok')
+        if (exitEdit.value == "Adicionar um planeta") { //Ir para a página addplanet
             const evento = EventCustom("/addPlanet");
             root.dispatchEvent(evento);
         }
-        if (exitEdit.value == "Cancelar edição") {
+        if (exitEdit.value == "Cancelar edição") { //Cencelar edição
             name_recipe.value = ''             
             input_description.value = ''             
             input_type.value = 0             
@@ -312,37 +260,84 @@ function logic_recipe(dataRecipe){
             exlAllIngredient.style.display = 'initial'
             button_Ingredient.innerText = 'Adicionar ingrediente'
             button_Description.innerText ='Adicionar instrução'
-            input_image_receita.setAttribute("required")
+            input_image_receita.required = true
             ingredients = []
             instructions = []
         }
     })
-
+    addEventButtonIngredient()
+    addEventButtonInstructions()
     addEventEditDel(dataRecipe)
-
 }
 
-function addEventLi() { // get the index of the ingredient/intruction clicked on editing
+function addEventButtonIngredient() {
+    const button_Ingredient = document.querySelector('.addIngredient')
+    const showListIng = document.querySelector('.showListIng')
     const input_ingredients = document.querySelector('.input_ingredients')
+    button_Ingredient.addEventListener('click', (event)=>{ 
+        if (button_Ingredient.innerText == 'Adicionar ingrediente') {
+            event.preventDefault()
+            console.log('Adicionar ingrediente')
+            showListIng.innerHTML = ''
+            ingredients.push(input_ingredients.value)
+            input_ingredients.value = ``
+            for (let i = 0; i < ingredients.length; i++) {
+                const liIng = document.createElement('li')
+                showListIng.appendChild(liIng)
+                liIng.innerHTML = ingredients[i]
+            }
+            addEventLiIng(ingredients)
+            console.log("linha 289 ", ingredients)
+        }
+
+        if (button_Ingredient.innerText == 'Editar ingrediente') {
+            event.preventDefault()
+            console.log('linha 293 ', ingredients)
+            ingredients.splice(index, 1, input_ingredients.value)
+            input_ingredients.value = ''
+            showListIng.innerHTML= ''
+            console.log('linha 299 ', ingredients)
+            for (let i = 0; i < ingredients.length; i++) {
+                const liIng = document.createElement('li')
+                showListIng.appendChild(liIng)
+                liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${ingredients[i]}`
+            }
+            addEventLiIng(ingredients)
+        }
+    })
+}
+
+function addEventButtonInstructions() {
+    const button_Description = document.querySelector('.addDescription')
+    const showListDes = document.querySelector('.showListDes')
     const input_instructions = document.querySelector('.input_instructions')
-    const editLiIng = document.querySelectorAll('#editLiIng')
-    editLiIng.forEach(li => {
-        li.addEventListener('click', (event) => {
-            const gerLiIng = event.target.nextSibling.textContent
-            input_ingredients.value = gerLiIng
-            index = ingredients.indexOf(gerLiIng)
-            console.log(index)
-        })
-    });
-    const editLiDes = document.querySelectorAll('#editLiDes')
-    editLiDes.forEach(li => {
-        li.addEventListener('click', (event) => {
-            const getLiDes = event.target.nextSibling.textContent
-            input_instructions.value = getLiDes
-            index = instructions.indexOf(getLiDes)
-            console.log(index)
-        })
-    });
+    button_Description.addEventListener('click', (event)=>{
+        event.preventDefault();
+        if (button_Description.innerText == 'Adicionar instrução') {
+            console.log('Adicionar instrução')
+            showListDes.innerHTML = ''
+            instructions.push(input_instructions.value)
+            input_instructions.value = ``
+            for (let i = 0; i < instructions.length; i++) {
+                const liDes = document.createElement('li')
+                showListDes.appendChild(liDes)
+                liDes.innerHTML = instructions[i]
+            }
+            addEventLiDes(instructions)
+        }
+        if (button_Description.innerText == 'Editar instrução') {
+            console.log('linha 327 ', instructions)
+            instructions.splice(index, 1, input_instructions.value)
+            input_instructions.value = ''
+            showListDes.innerHTML= ''
+            for (let i = 0; i < instructions.length; i++) {
+                const liDes = document.createElement('li')
+                showListDes.appendChild(liDes)
+                liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${instructions[i]}`
+            }
+            addEventLiDes(instructions)
+        }
+    })
 }
 
 function addEventEditDel(dataRecipe) {
@@ -362,11 +357,15 @@ function addEventEditDel(dataRecipe) {
     const buttonEnv = document.querySelector('.envio_button')
     const buttonEditDel = document.querySelectorAll('#editDelRecipeIcon')
     const exitEdit = document.querySelector('.exitEdit')
-    
 
-    buttonEditDel.forEach(button => {
+    buttonEditDel.forEach(button => { //Para cada icone de editar e deletar add um event de acordo com o ícone
     button.addEventListener('click', (event) => {
         //event.preventDefault();
+        console.log("addEventListener")
+        ingredients.length = 0
+        instructions = []
+        console.log("addEventListener", ingredients)
+        console.log("addEventListener", instructions)
         if (event.target.innerText === "edit") {
             button.value = "Editar receita"
             const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
@@ -378,30 +377,30 @@ function addEventEditDel(dataRecipe) {
             input_tempo.value = findRecipe.time
             input_description.value = findRecipe.description
             input_type.value = findRecipe.type
-            showListIng.innerHTML = ''
             button_Ingredient.innerText = 'Editar ingrediente'
             button_Description.innerText = 'Editar instrução'
             buttonEnv.value = 'Editar receita'
             exlAllDescriptions.style.display = 'none'
             exlAllIngredient.style.display = 'none'
             exitEdit.value = 'Cancelar edição'
-            input_image_receita.removeAttribute("required")
-            for (let i = 0; i < findRecipe.ingredient.length; i++) {
+            input_image_receita.required = false
+            showListIng.innerHTML = ''
+            for (let i = 0; i < findRecipe.ingredient.length; i++) { //adciona a lista de ingredientes abaixo do input e adc a variável global
                 ingredients.push(findRecipe.ingredient[i])
                 const liIng = document.createElement('li')
                 showListIng.appendChild(liIng)
                 liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${findRecipe.ingredient[i]}`
             }
+            console.log('linha 391 ', ingredients)
+            addEventLiIng(ingredients)
             showListDes.innerHTML = ''
-            for (let i = 0; i < findRecipe.instructions.length; i++) {
+            for (let i = 0; i < findRecipe.instructions.length; i++) { //adciona a lista de instruções abaixo do input e adc a variável global
                 instructions.push(findRecipe.instructions[i])
                 const liDes = document.createElement('li')
                 showListDes.appendChild(liDes)
                 liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${findRecipe.instructions[i]}`
             }
-            addEventLi(ingredients, instructions)
-            console.log(exitEdit)
-            
+            addEventLiDes(instructions) //Pega o index
         }
 
         if (event.target.innerText === "delete") {
@@ -409,6 +408,31 @@ function addEventEditDel(dataRecipe) {
             reRenderDelTable(cellId)
         }
     })});
+}
+
+function addEventLiIng(ingredients) { // get the index of the ingredient/intruction clicked on editing
+    const input_ingredients = document.querySelector('.input_ingredients')
+    const editLiIng = document.querySelectorAll('#editLiIng')
+    editLiIng.forEach(li => {
+        li.addEventListener('click', (event) => {
+            const gerLiIng = event.target.nextSibling.textContent
+            input_ingredients.value = gerLiIng
+            index = ingredients.indexOf(gerLiIng)
+        })
+    });
+    console.log("addEventLiIng linha 421", ingredients)
+}
+
+function addEventLiDes(instructions) { //Pega o index da instrução que foi clicada na lista de intruções a serem editadas
+    const input_instructions = document.querySelector('.input_instructions')
+    const editLiDes = document.querySelectorAll('#editLiDes')
+    editLiDes.forEach(li => {
+        li.addEventListener('click', (event) => {
+            const getLiDes = event.target.nextSibling.textContent
+            input_instructions.value = getLiDes
+            index = instructions.indexOf(getLiDes)
+        })
+    });
 }
 
 async function reRenderDelTable (cellId) {
@@ -425,6 +449,7 @@ async function reRenderDelTable (cellId) {
         setTimeout(() => {
             textError.innerHTML = ''
         }, 4000);
+        addEventLi()
     } catch (error) {
         textError.innerText = "Error: " + error.message
         textError.style.color = 'red';
@@ -487,7 +512,7 @@ function upload_receitaImg() {
                 return get_recipes()})
             .then( dataRecipe =>{
                 tbody.innerHTML = registerrecipe(dataRecipe.data)
-                addEventEditDel(dataRecipe)
+                addEventEditDel(dataRecipe.data)
                 textError.innerHTML = `Receita adicionada com sucesso!`;
                 textError.style.color = 'green';
                 setTimeout(() => {
@@ -562,7 +587,7 @@ function upload_receitaImg() {
                 return get_recipes()})
             .then( dataRecipe =>{
                 tbody.innerHTML = registerrecipe(dataRecipe.data)
-                addEventEditDel(dataRecipe)
+                addEventEditDel(dataRecipe.data)
                 textError.innerHTML = `Receita editada com sucesso!`;
                 textError.style.color = 'green';
                 setTimeout(() => {

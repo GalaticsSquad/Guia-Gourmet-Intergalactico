@@ -1,14 +1,18 @@
 const get_planets = async ()=>{
-    const req =  await fetch('http://localhost:3000/getplanet', {
+    try {
+        const req =  await fetch('http://localhost:3000/getplanet', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
         body: null,
-    })
-    const json = await req.json()
-    // const DB = json.data
-    return json;
+        
+        })
+        const json = await req.json()
+        return json;
+    } catch (error) {
+        console.log("FETCH", error)
+    }
 } 
 
 const get_planets_id = async (id)=>{

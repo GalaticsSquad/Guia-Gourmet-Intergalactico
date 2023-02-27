@@ -226,7 +226,6 @@ exports.edit_RP_Recipe = async (_id, body)=>{
         Object.assign(recipe[0].rows[0], body);
     
         const { id_planet, name, description, type, image, visit_count, time, ingredient, instructions } = recipe[0].rows[0]
-        
         const query4 =[{
             text: 'UPDATE recipes SET id_planet = $2, name = $3, description = $4, type = $5,  image = $6, visit_count = $7, time = $8  WHERE id = $1 RETURNING *',
             params:[_id, id_planet, name, description, type, image, visit_count, time]}]

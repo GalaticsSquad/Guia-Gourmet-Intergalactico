@@ -68,7 +68,7 @@ exports.get_CT_PlanetById = async (req, res) => {
 
 exports.add_CT_Planet = async (req, res) => {
   console.log("Controller: /POST");
-  const { name, icon, background, description } = req.body;
+  let { name, icon, background, description } = req.body;
   const response = {
     message: "",
     data: null,
@@ -90,16 +90,30 @@ exports.add_CT_Planet = async (req, res) => {
     }
     // const name2 = name.replace(/ /g, "")
     // const name2 = name.replace(/ /i, "")
+    if(name[name.length -1]===' ' && name[0]===' '){
+      console.log('if 1')
+      name = name.slice(1, -1)
+      
+    }
+    if( name[name.length -1]===' '){
+      console.log('if 2')
+      name = name.slice(0, -1)
+    }
+    if(name[0]===' '){
+      console.log('if 3')
+      name = name.slice(1)
+    }
+
     const nameRegister = await service.get_SV_planet_name(name)
 
-    
     if(nameRegister.length != 0 ){
-      throw "Error: já existe um planeta cadastrado com esse nome"
+      console.log("nameRegister", nameRegister)
+      throw `${TAG}Error: já existe um planeta cadastrado com esse nome`
     }
       
     const planet = await service.add_SV_Planet(name, icon, background, description);
     response.message = "Sucess";
-    response.data = planet;
+    response.data = nameRegister;
     res.status(200).json(response);
 
   } catch (error) {
@@ -123,15 +137,8 @@ exports.edit_CT_Planet = async (req, res) => {
   try {
 
     let _id = parseInt(req.params.id);
-    let { name, icon, background, description } = req.body;
-    
-    let new_icon = icon.replace("../", "")
-    let oldPath = path.join(__dirname, req.body.old_icon);
-    let newPath = path.join(__dirname, "../../public/"+new_icon);
+    let { name, icon, background, description , old_background, old_icon} = req.body;
 
-    let new_back = background.replace("../", "")
-    let oldPath_back = path.join(__dirname, req.body.old_background);
-    let newPath_back = path.join(__dirname, "../../public/"+new_back);
 
     if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
       throw 'ERROR: não é permitido alterar esse planeta'
@@ -161,7 +168,7 @@ exports.edit_CT_Planet = async (req, res) => {
       res.status(400).json(response);
       return;
     }
-    const planet = await service.edit_SV_Planet(_id, name, icon, background, description, oldPath, newPath, newPath_back, oldPath_back);
+    const planet = await service.edit_SV_Planet(_id, name, icon, background, description, old_background, old_icon);
     response.message = "Success";
     response.data = planet;
     // response.data = 'CONTROLER RESPONSE';
@@ -357,6 +364,7 @@ exports.edit_CT_Recipe = async (req, res) => {
   try {
     console.log('ingredients:',ingredients)
     const arrayIngredient = ingredients.split(",")
+    console.log(arrayIngredient)
     const arrayInstructions = instructions.split(",")
     const recipe = await service.edit_SV_Recipe(
       _id, 

@@ -39,28 +39,42 @@ exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
   }
 };
 // @author {Eduardo}
-exports.edit_SV_Planet = async (_id, name, icon, background, description, oldPath, newPath, newPath_back, oldPath_back) => {
+exports.edit_SV_Planet = async (_id, name, icon, background, description, old_background, old_icon) => {
   
   try {
-
-    fs.rename(oldPath, newPath, (err) => {
-      if (err) throw err;
-      console.log('Arquivo renomeado com sucesso!');
-    });
-
-    fs.rename(oldPath_back, newPath_back, (err) => {
-      if (err) throw err;
-      console.log('Arquivo renomeado com sucesso!');
-    });
+ 
     const body = {name:name, icon:icon, background:background, description:description}
     // console.log(body);
     const editPlanet = await dbPlanet.edit_RP_Planet(_id, body);
-  /* Object.assign(editPlanet, body); */
-  return editPlanet;
-} catch (error) {
-  console.log(TAG, 'error caught');
-  throw error;
-}
+    console.log("old_icon: ", old_icon)
+    console.log("old_icon teste: ", old_icon!==undefined)
+    if(old_icon!==undefined){
+      let new_icon = icon.replace("../", "")
+      let oldPath = path.join(__dirname, old_icon);
+      let newPath = path.join(__dirname, "../../public/"+new_icon);
+      fs.rename(oldPath, newPath, (err) => {
+        if (err) throw err;
+        console.log('Arquivo renomeado com sucesso!');
+      });
+  
+    }
+    console.log("old_back: ", old_background)
+    console.log("old_back teste: ", old_background!==undefined)
+    if(old_background!==undefined){
+      let new_back = background.replace("../", "")
+      let oldPath_back = path.join(__dirname, old_background);
+      let newPath_back = path.join(__dirname, "../../public/"+new_back);
+  
+      fs.rename(oldPath_back, newPath_back, (err) => {
+        if (err) throw err;
+        console.log('Arquivo renomeado com sucesso!');
+      });
+    }
+    return editPlanet;
+  } catch (error) {
+    console.log(TAG, 'error caught');
+    throw error;
+  }
 };
 
 exports.del_SV_Planet = async (_id) => {
@@ -75,6 +89,7 @@ exports.del_SV_Planet = async (_id) => {
 
 exports.get_SV_planet_name = (name) =>{
   try {
+
     const name_planet = dbPlanet.get_RP_name(name)
     return name_planet;
   } catch (error) {
@@ -183,14 +198,13 @@ exports.add_SV_Recipe = async (
 exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, time, ingredients, instructions, old_image) => {
   try{
     const body = {
-      id: _id,
       id_planet: id_planet,
       name: name,
       description: description,
       type: type,
       image: image,
       time: time,
-      ingredients: ingredients,
+      ingredient: ingredients,
       instructions: instructions
     }
     // let id = parseInt(_id);
