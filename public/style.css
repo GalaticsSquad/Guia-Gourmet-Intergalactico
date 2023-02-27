@@ -80,7 +80,6 @@ nav a{
 	border-bottom: 2px solid #222;
 	transition:  all .2s linear;
 	opacity: 0;
-	margin-top: 200px;
     cursor: pointer;
     padding: 0;
 }
@@ -569,10 +568,16 @@ header {
 .recipe-name {
     text-align: center;
     height: 10%;
+    margin-bottom: 15px;
 }
 
 .recipe-img-div{
     margin: 40px;
+}
+
+.recipe-img {
+    display: flex;
+    justify-content: center;
 }
 .recipe-container{
     display: flex;
@@ -618,6 +623,10 @@ header {
 
 .method-title {
     margin-bottom: 15px;
+}
+
+.recipe-method-section ol li {
+    margin-left: 20px;
 }
 
 .planet-info-container{
@@ -687,7 +696,7 @@ header {
     color: #A2C65A
 }
 
-.template-recipe-text{
+.template-recipe-text, .template-recipe-time{
     font-size: 1em;
     font-family: 'Poppins', sans-serif;
 }
@@ -763,6 +772,16 @@ header {
 .tbodyAddplanet tr td p {
     display: grid;
     align-items: center;
+}
+
+.imgTablePlanetsIcon {
+    width: 100px;
+    height: 100px;
+}
+
+.imgTablePlanetsBack{
+    width: 100px;
+    height: 150px;
 }
 
 #planet-name {
@@ -1079,9 +1098,16 @@ select {
 
 #table-heading {
     background-color: #D7D7D7;
+    font-size: 1.2em;
+    height: 2-px;
 }
 
 .tbodyAddRecipes tr td, .tbodyAddRecipes tr td p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+}
+
+.tbodyAddRecipes tr:nth-child(2) {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.9em;
 }
@@ -1091,12 +1117,13 @@ select {
     align-items: center;
 }
 
-#table-heading tr th, .tbodyAddRecipes tr td {
-    width: min-content;
+.imgTableRecipes {
+    width: 100px;
+    height: 100px;
 }
 
-.tbodyAddRecipe:nth-child(odd) {
-    background-color: #D7D7D7;
+#table-heading tr th, .tbodyAddRecipes tr td {
+    width: min-content;
 }
 
 #description_p, #ingredients_r, #preparation_r, #description_r{

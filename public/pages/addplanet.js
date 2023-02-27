@@ -63,8 +63,8 @@ function addplanet (data) {
                 <thead>
                     <tr id="table-heading">
                         <th class="id-number">#ID</th>
-                        <th class="nome">NOME</th>
-                        <th class="e-mail">icone</th>
+                        <th class="nome">Nome</th>
+                        <th class="e-mail">Ícone</th>
                         <th class="editar">Background</th>
                         <th class="excluir">Descrição</th>
                         <th class="editar">Editar</th>
@@ -264,8 +264,8 @@ function registerplanet(dataPlanet) {
         table_planet += `<tr class="editplanet_table">
         <td>${planet.id}</td>
         <td>${planet.name}</td>
-        <td>${planet.icon}</td>
-        <td>${planet.background}</td>
+        <td><img class="imgTablePlanetsIcon" src="../${planet.icon}"></td>
+        <td><img class="imgTablePlanetsBack" src="../${planet.background}"></td>
         <td id="tb_description"><p id="description_p">${planet.description}</p></td>
         <td><a href="#root" class="material-symbols-rounded">
         edit</a></td>

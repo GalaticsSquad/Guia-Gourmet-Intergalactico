@@ -68,7 +68,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   recipeName.innerHTML = recipePrincipal.name;
   recipeImg.appendChild(imgprato1);
   imgprato1.setAttribute("class", "imagep1");
-  imgprato1.src = `../uploads/${recipePrincipal.image}`;
+  imgprato1.src = `../${recipePrincipal.image}`;
 
   recipeContainer.appendChild(imgDiv);
   imgDiv.appendChild(recipeImg);
@@ -82,9 +82,11 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   ingredientstitle.textContent = "Ingredientes:";
   methodTitle.setAttribute("class", "method-title");
   methodTitle.textContent = "Modo De Preparo";
+  const methodTexOlt = document.createElement("ol");
+  methodSection.appendChild(methodTexOlt);
   recipePrincipal.instructions.forEach(instruction => {
-    const methodText = document.createElement("p");
-    methodSection.appendChild(methodText);
+    const methodText = document.createElement("li");
+    methodTexOlt.appendChild(methodText);
     methodText.textContent = instruction;
   });
 
@@ -134,6 +136,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     const templateRecipeTextSection = document.createElement("section");
     const templateRecipeTitle= document.createElement("h2");
     const templateRecipeText = document.createElement("p");
+    const templateRecipeTime = document.createElement("p");
     const button_container_text = document.createElement("div");
     const button_text = document.createElement("div");
     button_text.innerHTML = `Veja Mais`;
@@ -143,18 +146,21 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     templateRecipeDiv.appendChild(templateRecipeTextSection);
     templateRecipeTextSection.appendChild(templateRecipeTitle);
     templateRecipeTextSection.appendChild(templateRecipeText);
+    templateRecipeTextSection.appendChild(templateRecipeTime);
     templateRecipeDiv.appendChild(button_container_text);
     button_container_text.appendChild(button_text);
 
     recipeListContainer.setAttribute("class", "recipe-list-container");
     templateRecipeDiv.setAttribute("class", "template-recipe-div");
     templateRecipeImgDiv.setAttribute("class", "template-image-div");
-    templateRecipeImgDiv.setAttribute("src", `../uploads/${plate.image}`);
+    templateRecipeImgDiv.setAttribute("src", `../${plate.image}`);
     templateRecipeTextSection.setAttribute("class", "template-text-section");
     templateRecipeTitle.setAttribute("class", "template-recipe-title");
     templateRecipeTitle.innerText = plate.name;
     templateRecipeText.setAttribute("class", "template-recipe-text");
     templateRecipeText.innerText = plate.description;
+    templateRecipeTime.setAttribute("class", "template-recipe-time");
+    templateRecipeTime.innerText = `Tempo de preparo: ${plate.time};`
     button_container_text.setAttribute("class", "button_container_text");
     button_text.setAttribute("class", "button_text");
 

@@ -75,7 +75,7 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
             <div class="div_input">
                 <label>Descrição do Prato:</label>
                 <div class="div_input">
-                    <input type="text"  class="food_description"" maxlength="50" required>
+                    <input type="text"  class="food_description"" minlength="80" maxlength="110" required>
                 </textarea>
                 </div>
             </div>
@@ -153,7 +153,7 @@ function registerrecipe(data) {
     <td>${recipe.id}</td>
     <td>${recipe.id_planet}</td>
     <td>${recipe.name}</td>
-    <td>${recipe.image}</td>
+    <td><img class="imgTableRecipes" src="../${recipe.image}"></td>
     <td>${recipe.time}</td>
     <td><p id="ingredients_r">${ingredients_recipes}</p></td>
     <td><p id="preparation_r">${preparation_recipes}</p></td>
@@ -228,7 +228,7 @@ function logic_recipe(dataRecipe){
         input_instructions.value = input_instructions.value.replace(/[\052-\055]/g, "")
         input_instructions.value = input_instructions.value.replace(/[\072-\100]/g, "")
         input_instructions.value = input_instructions.value.replace(/[\133-\140]/g, "")
-        input_instructions.value = input_instructions.value.replace(/[\173-\277]/g, "")
+        input_instructions.value = input_instructions.value.replace(/[\173-\377]/g, "")
     })
     
     
@@ -531,6 +531,7 @@ function upload_receitaImg() {
                 showListDes.innerHTML = '' 
                 ingredients = []
                 instructions = []
+                reRenderHeader()
             })
             .catch(error => {
                 textError.innerHTML = `Algo deu errado!`;
@@ -606,8 +607,14 @@ function upload_receitaImg() {
                 showListDes.innerHTML = '' 
                 ingredients = []
                 instructions = []
+                reRenderHeader()
             })
         }  
     });   
 }
 
+async function reRenderHeader() {
+    const dataPlanet = await get_planets()
+    const dataRecipe = await get_recipes()
+    logicHeader(dataPlanet.data, dataRecipe.data)
+}
