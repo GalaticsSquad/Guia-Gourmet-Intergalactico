@@ -1,6 +1,7 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
 const path = require('path');
+const jwtLib = require("jsonwebtoken");
 
 // @author {Carolina}
 // @coauthor {Eduardo}
@@ -415,6 +416,42 @@ exports.del_CT_Recipe = async (req, res) => {
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
+    response.message = "Erro interno do Servidor";
+    response.data = null;
+    response.error = error;
+    res.status(500).json(response);
+  }
+};
+
+exports.post_CT_Session = async (req, res) => {
+  console.log("Controller: /POST");
+  const response = {
+    message: "",
+    data: null,
+    error: null,
+  };
+  const {username, password} = req.body
+  try {
+    if (username == '') {
+      console.log(error);
+      throw 'Username está vazio.'
+    }
+    if (password == '') {
+      console.log(error);
+      throw 'Password está vazio.'
+    }
+    const verify = await service.post_SV_Session(username, password);
+    if (!verify) {
+      throw 'Usuário não encontrado ou senha incorreta.'
+    }
+      const jwt = jwtLib.sign( {username: username}, process.env.JWTSECRET); // 
+      response.message = "Success";
+      response.data = verify;
+      res.cookie("session", jwt);
+      res.status(200).json(response);
+      console.log(res.cookie);
+  } catch (error) {
+    console.log("Controler ", error);
     response.message = "Erro interno do Servidor";
     response.data = null;
     response.error = error;

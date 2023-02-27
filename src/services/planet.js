@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const dbPlanet = require("../repository/db-gsquad");
 const TAG = "Service: ";
+const bcrypt = require("bcrypt");
 
 //planet
 exports.get_SV_Planet = async () => {
@@ -231,8 +232,19 @@ exports.del_SV_Recipe = async (_id) => {
   try{
     const recipe = await dbPlanet.del_RP_Recipe(_id)
     return recipe;
-  }catch(erro){
-    console.log(erro)
-    return erro;
+  }catch(error){
+    console.log(error)
+    return error;
   }
 };
+
+exports.post_SV_Session = async (username, password) => {
+  try {
+    const passDB = await dbPlanet.post_RP_Session(username)
+    const result = await bcrypt.compare(password, passDB[0].password);
+    console.log("result ", result)
+    return result
+  } catch (error) {
+    return error;
+  }
+}

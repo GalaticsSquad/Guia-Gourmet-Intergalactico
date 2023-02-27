@@ -262,3 +262,17 @@ exports.del_RP_Recipe = async (_id)=>{
         throw error
     }
 }
+
+exports.post_RP_Session = async (username)=>{
+    try{
+        const query = [{
+            text:'SELECT password FROM USERS WHERE username = $1',
+            params: [username]
+        }]
+        const response = await connection.executarQuerys(query)
+        return response[0].rows
+    }catch(error){
+        console.log(TAG, 'error caught9')
+        throw error
+    }
+}

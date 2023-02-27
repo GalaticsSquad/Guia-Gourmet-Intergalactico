@@ -1,5 +1,7 @@
- const get_recipes = async ()=>{
-    let req =  await fetch('http://localhost:3000/getrecipe', {
+
+
+const get_recipes = async ()=>{
+    let req =  await fetch(`http://localhost:3000/getrecipe`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +34,7 @@ const post_recipes = async (_id_planet, _name, _description,  _type, _image, _ti
         time: _time, 
         ingredients: _ingredients, 
         instructions: _instructions}
-    let req =  await fetch('http://localhost:3000/addrecipe', {
+    let req =  await fetch(`http://localhost:3000/addrecipe`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

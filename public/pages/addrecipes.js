@@ -208,7 +208,7 @@ function logic_recipe(dataRecipe){
         name_recipe.value = name_recipe.value.replace(/[\041-\055]/g, "")
         name_recipe.value = name_recipe.value.replace(/[\072-\100]/g, "")
         name_recipe.value = name_recipe.value.replace(/[\133-\140]/g, "")
-        name_recipe.value = name_recipe.value.replace(/[\173-\277]/g, "")
+        name_recipe.value = name_recipe.value.replace(/[\173-\377]/g, "")
     })
 
     input_ingredients.addEventListener('input', (event)=>{
@@ -228,7 +228,7 @@ function logic_recipe(dataRecipe){
         input_instructions.value = input_instructions.value.replace(/[\052-\055]/g, "")
         input_instructions.value = input_instructions.value.replace(/[\072-\100]/g, "")
         input_instructions.value = input_instructions.value.replace(/[\133-\140]/g, "")
-        input_instructions.value = input_instructions.value.replace(/[\173-\377]/g, "")
+        input_instructions.value = input_instructions.value.replace(/[\173-\277]/g, "")
     })
     
     

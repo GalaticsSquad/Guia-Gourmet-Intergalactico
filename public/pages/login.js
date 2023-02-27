@@ -22,10 +22,12 @@ function Login () {
     `<header>${headerFake}</header>
     <form class="container-login">
         <label class="up-name"  for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
 
         <label class="up-name" for="password">Password:</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
+
+        <p class="textErrorLogin"></p>
 
         <input type="button" id="login" value="Entrar">
     </form>`
@@ -33,11 +35,31 @@ function Login () {
 }
 
 function logicLogin () {
+    const username = document.querySelector('#username')
+    const password = document.querySelector('#password')
     const buttonEntry = document.querySelector("#login");
+    const textErrorLogin = document.querySelector('.textErrorLogin')
 
-    buttonEntry.addEventListener("click", () => {
-        const evento = EventCustom("/option");
-        root.dispatchEvent(evento);
+    buttonEntry.addEventListener("click", async () => {
+        try {
+            const body = {username: username.value, password: password.value}
+            let req =  await fetch(`http:///localhost:3000/session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+            })
+            let json = await req.json()
+            console.log(json)
+            if (json.message == "Success") {
+                const evento = EventCustom("/option");
+                root.dispatchEvent(evento);
+            }
+            
+        } catch (error) {
+            textErrorLogin.innerHTML = error
+        }
     });
 
 }
