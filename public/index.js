@@ -24,4 +24,10 @@ window.addEventListener("load", () => {
   Route('/')
 });
 
+window.addEventListener('popstate', ()=>{
+    // console.log('popstate', window.location.pathname)
+    const path = window.location.pathname
+    Route(path)
+})
+
 

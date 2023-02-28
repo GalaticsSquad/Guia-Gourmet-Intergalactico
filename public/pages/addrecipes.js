@@ -277,7 +277,6 @@ function addEventButtonIngredient() {
     button_Ingredient.addEventListener('click', (event)=>{ 
         if (button_Ingredient.innerText == 'Adicionar ingrediente') {
             event.preventDefault()
-            console.log('Adicionar ingrediente')
             showListIng.innerHTML = ''
             ingredients.push(input_ingredients.value)
             input_ingredients.value = ``
@@ -287,16 +286,13 @@ function addEventButtonIngredient() {
                 liIng.innerHTML = ingredients[i]
             }
             addEventLiIng(ingredients)
-            console.log("linha 289 ", ingredients)
         }
 
         if (button_Ingredient.innerText == 'Editar ingrediente') {
             event.preventDefault()
-            console.log('linha 293 ', ingredients)
             ingredients.splice(index, 1, input_ingredients.value)
             input_ingredients.value = ''
             showListIng.innerHTML= ''
-            console.log('linha 299 ', ingredients)
             for (let i = 0; i < ingredients.length; i++) {
                 const liIng = document.createElement('li')
                 showListIng.appendChild(liIng)

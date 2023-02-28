@@ -1,6 +1,7 @@
 import {EventCustom} from "../eventCustom.js";
 export default () => {
   const root = document.querySelector("#root");
+  root.innerHTML = ``
   const backgroundInit = document.createElement("div");
   backgroundInit.setAttribute("class", "backgroundInit");
   root.appendChild(backgroundInit);
