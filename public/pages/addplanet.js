@@ -86,6 +86,7 @@ function logic_addPlanet(dataPlanet){
     const imagebackground = document.querySelector('#imagebackground')
     const imageicon = document.querySelector('#imageicon')
     const sendPlanet = document.querySelector('.send-planet')
+    root.style.cursor = 'auto';
     addEvent(dataPlanet)
     name.addEventListener('input', (event)=>{
         event.preventDefault();

@@ -13,7 +13,7 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
   const dataRecipe = await get_recipes_id_planet(_idPlanet) // pega as receitas de um planeta
   const allDataRecipe = await get_recipes()
   const planeter = planets(dataPlanet_id.data[0], dataRecipe.data, _idRecipe);
-  let root = document.getElementById('root')
+  const root = document.querySelector('#root')
   root.innerHTML = ``
   root.appendChild(planeter);
   logicHeader(dataPlanet.data, allDataRecipe.data)
@@ -26,10 +26,9 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
 }
 
 function planets (dataPlanet, dataRecipe, _idRecipe) {
-  console.log("dataRecipe ", dataRecipe)
-  console.log(" _idRecipe ", _idRecipe)
+  const root = document.querySelector('#root')
+  root.style.cursor = 'auto'
   const recipePrincipal = dataRecipe.find( recipe => recipe.id === _idRecipe  )
-  console.log("recipePrincipal ", recipePrincipal)
 
   const insertH = insertHeader()
 
@@ -138,7 +137,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     const templateRecipeText = document.createElement("p");
     const templateRecipeTime = document.createElement("p");
     const button_container_text = document.createElement("div");
-    const button_text = document.createElement("div");
+    const button_text = document.createElement("a");
     button_text.innerHTML = `Veja Mais`;
 
     recipeListContainer.appendChild(templateRecipeDiv);
@@ -163,10 +162,14 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     templateRecipeTime.innerText = `Tempo de preparo: ${plate.time};`
     button_container_text.setAttribute("class", "button_container_text");
     button_text.setAttribute("class", "button_text");
+    button_text.setAttribute("href", "#root");
 
     button_text.addEventListener('click', () => {
       const evento = EventCustom(`/planets`, plate.id_planet, plate.id) ;
       root.dispatchEvent(evento);
+      button_text.disabled = true
+      button_text.style.cursor = 'wait'
+      root.style.cursor = 'wait'
     })
 
   });
@@ -186,6 +189,4 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
 function logicPlanets (data) {
   const titlePlanet = document.querySelector('.titlePlanet')
   titlePlanet.innerText = data.name
-
-  
 }

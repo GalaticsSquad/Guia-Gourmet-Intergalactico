@@ -42,12 +42,16 @@ container.innerHTML = `
 function logicOption () {
     const buttonPlat = document.querySelector("#buttonP");
     const buttonRec = document.querySelector("#buttonR");
+    const root = document.querySelector('#root')
+    root.style.cursor = 'auto';
 
     buttonPlat.addEventListener("click", () => {
+        root.style.cursor = 'wait';
         const evento = EventCustom("/addPlanet");
         root.dispatchEvent(evento);
     });
     buttonRec.addEventListener("click", () => {
+        root.style.cursor = 'wait';
         const evento = EventCustom("/addRecipes");
         root.dispatchEvent(evento);
     });

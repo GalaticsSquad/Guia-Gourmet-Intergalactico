@@ -39,6 +39,8 @@ function logicLogin () {
     const password = document.querySelector('#password')
     const buttonEntry = document.querySelector("#login");
     const textErrorLogin = document.querySelector('.textErrorLogin')
+    const root = document.querySelector('#root')
+    root.style.cursor = 'auto';
 
     buttonEntry.addEventListener("click", async () => {
         try {
@@ -53,6 +55,8 @@ function logicLogin () {
             let json = await req.json()
             console.log(json)
             if (json.message == "Success") {
+                root.style.cursor = 'wait';
+                buttonEntry.disabled = true
                 const evento = EventCustom("/option");
                 root.dispatchEvent(evento);
             }

@@ -35,26 +35,11 @@ function insertHeader() {
     return header;
 }
 
-{/* <a>
-    <div class="link"></div>
-</a>
-<a>
-    <div class="link"></div>
-</a>
-<a>
-    <div class="link"></div>
-</a>
-<a>
-    <div class="link"></div>
-</a> */}
-
 function logicHeader (dataPlanet, dataRecipe) {
-    
     const buttonHome = document.querySelector ('.linkHome')
     const buttonLogin = document.querySelector ('.loginMenu')
     const nav = document.querySelector('nav')
-
-
+    const root = document.querySelector('#root')
     
     let i = 0 // putting the names by fetch on nav
     while (dataPlanet.length > i) {
@@ -71,16 +56,19 @@ function logicHeader (dataPlanet, dataRecipe) {
             divLink.innerText = planetName
             divLink.addEventListener("click", () => {
             const evento = EventCustom(`/planets`, planetId, recipe[0].id) ;
+            root.style.cursor = 'wait';
             root.dispatchEvent(evento);
         })};
         i++
     }
     buttonHome.addEventListener("click", () => {
         const evento = EventCustom("/home");
+        root.style.cursor = 'wait';
         root.dispatchEvent(evento);
     });
     buttonLogin.addEventListener("click", () => {
         const evento = EventCustom("/login");
+        root.style.cursor = 'wait';
         root.dispatchEvent(evento);
     });
 

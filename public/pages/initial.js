@@ -30,6 +30,9 @@ export default () => {
   buttonInit.addEventListener("click", () => {
     const evento = EventCustom("/home");
     root.dispatchEvent(evento);
+    buttonInit.disabled = true
+    buttonInit.style.cursor = 'wait'
+    root.style.cursor = 'wait'
   });
 
   /* window.onpopstate = (event) => {

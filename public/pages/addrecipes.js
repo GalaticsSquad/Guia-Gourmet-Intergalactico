@@ -470,6 +470,7 @@ function upload_receitaImg() {
     const root = document.querySelector('#root')
     const showListDes = document.querySelector('.showListDes')
     const showListIng = document.querySelector('.showListIng')
+    root.style.cursor = 'auto';
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();

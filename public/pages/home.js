@@ -117,15 +117,18 @@ function htmlHome (dataPlanet, dataRecipe) {
 // @author {Carolina}
 
 function logicHome(dataRecipe) {
-
-    
-
+    const root = document.querySelector('#root');
+    root.style.cursor = 'auto'
     const recipeButton = document.querySelectorAll('.recipeButton')
+    const slideContainer = document.querySelector('.slideContainer')
     let i = 0
     while (recipeButton.length > i) {
         recipeButton[i].addEventListener('click', (event) => {
             const recipeName = event.target.parentElement.parentElement.children[0].children[0].innerText
-            let receita = dataRecipe.find(recipe => recipe.name === recipeName)
+            const receita = dataRecipe.find(recipe => recipe.name === recipeName)
+            root.style.cursor = 'wait'
+            slideContainer.style.cursor = 'wait'
+            recipeButton.disabled = true
             const evento = EventCustom(`/planets`, receita.id_planet, receita.id) ;
             root.dispatchEvent(evento);
         })
@@ -187,12 +190,6 @@ function logicHome(dataRecipe) {
         slides[prev].classList.add("prev");
         slides[next].classList.add("next");
     };
-}
-
-
-// conta a quantidade de digitos de uma string
-function contarDigitos(str) {
-    return (str.match(/[a-zA-B 0-9,.]/g) || []).length;
 }
 
 function encontra_receita_do_planeta(data,dataR){
@@ -288,11 +285,8 @@ function slide_planets (data) {
             continue
         }
         let slideAux = ``
+
         if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
-        // if(data[i].receitas===null){
-        //     continue
-        // }
-        
         slidePlanetas = slidePlanetas+`
             <div class="${slideAux}" >
                 <img src=${data[i].planeta.icon}>
@@ -300,12 +294,3 @@ function slide_planets (data) {
     }
     return slidePlanetas;
 }
-
-
-// function dispache(url){
-//     console.log('ok')
-//     console.log('dispache:', url)
-//     // const root = document.getElementById('root')
-//     // const event = EventCustom(url)
-//     // root.dispatchEvent(event)
-// }
