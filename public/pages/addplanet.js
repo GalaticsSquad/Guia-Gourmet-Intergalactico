@@ -191,25 +191,19 @@ function uploadImages() {
             
 
             if(imageBackground.files.length!==0){
-                formData.append('file', imageBackground.files[0], `background-${nameRG}.png`);
-            }else{
-            let old_back = id.background.replace("../", "")
-            formData.append('old_background', "../../public/"+old_back)
+                formData.append('file', imageBackground.files[0], id.background);
             }
               
             
             if(imageIcon.files.length !== 0) {
-            formData.append('file', imageIcon.files[0], `icon-${nameRG}.png`);
-            }else{
-            let old_icon = id.icon.replace("../", "")
-            formData.append('old_icon', "../../public/"+old_icon)
+            formData.append('file', imageIcon.files[0], id.icon);
             }
 
 
         
             formData.append('name', name.value)
-            formData.append('icon', `../uploads/icon-${nameRG}.png`)
-            formData.append('background', `../uploads/background-${nameRG}.png`)
+            formData.append('icon', id.icon)
+            formData.append('background', id.background)
             formData.append('description', description.value)
     
 

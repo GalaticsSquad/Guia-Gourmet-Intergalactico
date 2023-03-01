@@ -33,6 +33,27 @@ exports.get_SV_Planet_id = async (_id) =>{
 exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
   try {
     const addPlanet = await dbPlanet.add_RP_Planet(_name, _icon, _background, _description);
+    console.log('resposta do banco de dados planet:', addPlanet)
+    const img_id =  await dbPlanet.updateIMG_RP_Planet(addPlanet[0].id)
+
+    let new_icon = addPlanet[0].icon.replace("../", "")
+    let oldPath_icon = path.join(__dirname, "../../public/"+new_icon);
+    let newPath_icon = path.join(__dirname, "../../public/uploads/icon-"+addPlanet[0].id+".png");
+
+    fs.rename(oldPath_icon, newPath_icon, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
+
+    let new_back = addPlanet[0].background.replace("../", "")
+    let oldPath_back = path.join(__dirname, "../../public/"+new_back);
+    let newPath_back = path.join(__dirname, "../../public/uploads/background-"+addPlanet[0].id+".png");
+
+    fs.rename(oldPath_back, newPath_back, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
+
     return addPlanet;
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -165,17 +186,7 @@ exports.add_SV_Recipe = async (
   time,
   ingredients,
   instructions) => {
-    // console.log("Service: /POST");
-    // console.log("Service:", id_planet,
-    //   name,
-    //   description,
-    //   type,
-    //   image,
-    //   time,
-    //   ingredients,
-    //   instructions)
-  
-  // let last_id = dbPlanet.recipe[dbPlanet.recipe.length - 1].id;
+
   try {
     const recipeReq = await dbPlanet.add_RP_Recipe(
       id_planet,
@@ -188,7 +199,7 @@ exports.add_SV_Recipe = async (
       instructions)
       console.log("resposta do Banco de dados: ", recipeReq)
       const img_id =  await dbPlanet.updateIMG_RP_Recipe(recipeReq[0].id)
-      // console.log("resposta do banco de DADOS 2, COM ID: ", img_id[0].rows)
+ 
 
    
       let oldPath = path.join(__dirname, "../../public"+recipeReq[0].image);
@@ -250,7 +261,8 @@ exports.del_SV_Recipe = async (_id) => {
     return error;
   }
 };
-
+// @author {Carolina}
+// @coauthor {Eduardo}
 exports.post_SV_Session = async (username, password) => {
   try {
     const passDB = await dbPlanet.post_RP_Session(username)

@@ -209,38 +209,43 @@ function encontra_receita_do_planeta(data,dataR){
 
 function slides_Recipe(data){
     let slidesReceita = ``
-    // let slides = 'slide prev'
+
     let slides = ['slide next','slide','slide prev']
     
     if(data.length<2){
         return;
     }
-    for(let i=1; i<data.length;i++){
-        
+    let new_array = []
+    for(let i=0;i<data.length;i++){
         if(data[i].receitas===null || data[i].receitas.length < 2){
             continue
         }
-        let slideAux = ``
-        if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
+        new_array.push(data[i])
+    }
+    for(let i=1; i<new_array.length;i++){
         
+        let slideAux = ``
+        const limite = new_array.length -1
+        if(i===limite){slideAux = slides[2]}else if(i-1>=1){slideAux = slides[1]}else{slideAux = slides[i-1]}
+
         slidesReceita = slidesReceita+ `
                     <div class="${slideAux}">
                         <div class="slideContainer">
                             <div class="containerPlanetName">
-                                <h2 class="PlanetName">${data[i].planeta.name}</h2>
+                                <h2 class="PlanetName">${new_array[i].planeta.name}</h2>
                             </div>
                             <div class="recipes">
                                 <div class="containerRecipeLeft">
                                     <div class="recipeWrapper">
                                         <div class="recipeNameContainer">
                                         
-                                        <h3 class="recipeName">${data[i].receitas[0].name}</h3>
+                                        <h3 class="recipeName">${new_array[i].receitas[0].name}</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
                                             <ul class="listHome">
-                                                <li class="recipeResume">${data[i].receitas[0].description}</li>
-                                                <li class="recipeType">${data[i].receitas[0].type}</li>
-                                                <li class="recipeTime">tempo de preparo: ${data[i].receitas[0].time}</li>
+                                                <li class="recipeResume">${new_array[i].receitas[0].description}</li>
+                                                <li class="recipeType">${new_array[i].receitas[0].type}</li>
+                                                <li class="recipeTime">tempo de preparo: ${new_array[i].receitas[0].time}</li>
                                             </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
@@ -251,13 +256,13 @@ function slides_Recipe(data){
                                 <div class="containerRecipeRight">
                                     <div class="recipeWrapper">
                                         <div class="recipeNameContainer">
-                                        <h3 class="recipeName">${data[i].receitas[1].name}</h3>
+                                        <h3 class="recipeName">${new_array[i].receitas[1].name}</h3>
                                         </div>
                                         <div class="recipeInfoContainer">
                                             <ul class="listHome">
-                                                <li class="recipeResume">${data[i].receitas[1].description}</li>
-                                                <li class="recipeType">${data[i].receitas[1].type}</li>
-                                                <li class="recipeTime">tempo de preparo: ${data[i].receitas[1].time}</li>
+                                                <li class="recipeResume">${new_array[i].receitas[1].description}</li>
+                                                <li class="recipeType">${new_array[i].receitas[1].type}</li>
+                                                <li class="recipeTime">tempo de preparo: ${new_array[i].receitas[1].time}</li>
                                             </ul>
                                         </div>
                                         <div class="recipeButtonContainer">
@@ -278,18 +283,25 @@ function slide_planets (data) {
     if(data.length<2){
         return;
     }
+    
     let slides = ['item next','item','item prev']
-
-    for(let i=1;i<data.length;i++){
+    let new_array = []
+    for(let i=0;i<data.length;i++){
         if(data[i].receitas===null || data[i].receitas.length < 2){
             continue
         }
+        new_array.push(data[i])
+    }
+
+    for(let i=1;i<new_array.length;i++){
         let slideAux = ``
 
-        if(i-1>2){slideAux = slides[1]}else{slideAux = slides[i-1]}
+        const limite = new_array.length -1
+
+        if(i==limite){slideAux = slides[2]}else if(i-1>=1){slideAux = slides[1]}else{slideAux = slides[i-1]}
         slidePlanetas = slidePlanetas+`
             <div class="${slideAux}" >
-                <img src=${data[i].planeta.icon}>
+                <img src=${new_array[i].planeta.icon}>
             </div>`
     }
     return slidePlanetas;

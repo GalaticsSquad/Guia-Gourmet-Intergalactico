@@ -43,6 +43,20 @@ exports.add_RP_Planet = async (_name, _icon, _background, _description) => {
         throw error;
     }
 };
+exports.updateIMG_RP_Planet = async (id)=>{
+    try{   
+        const query =[{
+            text:  `UPDATE planets SET icon ='../uploads/icon-${id}.png', background ='../uploads/background-${id}.png' WHERE id = $1`,
+            params: [id]}]
+        
+        const planet = await connection.executarQuerys(query)
+        return planet;
+
+    }catch(error){
+        console.log(TAG, 'error caught8');
+        throw error;
+    }
+}
 
 exports.edit_RP_Planet = async (_id, body) => {
     try {
