@@ -51,7 +51,7 @@ function logicLogin () {
                 throw 'Digite uma senha'
             }
             const body = {username: username.value, password: password.value}
-            let req =  await fetch(`http:///localhost:3000/session`, {
+            let req =  await fetch(`http:///140.82.28.22:3000/session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

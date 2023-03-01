@@ -1,8 +1,7 @@
 
-
 const get_planets = async ()=>{
     try {
-        const req =  await fetch(`http://localhost:3000/getplanet`, {
+        const req =  await fetch(`http://140.82.28.22:3000/getplanet`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -18,7 +17,7 @@ const get_planets = async ()=>{
 } 
 
 const get_planets_id = async (id)=>{
-    const req =  await fetch(`http://localhost:3000/getplanet/${id}`, {
+    const req =  await fetch(`http://140.82.28.22:3000/getplanet/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -30,7 +29,7 @@ const get_planets_id = async (id)=>{
 }
 
 const del_planets = async (_id)=>{
-    let req =  await fetch(`http://localhost:3000/delplanet/${_id}`, {
+    let req =  await fetch(`http://140.82.28.22:3000/delplanet/${_id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'

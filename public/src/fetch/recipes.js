@@ -1,7 +1,7 @@
 
 
 const get_recipes = async ()=>{
-    let req =  await fetch(`http://localhost:3000/getrecipe`, {
+    let req =  await fetch(`http://140.82.28.22:3000/getrecipe`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -13,7 +13,7 @@ const get_recipes = async ()=>{
 }
 
  const get_recipes_id_planet = async (id_Planet)=>{
-    let req =  await fetch(`http://localhost:3000/getrecipe/${id_Planet}`, {
+    let req =  await fetch(`http://140.82.28.22:3000/getrecipe/${id_Planet}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ const post_recipes = async (_id_planet, _name, _description,  _type, _image, _ti
         time: _time, 
         ingredients: _ingredients, 
         instructions: _instructions}
-    let req =  await fetch(`http://localhost:3000/addrecipe`, {
+    let req =  await fetch(`http://140.82.28.22:3000/addrecipe`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ const patch_recipes = async (_id, _id_planet, _name, _description,  _type, _imag
         ingredients:_ingredients, 
         instructions:_instructions}
 
-    let req =  await fetch(`http://localhost:3000/editrecipe/${_id}`, {
+    let req =  await fetch(`http://140.82.28.22:3000/editrecipe/${_id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ const patch_recipes = async (_id, _id_planet, _name, _description,  _type, _imag
 
 const delete_recipes = async (_id)=>{
 
-    let req =  await fetch(`http://localhost:3000/delrecipe/${_id}`, {
+    let req =  await fetch(`http://140.82.28.22:3000/delrecipe/${_id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
