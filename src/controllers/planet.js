@@ -141,9 +141,9 @@ exports.edit_CT_Planet = async (req, res) => {
     let { name, icon, background, description , old_background, old_icon} = req.body;
 
 
-    if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
-      throw 'ERROR: não é permitido alterar esse planeta'
-    }
+    /* if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
+      throw 'Não é permitido alterar esse planeta'
+    } */
     if (!name) {
       throw "Error: Por favor insira o nome do planeta.";
     }

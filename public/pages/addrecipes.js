@@ -111,7 +111,8 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                 <input type="submit" class="envio_button" value="Adicionar receita">
                 <input type="button" class="exitEdit" value="Adicionar um planeta">
             </div>
-            <section>
+        </form>
+        <section>
                 <table id="table" class="tableAddRecipes">
                     <thead>
                         <tr id="table-heading">
@@ -133,7 +134,6 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
                     </tbody>
                 </table>
             </section>
-        </form>
     </div>
     `;
 
@@ -144,10 +144,10 @@ function registerrecipe(data) {
     let table_recipe = "";
     data.forEach((recipe) => {
     let ingredients_recipes = "";
-    recipe.ingredient.forEach((Ing) => ingredients_recipes += `${Ing}`);
+    recipe.ingredient.forEach((Ing) => ingredients_recipes += ` ${Ing}`);
 
     let preparation_recipes = "";
-    recipe.instructions.forEach((prep) => preparation_recipes += `${prep}`);
+    recipe.instructions.forEach((prep) => preparation_recipes += ` ${prep}`);
 
     table_recipe += `<tr>
     <td>${recipe.id}</td>
@@ -235,11 +235,13 @@ function logic_recipe(dataRecipe){
     exlAllIngredient.addEventListener('click', (event)=>{ //Limpar lista de ingredientes adicionados
         event.preventDefault();
         showListIng.innerHTML = ''
+        ingredients = []
     })
 
     exlAllDescriptions.addEventListener('click', (event)=>{ //Limpar lista de instruções adicionadas
         event.preventDefault();
-        showListIng.innerHTML = ''
+        showListDes.innerHTML = ''
+        instructions = []
     })
 
     exitEdit.addEventListener ('click', () => {
@@ -277,28 +279,32 @@ function addEventButtonIngredient() {
     button_Ingredient.addEventListener('click', (event)=>{ 
         if (button_Ingredient.innerText == 'Adicionar ingrediente') {
             event.preventDefault()
-            showListIng.innerHTML = ''
-            ingredients.push(input_ingredients.value)
-            input_ingredients.value = ``
-            for (let i = 0; i < ingredients.length; i++) {
-                const liIng = document.createElement('li')
-                showListIng.appendChild(liIng)
-                liIng.innerHTML = ingredients[i]
+            if (input_ingredients.value !== ``) {
+                showListIng.innerHTML = ''
+                ingredients.push(input_ingredients.value)
+                input_ingredients.value = ``
+                for (let i = 0; i < ingredients.length; i++) {
+                    const liIng = document.createElement('li')
+                    showListIng.appendChild(liIng)
+                    liIng.innerHTML = ingredients[i]
+                }
+                addEventLiIng(ingredients)
             }
-            addEventLiIng(ingredients)
         }
 
         if (button_Ingredient.innerText == 'Editar ingrediente') {
             event.preventDefault()
-            ingredients.splice(index, 1, input_ingredients.value)
-            input_ingredients.value = ''
-            showListIng.innerHTML= ''
-            for (let i = 0; i < ingredients.length; i++) {
-                const liIng = document.createElement('li')
-                showListIng.appendChild(liIng)
-                liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${ingredients[i]}`
+            if (input_ingredients.value !== '') {
+                ingredients.splice(index, 1, input_ingredients.value)
+                input_ingredients.value = ''
+                showListIng.innerHTML= ''
+                for (let i = 0; i < ingredients.length; i++) {
+                    const liIng = document.createElement('li')
+                    showListIng.appendChild(liIng)
+                    liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${ingredients[i]}`
+                }
+                addEventLiIng(ingredients)
             }
-            addEventLiIng(ingredients)
         }
     })
 }
@@ -310,28 +316,30 @@ function addEventButtonInstructions() {
     button_Description.addEventListener('click', (event)=>{
         event.preventDefault();
         if (button_Description.innerText == 'Adicionar instrução') {
-            console.log('Adicionar instrução')
-            showListDes.innerHTML = ''
-            instructions.push(input_instructions.value)
-            input_instructions.value = ``
-            for (let i = 0; i < instructions.length; i++) {
-                const liDes = document.createElement('li')
-                showListDes.appendChild(liDes)
-                liDes.innerHTML = instructions[i]
+            if (input_instructions.value !== ``) {
+                showListDes.innerHTML = ''
+                instructions.push(input_instructions.value)
+                input_instructions.value = ``
+                for (let i = 0; i < instructions.length; i++) {
+                    const liDes = document.createElement('li')
+                    showListDes.appendChild(liDes)
+                    liDes.innerHTML = instructions[i]
+                }
+                addEventLiDes(instructions)
             }
-            addEventLiDes(instructions)
         }
         if (button_Description.innerText == 'Editar instrução') {
-            console.log('linha 327 ', instructions)
-            instructions.splice(index, 1, input_instructions.value)
-            input_instructions.value = ''
-            showListDes.innerHTML= ''
-            for (let i = 0; i < instructions.length; i++) {
-                const liDes = document.createElement('li')
-                showListDes.appendChild(liDes)
-                liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${instructions[i]}`
+            if (input_instructions.value !== '') {
+                instructions.splice(index, 1, input_instructions.value)
+                input_instructions.value = ''
+                showListDes.innerHTML= ''
+                for (let i = 0; i < instructions.length; i++) {
+                    const liDes = document.createElement('li')
+                    showListDes.appendChild(liDes)
+                    liDes.innerHTML = `<span class="material-symbols-rounded" id="editLiDes">edit</span>${instructions[i]}`
+                }
+                addEventLiDes(instructions)
             }
-            addEventLiDes(instructions)
         }
     })
 }
@@ -357,13 +365,9 @@ function addEventEditDel(dataRecipe) {
     buttonEditDel.forEach(button => { //Para cada icone de editar e deletar add um event de acordo com o ícone
     button.addEventListener('click', (event) => {
         //event.preventDefault();
-        console.log("addEventListener")
         ingredients.length = 0
         instructions = []
-        console.log("addEventListener", ingredients)
-        console.log("addEventListener", instructions)
         if (event.target.innerText === "edit") {
-            button.value = "Editar receita"
             const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
             findRecipe = dataRecipe.find(recipe => recipe.id===cellId)
             objRecipe = findRecipe
@@ -387,7 +391,6 @@ function addEventEditDel(dataRecipe) {
                 showListIng.appendChild(liIng)
                 liIng.innerHTML = `<span class="material-symbols-rounded" id="editLiIng">edit</span>${findRecipe.ingredient[i]}`
             }
-            console.log('linha 391 ', ingredients)
             addEventLiIng(ingredients)
             showListDes.innerHTML = ''
             for (let i = 0; i < findRecipe.instructions.length; i++) { //adciona a lista de instruções abaixo do input e adc a variável global
@@ -409,6 +412,7 @@ function addEventEditDel(dataRecipe) {
 function addEventLiIng(ingredients) { // get the index of the ingredient/intruction clicked on editing
     const input_ingredients = document.querySelector('.input_ingredients')
     const editLiIng = document.querySelectorAll('#editLiIng')
+    reRenderHeader()
     editLiIng.forEach(li => {
         li.addEventListener('click', (event) => {
             const gerLiIng = event.target.nextSibling.textContent
@@ -416,7 +420,6 @@ function addEventLiIng(ingredients) { // get the index of the ingredient/intruct
             index = ingredients.indexOf(gerLiIng)
         })
     });
-    console.log("addEventLiIng linha 421", ingredients)
 }
 
 function addEventLiDes(instructions) { //Pega o index da instrução que foi clicada na lista de intruções a serem editadas
@@ -437,7 +440,6 @@ async function reRenderDelTable (cellId) {
     try {
         await delete_recipes(cellId)
         const dataRecipe = await get_recipes()
-        console.log(dataRecipe.data)
         tbody.innerHTML = registerrecipe(dataRecipe.data)
         addEventEditDel(dataRecipe.data)
         textError.innerHTML = `Receita deletada com sucesso!`;
@@ -445,9 +447,7 @@ async function reRenderDelTable (cellId) {
         setTimeout(() => {
             textError.innerHTML = ''
         }, 4000);
-        addEventLiIng(ingredients)
     } catch (error) {
-        console.log("esse daqui:",error)
         textError.innerText = "Error: " + error.message
         textError.style.color = 'red';
     }
@@ -462,11 +462,14 @@ function upload_receitaImg() {
     const type = document.querySelector('#type_select')    
     const time = document.querySelector('#input_tempo')    
     const description = document.querySelector('.food_description')
+    const input_instructions = document.querySelector('.input_instructions')
+    const input_ingredients = document.querySelector('.input_ingredients')
     const tbody = document.querySelector('#tbody')
     const textError = document.querySelector('.textError')
     const root = document.querySelector('#root')
     const showListDes = document.querySelector('.showListDes')
     const showListIng = document.querySelector('.showListIng')
+    const exitEdit = document.querySelector('.exitEdit')
     root.style.cursor = 'auto';
 
     form.addEventListener('submit', (event) => {
@@ -487,10 +490,6 @@ function upload_receitaImg() {
             formData.append('ingredients', ingredients)
             formData.append('instructions', instructions)
             id_planet.value = "1"
-            console.log('teste1')
-            
-        //     const nameRG = name.value.replace(/ /g, "")    
-        //         formData.append('file', imageRecipe.files[0], `receita-${nameRG}.png`);
             fetch('/addrecipe', {
                 method: 'POST',
                 body: formData
@@ -525,6 +524,8 @@ function upload_receitaImg() {
                 description.value = ``
                 id_planet.value = ""
                 type.value = ""
+                input_instructions.value = ""
+                input_ingredients.value = ""
                 showListIng.innerHTML = ''             
                 showListDes.innerHTML = '' 
                 ingredients = []
@@ -544,9 +545,6 @@ function upload_receitaImg() {
             });
         }
         if (submitButton.value == 'Editar receita') {
-            console.log('ok')
-            // let old_icon = id.icon.replace("../", "")
-            // formData.append('old_icon', "../../public/"+old_icon)
             if(image_receita.files.length!==0){
                 formData.append('file', image_receita.files[0], `receita-${nameRG}.png`);
             }
@@ -559,9 +557,6 @@ function upload_receitaImg() {
             formData.append('time', time.value)
             formData.append('ingredients', ingredients)
             formData.append('instructions', instructions)
-            
-            console.log('formdata', formData.getAll('ingredients'))
-            console.log('formdata', formData.getAll('name'))
 
             fetch(`/editrecipe/${objRecipe.id}`, {
                 method: 'PATCH',
@@ -578,7 +573,6 @@ function upload_receitaImg() {
                     submitButton.disabled = false
                     root.style.cursor = 'auto'
                     submitButton.style.cursor = 'auto'
-                    console.error(error)
             }})
             .then(() =>{
                 return get_recipes()})
@@ -593,6 +587,10 @@ function upload_receitaImg() {
                 submitButton.disabled = false
                 submitButton.style.cursor = 'auto'
                 root.style.cursor = 'auto'
+                submitButton.value = 'Adcionar receita'
+                exitEdit.value = 'Adicionar um planeta'
+                input_instructions.value = ""
+                input_ingredients.value = ""
                 recipeName.value = ``
                 image_receita.value = ``
                 time.value = ``

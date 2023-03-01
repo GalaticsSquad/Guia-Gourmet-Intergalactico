@@ -18,11 +18,6 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
   root.appendChild(planeter);
   logicHeader(dataPlanet.data, allDataRecipe.data)
   logicPlanets(dataPlanet_id.data[0])
-  console.log("_idRecipe " , _idRecipe)
-  console.log("_idPlanet " , _idPlanet)
-  console.log("dataPlanet_id " , dataPlanet_id.data[0])
-  console.log("dataPlanet " , dataPlanet.data)
-  console.log("dataRecipe " , dataRecipe.data)
 }
 
 function planets (dataPlanet, dataRecipe, _idRecipe) {

@@ -152,7 +152,6 @@ function uploadImages() {
             })
             .then(response => response.json())
             .then((response)=>{
-                console.log(response)
                 if(response.error!==null){
                     throw `Error: ${response.error}!`;
 

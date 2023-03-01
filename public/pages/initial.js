@@ -36,10 +36,5 @@ export default () => {
     root.style.cursor = 'wait'
   });
 
-  /* window.onpopstate = (event) => {
-    console.log(event)
-    console.log(event.state)
-} */
-
   return containerInit;
 };

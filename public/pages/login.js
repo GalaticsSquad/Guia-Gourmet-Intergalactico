@@ -53,7 +53,6 @@ function logicLogin () {
             body: JSON.stringify(body),
             })
             let json = await req.json()
-            console.log(json)
             if (json.message == "Success") {
                 root.style.cursor = 'wait';
                 buttonEntry.disabled = true
