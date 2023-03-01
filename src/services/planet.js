@@ -177,7 +177,7 @@ exports.add_SV_Recipe = async (
   
   // let last_id = dbPlanet.recipe[dbPlanet.recipe.length - 1].id;
   try {
-    const recipeReq = dbPlanet.add_RP_Recipe(
+    const recipeReq = await dbPlanet.add_RP_Recipe(
       id_planet,
       name,
       description,
@@ -186,8 +186,21 @@ exports.add_SV_Recipe = async (
       time,
       ingredients,
       instructions)
+      console.log("resposta do Banco de dados: ", recipeReq)
+      const img_id =  await dbPlanet.updateIMG_RP_Recipe(recipeReq[0].id)
+      // console.log("resposta do banco de DADOS 2, COM ID: ", img_id[0].rows)
 
-    return recipeReq;
+   
+      let oldPath = path.join(__dirname, "../../public"+recipeReq[0].image);
+      let newPath = path.join(__dirname, "../../public/uploads/receita-"+recipeReq[0].id+".png");
+
+      fs.rename(oldPath, newPath, (err) => {
+        if (err) throw err;
+        console.log('Arquivo renomeado com sucesso!');
+      });
+      
+
+    return recipeReq[0];
   } catch (err) {
     console.log(err);
     return err;
@@ -196,7 +209,7 @@ exports.add_SV_Recipe = async (
 
 
 // @author {Eduardo}
-exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, time, ingredients, instructions, old_image) => {
+exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, time, ingredients, instructions) => {
   try{
     const body = {
       id_planet: id_planet,
@@ -208,7 +221,7 @@ exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, 
       ingredient: ingredients,
       instructions: instructions
     }
-    // let id = parseInt(_id);
+    let id = parseInt(_id);
     const recipe = await dbPlanet.edit_RP_Recipe(_id, body)
     if(old_image!==undefined){
       let oldPath = path.join(__dirname, "../../public/"+old_image);

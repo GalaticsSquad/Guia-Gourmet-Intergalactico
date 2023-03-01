@@ -445,8 +445,9 @@ async function reRenderDelTable (cellId) {
         setTimeout(() => {
             textError.innerHTML = ''
         }, 4000);
-        addEventLi()
+        addEventLiIng(ingredients)
     } catch (error) {
+        console.log("esse daqui:",error)
         textError.innerText = "Error: " + error.message
         textError.style.color = 'red';
     }
@@ -548,15 +549,13 @@ function upload_receitaImg() {
             // formData.append('old_icon', "../../public/"+old_icon)
             if(image_receita.files.length!==0){
                 formData.append('file', image_receita.files[0], `receita-${nameRG}.png`);
-            }else{
-            // let old_icon = objRecipe.image.replace("/", "")
-                formData.append('old_image', objRecipe.image)
             }
+
             formData.append('id_planet', `${id_planet.value}`)
             formData.append('name', `${recipeName.value}`)
             formData.append('description', description.value)
             formData.append('type', type.value)
-            formData.append('image', `/uploads/receita-${nameRG}.png`)
+            formData.append('image', objRecipe.image)
             formData.append('time', time.value)
             formData.append('ingredients', ingredients)
             formData.append('instructions', instructions)

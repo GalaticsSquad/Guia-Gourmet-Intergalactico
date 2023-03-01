@@ -344,7 +344,7 @@ exports.edit_CT_Recipe = async (req, res) => {
   console.log("Controller: /PATCH");
   let _id = parseInt(req.params.id);
   console.log("body", req.body)
-  let {id_planet, name, description, type, image, time, ingredients, instructions, old_image} = req.body;
+  let {id_planet, name, description, type, image, time, ingredients, instructions} = req.body;
   // delete _body.password;
 
   const response = {
@@ -376,8 +376,7 @@ exports.edit_CT_Recipe = async (req, res) => {
       image, 
       time, 
       arrayIngredient, 
-      arrayInstructions, 
-      old_image);
+      arrayInstructions);
 
     response.message = "Success";
     response.data = recipe;

@@ -199,6 +199,21 @@ exports.add_RP_Recipe = async (_id_planet, _name, _description,  _type, _image, 
     }
 };
 
+exports.updateIMG_RP_Recipe = async (id) =>{
+    try{   
+        const query =[{
+            text:  `UPDATE recipes SET image ='/uploads/receita-${id}.png' WHERE id = $1`,
+            params: [id]}]
+        
+        const recipe = await connection.executarQuerys(query)
+        return recipe;
+
+    }catch(error){
+        console.log(TAG, 'error caught8');
+        throw error;
+    }
+}
+
 exports.edit_RP_Recipe = async (_id, body)=>{
     try {
         const query =[{
