@@ -440,7 +440,7 @@ exports.post_CT_Session = async (req, res) => {
       throw 'Password está vazio.'
     }
     const verify = await service.post_SV_Session(username, password);
-    if (!verify) {
+    if (verify !== true) {
       throw 'Usuário não encontrado ou senha incorreta.'
     }
       const jwt = jwtLib.sign( {username: username}, process.env.JWTSECRET); // 

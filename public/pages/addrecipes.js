@@ -545,8 +545,9 @@ function upload_receitaImg() {
             });
         }
         if (submitButton.value == 'Editar receita') {
+
             if(image_receita.files.length!==0){
-                formData.append('file', image_receita.files[0], `receita-${nameRG}.png`);
+                formData.append('file', image_receita.files[0], objRecipe.image);
             }
 
             formData.append('id_planet', `${id_planet.value}`)

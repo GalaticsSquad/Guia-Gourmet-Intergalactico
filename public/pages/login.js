@@ -44,6 +44,12 @@ function logicLogin () {
 
     buttonEntry.addEventListener("click", async () => {
         try {
+            if(username.value === ""){
+                throw 'Digite um login'
+            }
+            if(password.value === ""){
+                throw 'Digite uma senha'
+            }
             const body = {username: username.value, password: password.value}
             let req =  await fetch(`http:///localhost:3000/session`, {
             method: 'POST',
@@ -53,7 +59,10 @@ function logicLogin () {
             body: JSON.stringify(body),
             })
             let json = await req.json()
-            if (json.message == "Success") {
+            if (json.error !== null) {
+                throw json.error
+            }
+            else{
                 root.style.cursor = 'wait';
                 buttonEntry.disabled = true
                 const evento = EventCustom("/option");
@@ -62,6 +71,10 @@ function logicLogin () {
             
         } catch (error) {
             textErrorLogin.innerHTML = error
+            textErrorLogin.style.color = 'red'
+            setTimeout(() => {
+                textErrorLogin.innerHTML = ''
+            }, 4000);
         }
     });
 
