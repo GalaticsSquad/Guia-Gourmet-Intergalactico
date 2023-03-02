@@ -133,7 +133,6 @@ function uploadImages() {
         event.preventDefault();
         root.style.cursor = 'wait'
         enviarPlanet.style.cursor = 'wait'
-        // enviarPlanet.disabled = true
         const formData = new FormData();  
         const nameRG = name.value.replace(/ /g, "") 
 
@@ -188,17 +187,13 @@ function uploadImages() {
 
         if (enviarPlanet.value === 'Editar planeta') {
             
-
             if(imageBackground.files.length!==0){
                 formData.append('file', imageBackground.files[0], id.background);
             }
               
-            
             if(imageIcon.files.length !== 0) {
             formData.append('file', imageIcon.files[0], id.icon);
             }
-
-
         
             formData.append('name', name.value)
             formData.append('icon', id.icon)
@@ -218,7 +213,6 @@ function uploadImages() {
             .then(() =>{
                 return get_planets()})
             .then( dataPlanet =>{
-
                 tbody.innerHTML = ''
                 tbody.innerHTML = registerplanet(dataPlanet.data)
                 addEvent(dataPlanet.data)
@@ -258,8 +252,8 @@ function registerplanet(dataPlanet) {
         table_planet += `<tr class="editplanet_table">
         <td>${planet.id}</td>
         <td>${planet.name}</td>
-        <td><img class="imgTablePlanetsIcon" src="../${planet.icon}"></td>
-        <td><img class="imgTablePlanetsBack" src="../${planet.background}"></td>
+        <td><img class="imgTablePlanetsIcon" src="../${planet.icon}?q=${Date.now()}"></td>
+        <td><img class="imgTablePlanetsBack" src="../${planet.background}?q=${Date.now()}"></td>
         <td id="tb_description"><p id="description_p">${planet.description}</p></td>
         <td><a href="#root" class="material-symbols-rounded">
         edit</a></td>
@@ -308,6 +302,7 @@ async function reRenderDelTable (cellId) {
         const dataPlanet = await get_planets()
         tbody.innerHTML = registerplanet(dataPlanet.data)
         addEvent(dataPlanet.data)
+        reRenderHeader()
         textError.innerText = "Planeta deletado com sucesso!"
         textError.style.color = 'green';
         setTimeout(() => {
@@ -328,6 +323,7 @@ function styleInputFile() {
     for (let i = 0; i < labels.length; i++) {
         labels[i].style.display = 'block'
         inputs[i].style.display = 'block'
+        inputs[i].checked = false
         label_back[i].style.opacity = '0.25'
         input_back[i].style.opacity = '0.25'
         input_back[i].disabled = true
@@ -353,8 +349,15 @@ function reStyleInputFile() {
     for (let i = 0; i < labels.length; i++) {
         labels[i].style.display = 'none'
         inputs[i].style.display = 'none'
+        inputs[i].checked = false
         label_back[i].style.opacity = '1'
         input_back[i].style.opacity = '1'
         input_back[i].disabled = false
     }
+}
+
+async function reRenderHeader() {
+    const dataPlanet = await get_planets()
+    const dataRecipe = await get_recipes()
+    logicHeader(dataPlanet.data, dataRecipe.data)
 }

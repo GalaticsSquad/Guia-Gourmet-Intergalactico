@@ -3,6 +3,8 @@ import {EventCustom} from "../eventCustom.js";
 import { get_planets } from "../src/fetch/planet.js";
 import { get_recipes } from "../src/fetch/recipes.js";
 
+// @author {Carolina}
+// @coauthor {Eduardo}
 export default async function renderLogin (){
     const dataPlanet = await get_planets()
     const allDataRecipe = await get_recipes()
@@ -14,17 +16,19 @@ export default async function renderLogin (){
     logicLogin()
 }
 
+// @author {Henrique}
 function Login () {
     const headerFake = insertHeader();
     const container = document.createElement("div");
     container.className = "rootContainerlogin"
     container.innerHTML = 
-    `<header>${headerFake}</header>
+    `<div class="backgroundInit"></div>
+    <header>${headerFake}</header>
     <form class="container-login">
-        <label class="up-name"  for="username">Username:</label>
+        <label class="up-name"  for="username">Usuário:</label>
         <input type="text" id="username" name="username" required>
 
-        <label class="up-name" for="password">Password:</label>
+        <label class="up-name" for="password">Senha:</label>
         <input type="password" id="password" name="password" required>
 
         <p class="textErrorLogin"></p>
@@ -34,6 +38,8 @@ function Login () {
     return container
 }
 
+// @author {João}
+// @coauthor {Eduardo, Carolina, Henrique}
 function logicLogin () {
     const username = document.querySelector('#username')
     const password = document.querySelector('#password')
@@ -51,7 +57,8 @@ function logicLogin () {
                 throw 'Digite uma senha'
             }
             const body = {username: username.value, password: password.value}
-            let req =  await fetch(`http:///140.82.28.22:3000/session`, {
+            
+            let req =  await fetch(`https:///140.82.28.22:443/session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +75,6 @@ function logicLogin () {
                 const evento = EventCustom("/option");
                 root.dispatchEvent(evento);
             }
-            
         } catch (error) {
             textErrorLogin.innerHTML = error
             textErrorLogin.style.color = 'red'

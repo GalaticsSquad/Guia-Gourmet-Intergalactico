@@ -87,7 +87,6 @@ exports.del_RP_Planet = async (_id)=>{
             params: [_id]
         }]
         const response = await connection.executarQuerys(query)
-        console.log(response[0].rows)
         return response[0].rows
     }catch(error){
         console.log(TAG, 'error caught9')
@@ -146,7 +145,7 @@ exports.get_RP_Recipe_id = async (_id) => { //necessário verificar o soft delet
             text: 'SELECT * FROM recipes WHERE id_planet = $1 ORDER BY id ASC',
             params: [_id]}]
         const response = await connection.executarQuerys(query)
-        console.log("tamanho do vetor rows:", response[0].rows.length)
+
         for(let i =0 ; i<response[0].rows.length; i++){
             const query2 = {
                 text:'SELECT id_recipes, ingredient FROM ingredients_recipes WHERE id_recipes = $1',
@@ -174,14 +173,6 @@ exports.get_RP_Recipe_id = async (_id) => { //necessário verificar o soft delet
 exports.add_RP_Recipe = async (_id_planet, _name, _description,  _type, _image, _time, _ingredients, _instructions) => {
     console.log("Repository: /POST");
 
-    console.log("repository:",_id_planet,
-      _name,
-      _description,
-      _type,
-      _image,
-      _time,
-      _ingredients,
-      _instructions)
 
     try {
         let querys = []

@@ -23,8 +23,8 @@ function add_planet_recipe () {
 const headerFake = insertHeader();
 const container = document.createElement("div");
 container.className = "rootContaineradd";
-/* const container_class = document.querySelector(".rootContaineradd") */
 container.innerHTML = `
+    <div class="backgroundInit"></div>
     <header>${headerFake}</header>
     <div class="cadastro_planet_recipe">
         <div class="buttons_planet_recipe">

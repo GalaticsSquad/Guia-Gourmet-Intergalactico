@@ -1,5 +1,5 @@
 import {EventCustom} from "../eventCustom.js";
-
+// @author {Carolina}
 function insertHeader() {
   // const header = document.createElement('header')
     const header = `
@@ -20,6 +20,7 @@ function insertHeader() {
             </nav>
             <div class="containerLoginMenu">
                 <a class="loginMenu">Login</a>
+                <a class="logoutMenu">Logout</a>
             </div>
         </div>
     </div>
@@ -32,9 +33,11 @@ function insertHeader() {
     `;
     return header;
 }
-
+// @author {Carolina}
+// @coauthor {Eduardo}
 function logicHeader (dataPlanet, dataRecipe) {
     const buttonLogin = document.querySelector ('.loginMenu')
+    const buttonLogout = document.querySelector ('.logoutMenu')
     const nav = document.querySelector('nav')
     const root = document.querySelector('#root')
     const aHome = document.createElement('a')
@@ -71,12 +74,80 @@ function logicHeader (dataPlanet, dataRecipe) {
         })};
         i++
     }
+
+    protectedFetch()
+
     buttonLogin.addEventListener("click", () => {
-        const evento = EventCustom("/login");
-        root.style.cursor = 'wait';
-        root.dispatchEvent(evento);
+        if (buttonLogin.innerText === "Login") {
+            const evento = EventCustom("/login");
+            root.style.cursor = 'wait';
+            root.dispatchEvent(evento);
+        }
+        else {
+            const evento = EventCustom("/option");
+            root.style.cursor = 'wait';
+            root.dispatchEvent(evento);
+        }
     });
 
+    buttonLogout.addEventListener('click', () => {
+        logoutFetch()
+    })
+
+}
+
+// @author {Carolina}
+// @coauthor {Eduardo}
+async function protectedFetch() {
+    const buttonLogin = document.querySelector ('.loginMenu')
+    const buttonLogout = document.querySelector ('.logoutMenu')
+    try {
+        const req = await fetch(`https:///140.82.28.22:443/protected`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }})
+        const json = await req.json()
+        if (!json.user) {
+            throw "Usuário deslogado"
+        }
+        else{
+            buttonLogin.innerText = json.user
+            buttonLogout.style.display = 'block'
+        }
+        
+    } catch (error) {
+        console.log(error)
+        buttonLogin.innerText = "Login"
+    }
+}
+// @author {Eduardo}
+// @coauthor {Carolina}
+async function logoutFetch() {
+    const buttonLogin = document.querySelector ('.loginMenu')
+    const buttonLogout = document.querySelector ('.logoutMenu')
+    try {
+        const req =  await fetch(`https:///140.82.28.22:443/logout`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }})
+        const json = await req.json()
+        if (json.message == "Successfully logged out") {
+            buttonLogout.style.display = 'none'
+            buttonLogin.innerText = "Login"
+            const path = window.location.pathname
+            if(path == '/addRecipes' || path == '/addPlanet'){
+                const evento = EventCustom("/home");
+                root.dispatchEvent(evento);
+            }
+        }
+        else{
+            throw "Error"
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export {insertHeader, logicHeader}

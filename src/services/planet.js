@@ -20,9 +20,6 @@ exports.get_SV_Planet = async () => {
 exports.get_SV_Planet_id = async (_id) =>{
   try {
     const planetById = await dbPlanet.get_RP_Planet_id(_id);
-    // if(planetById.delete === true){
-    //   throw "Error: Receita não encontrada"
-    // }
     return planetById
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -33,7 +30,6 @@ exports.get_SV_Planet_id = async (_id) =>{
 exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
   try {
     const addPlanet = await dbPlanet.add_RP_Planet(_name, _icon, _background, _description);
-    console.log('resposta do banco de dados planet:', addPlanet)
     const img_id =  await dbPlanet.updateIMG_RP_Planet(addPlanet[0].id)
 
     let new_icon = addPlanet[0].icon.replace("../", "")
@@ -60,38 +56,14 @@ exports.add_SV_Planet = async (_name, _icon, _background, _description) => {
     throw error;
   }
 };
+
+
 // @author {Eduardo}
-exports.edit_SV_Planet = async (_id, name, icon, background, description, old_background, old_icon) => {
+exports.edit_SV_Planet = async (_id, name, icon, background, description) => {
   
   try {
- 
     const body = {name:name, icon:icon, background:background, description:description}
-    // console.log(body);
     const editPlanet = await dbPlanet.edit_RP_Planet(_id, body);
-    console.log("old_icon: ", old_icon)
-    console.log("old_icon teste: ", old_icon!==undefined)
-    if(old_icon!==undefined){
-      let new_icon = icon.replace("../", "")
-      let oldPath = path.join(__dirname, old_icon);
-      let newPath = path.join(__dirname, "../../public/"+new_icon);
-      fs.rename(oldPath, newPath, (err) => {
-        if (err) throw err;
-        console.log('Arquivo renomeado com sucesso!');
-      });
-  
-    }
-    console.log("old_back: ", old_background)
-    console.log("old_back teste: ", old_background!==undefined)
-    if(old_background!==undefined){
-      let new_back = background.replace("../", "")
-      let oldPath_back = path.join(__dirname, old_background);
-      let newPath_back = path.join(__dirname, "../../public/"+new_back);
-  
-      fs.rename(oldPath_back, newPath_back, (err) => {
-        if (err) throw err;
-        console.log('Arquivo renomeado com sucesso!');
-      });
-    }
     return editPlanet;
   } catch (error) {
     console.log(TAG, 'error caught');
@@ -120,7 +92,12 @@ exports.get_SV_planet_name = (name) =>{
   }
 }
 
+
+
 //Recipes
+// @author {Carolina}
+// @coauthor {Eduardo}
+
 exports.get_SV_Recipe = async () => {
   try {
     const recipesReq = await dbPlanet.get_RP_AllRecipes();
@@ -148,7 +125,8 @@ exports.get_SV_Recipe = async () => {
     }
 };
 
-// @author {Eduardo}
+// @author {Carolina}
+// @coauthor {Eduardo}
 exports.get_SV_Recipe_id = async (_id) => {
   try {
     const recipeRequisition = await dbPlanet.get_RP_Recipe_id(_id);
@@ -162,13 +140,12 @@ exports.get_SV_Recipe_id = async (_id) => {
       recipeRequisition[0][i].ingredients = arrayIngredientsofRow
     }
     for (let i = 0; i < recipeRequisition[2].length; i++) { /* getting the ingredients and putting in the recipe */
-    const arrayIngredientsofRow = []
-    recipeRequisition[2][i].rows.map((row)=> {
-      console.log("map", row.description)
-      arrayIngredientsofRow.push(row.description)
-    })
+      const arrayIngredientsofRow = []
+      recipeRequisition[2][i].rows.map((row)=> {
+        arrayIngredientsofRow.push(row.description)
+      })
     recipeRequisition[0][i].instructions = arrayIngredientsofRow
-  }
+    }
     const recipe = recipeRequisition[0]
     return recipe
   } catch (error) {
@@ -176,6 +153,7 @@ exports.get_SV_Recipe_id = async (_id) => {
     throw error;
   }
 };
+
 // @author {Eduardo}
 exports.add_SV_Recipe = async (
   id_planet,
@@ -197,20 +175,18 @@ exports.add_SV_Recipe = async (
       time,
       ingredients,
       instructions)
-      console.log("resposta do Banco de dados: ", recipeReq)
-      const img_id =  await dbPlanet.updateIMG_RP_Recipe(recipeReq[0].id)
+    const img_id =  await dbPlanet.updateIMG_RP_Recipe(recipeReq[0].id)
  
 
    
-      let oldPath = path.join(__dirname, "../../public"+recipeReq[0].image);
-      let newPath = path.join(__dirname, "../../public/uploads/receita-"+recipeReq[0].id+".png");
+    let oldPath = path.join(__dirname, "../../public"+recipeReq[0].image);
+    let newPath = path.join(__dirname, "../../public/uploads/receita-"+recipeReq[0].id+".png");
 
-      fs.rename(oldPath, newPath, (err) => {
-        if (err) throw err;
-        console.log('Arquivo renomeado com sucesso!');
-      });
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) throw err;
+      console.log('Arquivo renomeado com sucesso!');
+    });
       
-
     return recipeReq[0];
   } catch (err) {
     console.log(err);
@@ -232,16 +208,8 @@ exports.edit_SV_Recipe = async (_id, id_planet, name, description, type, image, 
       ingredient: ingredients,
       instructions: instructions
     }
-    let id = parseInt(_id);
+    // let id = parseInt(_id);
     const recipe = await dbPlanet.edit_RP_Recipe(_id, body)
-    if(old_image!==undefined){
-      let oldPath = path.join(__dirname, "../../public/"+old_image);
-      let newPath = path.join(__dirname, "../../public/"+image)
-      fs.rename(oldPath, newPath, (err) => {
-        if (err) throw err;
-        console.log('Arquivo renomeado com sucesso!');
-      });
-    }
 
     return recipe;
   }catch(erro){
@@ -261,13 +229,14 @@ exports.del_SV_Recipe = async (_id) => {
     return error;
   }
 };
+
+
 // @author {Carolina}
 // @coauthor {Eduardo}
 exports.post_SV_Session = async (username, password) => {
   try {
     const passDB = await dbPlanet.post_RP_Session(username)
     const result = await bcrypt.compare(password, passDB[0].password);
-    console.log("result ", result)
     return result
   } catch (error) {
     return error;

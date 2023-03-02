@@ -1,6 +1,6 @@
 //const dbPlanet = require("../repository/DB_planet");
 const service = require("../services/planet");
-const path = require('path');
+const path = require("path");
 const jwtLib = require("jsonwebtoken");
 
 // @author {Carolina}
@@ -14,7 +14,6 @@ exports.get_CT_Planet = async (req, res) => {
     data: null,
     error: null,
   };
-  console.log(req.body)
 
   try {
     const allPlanets = await service.get_SV_Planet();
@@ -41,17 +40,18 @@ exports.get_CT_PlanetById = async (req, res) => {
   };
   try {
     const _id = parseInt(req.params.id);
-    if (isNaN(_id)) { //verificar se é valido
-      console.log(TAG, "Parameter isNaN")
-      response.message = 'Informe um valor válido';
+    if (isNaN(_id)) {
+      //verificar se é valido
+      console.log(TAG, "Parameter isNaN");
+      response.message = "Informe um valor válido";
       response.data = null;
-      response.error = 'Informe um valor válido'
+      response.error = "Informe um valor válido";
       res.status(400).json(response);
       return;
     }
     const planet = await service.get_SV_Planet_id(_id);
-    if(planet.length===0){
-      throw 'Error: planeta não encontrado'
+    if (planet.length === 0) {
+      throw "Error: planeta não encontrado";
     }
     response.message = "Success";
     response.data = planet;
@@ -75,7 +75,7 @@ exports.add_CT_Planet = async (req, res) => {
     data: null,
     error: null,
   };
-  console.log("teste body:", req.body)
+  console.log("teste body:", req.body);
   try {
     if (!name) {
       throw "Error: Por favor insira o nome do planeta.";
@@ -89,34 +89,36 @@ exports.add_CT_Planet = async (req, res) => {
     if (!description) {
       throw "Error: Por favor insira a descrição do planeta.";
     }
-    // const name2 = name.replace(/ /g, "")
-    // const name2 = name.replace(/ /i, "")
-    if(name[name.length -1]===' ' && name[0]===' '){
-      console.log('if 1')
-      name = name.slice(1, -1)
-      
+
+    if (name[name.length - 1] === " " && name[0] === " ") {
+      console.log("if 1");
+      name = name.slice(1, -1);
     }
-    if( name[name.length -1]===' '){
-      console.log('if 2')
-      name = name.slice(0, -1)
+    if (name[name.length - 1] === " ") {
+      console.log("if 2");
+      name = name.slice(0, -1);
     }
-    if(name[0]===' '){
-      console.log('if 3')
-      name = name.slice(1)
+    if (name[0] === " ") {
+      console.log("if 3");
+      name = name.slice(1);
     }
 
-    const nameRegister = await service.get_SV_planet_name(name)
+    const nameRegister = await service.get_SV_planet_name(name);
 
-    if(nameRegister.length != 0 ){
-      console.log("nameRegister", nameRegister)
-      throw `${TAG}Error: já existe um planeta cadastrado com esse nome`
+    if (nameRegister.length != 0) {
+      console.log("nameRegister", nameRegister);
+      throw `${TAG}Error: já existe um planeta cadastrado com esse nome`;
     }
-      
-    const planet = await service.add_SV_Planet(name, icon, background, description);
+
+    const planet = await service.add_SV_Planet(
+      name,
+      icon,
+      background,
+      description
+    );
     response.message = "Sucess";
     response.data = nameRegister;
     res.status(200).json(response);
-
   } catch (error) {
     console.log(error);
     response.message = "Erro interno do Servidor";
@@ -136,14 +138,13 @@ exports.edit_CT_Planet = async (req, res) => {
   };
 
   try {
-
     let _id = parseInt(req.params.id);
-    let { name, icon, background, description , old_background, old_icon} = req.body;
+    let { name, icon, background, description, old_background, old_icon } =
+      req.body;
 
-
-    /* if( _id === 1 || _id === 2 || _id === 3 || _id === 4){
-      throw 'Não é permitido alterar esse planeta'
-    } */
+    // if (_id === 1 || _id === 2 || _id === 3 || _id === 4) {
+    //   throw "Não é permitido alterar esse planeta";
+    // }
     if (!name) {
       throw "Error: Por favor insira o nome do planeta.";
     }
@@ -156,23 +157,30 @@ exports.edit_CT_Planet = async (req, res) => {
     if (!description) {
       throw "Error: Por favor insira a descrição do planeta.";
     }
-    if(name==="" || name===" "){
-      throw "Error: nome do Planeta não é válido"
+    if (name === "" || name === " ") {
+      throw "Error: nome do Planeta não é válido";
     }
-  
+
     /* delete _body.password; */
     if (isNaN(_id)) {
-      console.log(TAG, "Parameter isNaN")
-      response.message = 'Informe um valor válido';
+      console.log(TAG, "Parameter isNaN");
+      response.message = "Informe um valor válido";
       response.data = null;
-      response.error = 'Informe um valor válido'
+      response.error = "Informe um valor válido";
       res.status(400).json(response);
       return;
     }
-    const planet = await service.edit_SV_Planet(_id, name, icon, background, description, old_background, old_icon);
+    const planet = await service.edit_SV_Planet(
+      _id,
+      name,
+      icon,
+      background,
+      description,
+      old_background,
+      old_icon
+    );
     response.message = "Success";
     response.data = planet;
-    // response.data = 'CONTROLER RESPONSE';
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -195,8 +203,8 @@ exports.del_CT_Planet = async (req, res) => {
   };
 
   try {
-    if( id === 1 || id === 2 || id === 3 || id === 4){
-      throw 'ERROR: não é permitido deletar esse planeta'
+    if (id === 1 || id === 2 || id === 3 || id === 4) {
+      throw "ERROR: não é permitido deletar esse planeta";
     }
     const planet = await service.del_SV_Planet(id);
     response.message = "Success";
@@ -249,10 +257,10 @@ exports.get_CT_RecipeById = async (req, res) => {
 
   try {
     if (isNaN(_id)) {
-      console.log(TAG, "Parameter isNaN")
-      response.message = 'Informe um valor válido';
+      console.log(TAG, "Parameter isNaN");
+      response.message = "Informe um valor válido";
       response.data = null;
-      response.error = 'Informe um valor válido'
+      response.error = "Informe um valor válido";
       res.status(400).json(response);
       return;
     }
@@ -273,23 +281,23 @@ exports.get_CT_RecipeById = async (req, res) => {
 // @coauthor {Henrique}
 exports.add_CT_Recipe = async (req, res) => {
   console.log("Controller: /POST");
-  const { id_planet,
-          name,
-          description,
-          type,
-          image,
-          time,
-          ingredients,
-          instructions} = req.body;
+  const {
+    id_planet,
+    name,
+    description,
+    type,
+    image,
+    time,
+    ingredients,
+    instructions,
+  } = req.body;
   const response = {
     message: "",
     data: null,
     error: null,
   };
-  const arrayIngredient = ingredients.split(",")
-  const arrayInstructions = instructions.split(",")
-  // console.log("ingredients:", arrayIngredient)
-  // console.log("instructions:", arrayInstructions)
+  const arrayIngredient = ingredients.split(",");
+  const arrayInstructions = instructions.split(",");
 
   try {
     if (!id_planet) {
@@ -324,7 +332,8 @@ exports.add_CT_Recipe = async (req, res) => {
       image,
       time,
       arrayIngredient,
-      arrayInstructions);
+      arrayInstructions
+    );
     response.message = "Sucess";
     response.data = recipe;
     res.status(200).json(response);
@@ -343,9 +352,18 @@ exports.add_CT_Recipe = async (req, res) => {
 exports.edit_CT_Recipe = async (req, res) => {
   console.log("Controller: /PATCH");
   let _id = parseInt(req.params.id);
-  console.log("body", req.body)
-  let {id_planet, name, description, type, image, time, ingredients, instructions} = req.body;
-  // delete _body.password;
+  console.log("body", req.body);
+  let {
+    id_planet,
+    name,
+    description,
+    type,
+    image,
+    time,
+    ingredients,
+    instructions,
+  } = req.body;
+
 
   const response = {
     message: "",
@@ -354,29 +372,34 @@ exports.edit_CT_Recipe = async (req, res) => {
   };
 
   if (isNaN(_id)) {
-    console.log("Controller: Parameter isNaN")
-    response.message = 'Informe um valor válido';
+    console.log("Controller: Parameter isNaN");
+    response.message = "Informe um valor válido";
     response.data = null;
-    response.error = 'Informe um valor válido'
+    response.error = "Informe um valor válido";
     res.status(400).json(response);
     return;
   }
 
   try {
-    console.log('ingredients:',ingredients)
-    const arrayIngredient = ingredients.split(",")
-    console.log(arrayIngredient)
-    const arrayInstructions = instructions.split(",")
+    // if (_id <= 31) {
+    //   throw "Error: Essa receita não pode ser editada.";
+    // }
+
+
+    const arrayIngredient = ingredients.split(",");
+
+    const arrayInstructions = instructions.split(",");
     const recipe = await service.edit_SV_Recipe(
-      _id, 
-      id_planet, 
-      name, 
-      description, 
-      type, 
-      image, 
-      time, 
-      arrayIngredient, 
-      arrayInstructions);
+      _id,
+      id_planet,
+      name,
+      description,
+      type,
+      image,
+      time,
+      arrayIngredient,
+      arrayInstructions
+    );
 
     response.message = "Success";
     response.data = recipe;
@@ -401,11 +424,15 @@ exports.del_CT_Recipe = async (req, res) => {
 
   try {
     let id = parseInt(req.params.id);
+    if (id <= 31) {
+      throw "Error: Essa receita não pode ser deletada.";
+    }
+
     if (isNaN(id)) {
-      console.log("Controller: Parameter isNaN")
-      response.message = 'Informe um valor válido';
+      console.log("Controller: Parameter isNaN");
+      response.message = "Informe um valor válido";
       response.data = null;
-      response.error = 'Informe um valor válido'
+      response.error = "Informe um valor válido";
       res.status(400).json(response);
       return;
     }
@@ -429,26 +456,26 @@ exports.post_CT_Session = async (req, res) => {
     data: null,
     error: null,
   };
-  const {username, password} = req.body
+  const { username, password } = req.body;
   try {
-    if (username == '') {
+    if (username == "") {
       console.log(error);
-      throw 'Username está vazio.'
+      throw "Username está vazio.";
     }
-    if (password == '') {
+    if (password == "") {
       console.log(error);
-      throw 'Password está vazio.'
+      throw "Password está vazio.";
     }
     const verify = await service.post_SV_Session(username, password);
     if (verify !== true) {
-      throw 'Usuário não encontrado ou senha incorreta.'
+      throw "Usuário não encontrado ou senha incorreta.";
     }
-      const jwt = jwtLib.sign( {username: username}, process.env.JWTSECRET); // 
-      response.message = "Success";
-      response.data = verify;
-      res.cookie("session", jwt);
-      res.status(200).json(response);
-      console.log(res.cookie);
+    const jwt = jwtLib.sign({ user: username }, process.env.JWTSECRET); //
+    response.message = "Success";
+    response.data = verify;
+    res.cookie("session", jwt);
+    res.status(200).json(response);
+    console.log(res.cookie);
   } catch (error) {
     console.log("Controler ", error);
     response.message = "Erro interno do Servidor";

@@ -12,7 +12,6 @@ const upload = multer()
 router.get("/getplanet", controller.get_CT_Planet);
 router.get("/getplanet/:id" ,controller.get_CT_PlanetById);
 router.post("/addplanet", middle.authenticate,  multer(multerConfig).array('file'), controller.add_CT_Planet);
-router.patch("/editplanet_text/:id", middle.authenticate, controller.edit_CT_Planet);
 router.patch("/editplanet/:id", middle.authenticate, multer(multerConfig).array('file'), controller.edit_CT_Planet);
 router.delete("/delplanet/:id", middle.authenticate, controller.del_CT_Planet)
 
@@ -28,21 +27,13 @@ router.post("/addrecipe", middle.authenticate, multer(multerConfig).single('file
 router.patch("/editrecipe/:id", middle.authenticate, multer(multerConfig).single('file'),controller.edit_CT_Recipe);
 router.delete("/delrecipe/:id", middle.authenticate, controller.del_CT_Recipe);
 
+// @author {Carolina}
+// @coauthor {Eduardo}
+// Rotas da sessão
+router.get("/logout", middle.authenticate, middle.logout)
+router.get("/protected", middle.authenticate, middle.protected);
 
-// router.get("/name/:name", teste.get_RP_name);
 
 
-// Rota para upload de imagens;
-router.post("/img", multer(multerConfig).array('file'), (req, res) => {
-  console.log(req.file)
-  console.log(req.body)
- res.json({upload: 'OK'});
-})
-
-router.post("/img2", multer(multerConfig).single('file'), (req, res) => {
-  console.log(req.file)
-  console.log(req.body)
- res.json({upload: 'OK'});
-})
 
 module.exports = router;

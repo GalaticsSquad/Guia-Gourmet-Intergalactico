@@ -8,7 +8,6 @@ import { get_recipes } from "../src/fetch/recipes.js";
 
 // // @author {Carolina}
 // //@coauthor {Eduardo}
-
 export default async function renderHome() {
     const dataPlanet = await get_planets()
     const dataRecipe = await get_recipes()
@@ -25,7 +24,7 @@ export default async function renderHome() {
 function htmlHome (dataPlanet, dataRecipe) {
     const headerFake = insertHeader();
     const container = document.createElement("div");
-    let format_data = encontra_receita_do_planeta(dataPlanet, dataRecipe)
+    let format_data = find_recipe_planet(dataPlanet, dataRecipe)
     const dig = dataRecipe[2].name.substring(0,100)
 
     const add_recipe = slides_Recipe(format_data)
@@ -107,7 +106,7 @@ function htmlHome (dataPlanet, dataRecipe) {
                 </div>
         
             </section>
-            <footer> <a href="https://github.com/GalaticsSquad/Guia-Gourmet-Intergalactico" class="textFooter">Copyright 2023 GalaticSquad - Carolina Liberato, Henrique Saiti, Eduardo Henrique, João Silva </a> </footer>
+            <footer> <a href="https://github.com/GalaticsSquad/Guia-Gourmet-Intergalactico" class="textFooter">Copyright 2023 GalaticSquad - Carolina Liberato, Henrique Saiti, Eduardo Henrique, João Victor</a> </footer>
         </main>
         `;
     
@@ -115,25 +114,23 @@ function htmlHome (dataPlanet, dataRecipe) {
 }
 
 // @author {Carolina}
-
 function logicHome(dataRecipe) {
     const root = document.querySelector('#root');
     root.style.cursor = 'auto'
     const recipeButton = document.querySelectorAll('.recipeButton')
     const slideContainer = document.querySelector('.slideContainer')
     let i = 0
-    while (recipeButton.length > i) {
-        recipeButton[i].addEventListener('click', (event) => {
-            const recipeName = event.target.parentElement.parentElement.children[0].children[0].innerText
-            const receita = dataRecipe.find(recipe => recipe.name === recipeName)
+    recipeButton.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const recipeName = event.target.parentElement.parentElement.children[0].children[0].innerHTML
+            const receita = dataRecipe.find(recipe => recipe.name == recipeName)
             root.style.cursor = 'wait'
             slideContainer.style.cursor = 'wait'
-            recipeButton.disabled = true
+            button.disabled = true
             const evento = EventCustom(`/planets`, receita.id_planet, receita.id) ;
             root.dispatchEvent(evento);
         })
-        i++
-    }
+    });
 
     /* CARROSEL */
 
@@ -192,7 +189,8 @@ function logicHome(dataRecipe) {
     };
 }
 
-function encontra_receita_do_planeta(data,dataR){
+// @author {Eduardo}
+function find_recipe_planet(data,dataR){
     let vetor = []
     for(let i=0;i<data.length;i++){
         let find = dataR.filter(receita => receita.id_planet===data[i].id)
@@ -207,6 +205,7 @@ function encontra_receita_do_planeta(data,dataR){
     return vetor
 }
 
+// @author {Eduardo}
 function slides_Recipe(data){
     let slidesReceita = ``
 
@@ -278,6 +277,7 @@ function slides_Recipe(data){
     return slidesReceita;
 }
 
+// @author {Eduardo}
 function slide_planets (data) {
     let slidePlanetas = ``
     if(data.length<2){

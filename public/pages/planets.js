@@ -1,13 +1,11 @@
-// import routes from "./routes.js";
 import {insertHeader, logicHeader} from "./header.js";
 import { get_planets_id, get_planets} from "../src/fetch/planet.js";
 import { get_recipes_id_planet, get_recipes } from "../src/fetch/recipes.js";
 import { EventCustom } from "../eventCustom.js";
 
-
+// @author {Carolina}
+// @coauthor {Eduardo}
 export default async function renderPlanets(_idPlanet, _idRecipe){
-
-  // const filtered = data[1].filter(recipe => recipe.id_planet === _idPlanet)
   const dataPlanet = await get_planets()
   const dataPlanet_id = await get_planets_id(_idPlanet)
   const dataRecipe = await get_recipes_id_planet(_idPlanet) // pega as receitas de um planeta
@@ -20,6 +18,8 @@ export default async function renderPlanets(_idPlanet, _idRecipe){
   logicPlanets(dataPlanet_id.data[0])
 }
 
+// @author {Henrique}
+// @coauthor {Eduardo, Carolina, João}
 function planets (dataPlanet, dataRecipe, _idRecipe) {
   const root = document.querySelector('#root')
   root.style.cursor = 'auto'
@@ -37,7 +37,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   header.innerHTML = insertH
 
   main_container.appendChild(container);
-  main_container.style.backgroundImage = `url('${dataPlanet.background}')`
+  main_container.style.backgroundImage = `url('${dataPlanet.background}?q=${Date.now()}')`
   main_container.setAttribute("class", "backgroundPLanets");
 
   // Receita:
@@ -62,7 +62,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   recipeName.innerHTML = recipePrincipal.name;
   recipeImg.appendChild(imgprato1);
   imgprato1.setAttribute("class", "imagep1");
-  imgprato1.src = `../${recipePrincipal.image}`;
+  imgprato1.src = `../${recipePrincipal.image}?q=${Date.now()}`;
 
   recipeContainer.appendChild(imgDiv);
   imgDiv.appendChild(recipeImg);
@@ -117,7 +117,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   textPlanetDiv.setAttribute("class", "planet-text-div");
   textPlanet.setAttribute("class", "planet-text");
   imgPlanetDiv.setAttribute("class", "planet-image-div");
-  imgPlanetDiv.style.backgroundImage = `url(../${dataPlanet.icon})`
+  imgPlanetDiv.style.backgroundImage = `url(../${dataPlanet.icon}?q=${Date.now()})`
 
 
   // Mais receitas:
@@ -147,7 +147,7 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
     recipeListContainer.setAttribute("class", "recipe-list-container");
     templateRecipeDiv.setAttribute("class", "template-recipe-div");
     templateRecipeImgDiv.setAttribute("class", "template-image-div");
-    templateRecipeImgDiv.setAttribute("src", `../${plate.image}`);
+    templateRecipeImgDiv.setAttribute("src", `../${plate.image}?q=${Date.now()}`);
     templateRecipeTextSection.setAttribute("class", "template-text-section");
     templateRecipeTitle.setAttribute("class", "template-recipe-title");
     templateRecipeTitle.innerText = plate.name;
@@ -176,11 +176,12 @@ function planets (dataPlanet, dataRecipe, _idRecipe) {
   footer.appendChild(tagAFooter)
   tagAFooter.setAttribute("href", "https://github.com/GalaticsSquad/Guia-Gourmet-Intergalactico");
   tagAFooter.setAttribute("class", "textFooter");
-  tagAFooter.innerText = "Copyright 2023 GalaticSquad - Carolina Liberato, Henrique Saiti, Eduardo Henrique, João Vitor"
+  tagAFooter.innerText = "Copyright 2023 GalaticSquad - Carolina Liberato, Henrique Saiti, Eduardo Henrique, João Victor"
 
   return main_container;
 }
 
+// @author {Carolina}
 function logicPlanets (data) {
   const titlePlanet = document.querySelector('.titlePlanet')
   titlePlanet.innerText = data.name

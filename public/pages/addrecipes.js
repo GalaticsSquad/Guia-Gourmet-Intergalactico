@@ -1,10 +1,12 @@
 // // @author {Eduardo}
-// //@coauthor {Carolina,João}
+// // @coauthor {Carolina,João}
 import {EventCustom} from "../eventCustom.js";
 import {insertHeader, logicHeader} from "./header.js";
 import { get_planets } from "../src/fetch/planet.js";
 import { get_recipes, post_recipes, patch_recipes, delete_recipes } from "../src/fetch/recipes.js";
 
+// @author {Carolina}
+// // @coauthor {Eduardo, João}
 export default async function renderAddRecipe() {
     const dataPlanet = await get_planets()
     const dataRecipe = await get_recipes()
@@ -140,6 +142,7 @@ function addRecipeHTML(dataRecipe, dataPlanet) {
     return container
 }
 
+// @author {Carolina}
 function registerrecipe(data) {
     let table_recipe = "";
     data.forEach((recipe) => {
@@ -153,7 +156,7 @@ function registerrecipe(data) {
     <td>${recipe.id}</td>
     <td>${recipe.id_planet}</td>
     <td>${recipe.name}</td>
-    <td><img class="imgTableRecipes" src="../${recipe.image}"></td>
+    <td><img class="imgTableRecipes" src="../${recipe.image}?q=${Date.now()}"></td>
     <td>${recipe.time}</td>
     <td><p id="ingredients_r">${ingredients_recipes}</p></td>
     <td><p id="preparation_r">${preparation_recipes}</p></td>
@@ -165,7 +168,7 @@ function registerrecipe(data) {
 });
 return table_recipe;
 }
-
+// @author {Eduardo}
 function add_options_planet(dataPlanet){
     let options = ``
     for(let i=0; i<dataPlanet.length;i++){
@@ -173,7 +176,8 @@ function add_options_planet(dataPlanet){
     }
     return options;
 }
-
+// @author {Carolina}
+// @coauthor {Eduardo}
 function logic_recipe(dataRecipe){
 
     const button_Ingredient = document.querySelector('.addIngredient')
@@ -251,7 +255,9 @@ function logic_recipe(dataRecipe){
         }
         if (exitEdit.value == "Cancelar edição") { //Cencelar edição
             name_recipe.value = ''             
-            input_description.value = ''             
+            input_description.value = ''  
+            input_instructions.value = ""
+            input_ingredients.value = ""           
             input_type.value = 0             
             input_tempo.value = ''             
             showListIng.innerHTML = ''             
@@ -271,7 +277,7 @@ function logic_recipe(dataRecipe){
     addEventButtonInstructions()
     addEventEditDel(dataRecipe)
 }
-
+// @author {Carolina}
 function addEventButtonIngredient() {
     const button_Ingredient = document.querySelector('.addIngredient')
     const showListIng = document.querySelector('.showListIng')
@@ -308,7 +314,7 @@ function addEventButtonIngredient() {
         }
     })
 }
-
+// @author {Carolina}
 function addEventButtonInstructions() {
     const button_Description = document.querySelector('.addDescription')
     const showListDes = document.querySelector('.showListDes')
@@ -343,7 +349,7 @@ function addEventButtonInstructions() {
         }
     })
 }
-
+// @author {Carolina}
 function addEventEditDel(dataRecipe) {
     let findRecipe = 0
     const button_Ingredient = document.querySelector('.addIngredient')
@@ -364,14 +370,12 @@ function addEventEditDel(dataRecipe) {
 
     buttonEditDel.forEach(button => { //Para cada icone de editar e deletar add um event de acordo com o ícone
     button.addEventListener('click', (event) => {
-        //event.preventDefault();
         ingredients.length = 0
         instructions = []
         if (event.target.innerText === "edit") {
             const cellId = parseInt(event.target.parentElement.parentElement.cells[0].innerText)
             findRecipe = dataRecipe.find(recipe => recipe.id===cellId)
             objRecipe = findRecipe
-            console.log(findRecipe)
             planet_select.value = findRecipe.id_planet
             name_recipe.value = findRecipe.name
             input_tempo.value = findRecipe.time
@@ -408,7 +412,7 @@ function addEventEditDel(dataRecipe) {
         }
     })});
 }
-
+// @author {Carolina}
 function addEventLiIng(ingredients) { // get the index of the ingredient/intruction clicked on editing
     const input_ingredients = document.querySelector('.input_ingredients')
     const editLiIng = document.querySelectorAll('#editLiIng')
@@ -421,7 +425,7 @@ function addEventLiIng(ingredients) { // get the index of the ingredient/intruct
         })
     });
 }
-
+// @author {Carolina}
 function addEventLiDes(instructions) { //Pega o index da instrução que foi clicada na lista de intruções a serem editadas
     const input_instructions = document.querySelector('.input_instructions')
     const editLiDes = document.querySelectorAll('#editLiDes')
@@ -433,7 +437,7 @@ function addEventLiDes(instructions) { //Pega o index da instrução que foi cli
         })
     });
 }
-
+// @author {Carolina}
 async function reRenderDelTable (cellId) {
     const textError = document.querySelector('.textError')
     const tbody = document.querySelector('#tbody')
@@ -452,7 +456,8 @@ async function reRenderDelTable (cellId) {
         textError.style.color = 'red';
     }
 }
-
+// @author {Eduardo}
+// @coauthor {Henrique}
 function upload_receitaImg() {
     const submitButton = document.querySelector('.envio_button')
     const form = document.querySelector('.form_envio')  
@@ -497,13 +502,7 @@ function upload_receitaImg() {
             .then(response => response.json())
             .then((response)=>{
                 if(response.error!==null){
-                    textError.innerHTML = `Algo deu errado!`;
-                    textError.style.color = 'red';
-                    setTimeout(() => {
-                        textError.innerHTML = ''
-                    }, 5000);
-                    submitButton.disabled = false
-                    root.style.cursor = 'auto'
+                    throw response.error
                 }})
             .then(() =>{
                 return get_recipes()})
@@ -533,7 +532,7 @@ function upload_receitaImg() {
                 reRenderHeader()
             })
             .catch(error => {
-                textError.innerHTML = `Algo deu errado!`;
+                textError.innerHTML = error;
                 textError.style.color = 'red';
                 setTimeout(() => {
                     textError.innerHTML = ''
@@ -566,15 +565,8 @@ function upload_receitaImg() {
             .then(response => response.json())
             .then((response)=>{
                 if(response.error!==null){
-                    textError.innerHTML = `Algo deu errado!`;
-                    textError.style.color = 'red';
-                    setTimeout(() => {
-                        textError.innerHTML = ''
-                    }, 5000);
-                    submitButton.disabled = false
-                    root.style.cursor = 'auto'
-                    submitButton.style.cursor = 'auto'
-            }})
+                    throw response.error
+                }})
             .then(() =>{
                 return get_recipes()})
             .then( dataRecipe =>{
@@ -604,10 +596,21 @@ function upload_receitaImg() {
                 instructions = []
                 reRenderHeader()
             })
+            .catch((error) =>{
+                textError.innerHTML = error;
+                textError.style.color = 'red';
+                setTimeout(() => {
+                    textError.innerHTML = ''
+                }, 5000);
+                submitButton.disabled = false
+                root.style.cursor = 'auto'
+                submitButton.style.cursor = 'auto'
+            })
         }  
     });   
 }
 
+// @author {Carolina}
 async function reRenderHeader() {
     const dataPlanet = await get_planets()
     const dataRecipe = await get_recipes()

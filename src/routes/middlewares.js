@@ -3,7 +3,8 @@ const jwtLib = require("jsonwebtoken");
 exports.authenticate = async (req, res, next) => {
     try {
         const decodedJwt = jwtLib.verify(req.cookies.session, process.env.JWTSECRET);
-        next();
+        req.user = decodedJwt.user
+        return next();
     } catch (error) {
         const response = {
             message: "",
@@ -17,3 +18,17 @@ exports.authenticate = async (req, res, next) => {
         res.status(403).json(response);
     }
 }
+exports.protected = (req, res) => {
+    return res.json({ user: req.user });
+};
+
+
+exports.logout =  (req, res) => {
+    return res
+      .clearCookie('session')
+      .status(200)
+      .json({
+        message: "Successfully logged out",
+        data: null,
+        error: null });
+  };

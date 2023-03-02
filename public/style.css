@@ -6,9 +6,7 @@
 }
 
 #root{
-    
     margin: 0 auto;
-/*     overflow-x: hidden; */
 } 
 
 /* -------------------------- MENU -------------------------- */
@@ -69,6 +67,8 @@ nav{
 	width: 100%;
 	position: relative;
 	top:110px;
+    height: 75%;
+    overflow-y: auto;
 }
 nav a{
 	text-decoration: none;
@@ -100,15 +100,23 @@ nav a{
 
 .containerLoginMenu {
     position: absolute;
-    top: 93%;
+    top: 92%;
     left: 10%;
+    width: 75%;
     font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
 }
 
-.loginMenu {
+.loginMenu, .logoutMenu {
     cursor: pointer;
     text-decoration: none;
     color: #A2C65A;
+}
+
+.logoutMenu {
+    display: none;
+    color: rgb(228, 63, 63);
 }
 
 /* -------------------------- HEADER -------------------------- */
@@ -199,7 +207,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: end;
-    font-size: 5.5rem;
+    font-size: 5.2rem;
     text-align: center;
     text-shadow: #fffefe4a 2px 8px;
     color: #A2C65A;
@@ -256,37 +264,6 @@ header {
 
 .button-init:hover::before, .button-init:focus::before {
     opacity: 1;
-}
-
-.button-init::after {
-    content: '';
-    width: 30px; height: 30px;
-    border-radius: 100%;
-    border: 6px solid #A2C65A;
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: ring 1.5s infinite;
-}
-
-.button-init:hover::after, .button-init:focus::after {
-    animation: none;
-    display: none;
-}
-
-@keyframes ring {
-    0% {
-    width: 30px;
-    height: 30px;
-    opacity: 1;
-    }
-    100% {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-    }
 }
 
 /* -------------------------- HOME -------------------------- */
@@ -699,6 +676,7 @@ header {
 .template-recipe-text, .template-recipe-time{
     font-size: 1em;
     font-family: 'Poppins', sans-serif;
+    word-break: break-all;
 }
 
 .button_container_text{
@@ -1122,14 +1100,11 @@ select {
     height: 100px;
 }
 
-/* #table-heading tr th, .tbodyAddRecipes tr td {
-    width: min-content;
-} */
-
 #description_p, #ingredients_r, #preparation_r, #description_r{
     height: 150px;
     width: cover;
     overflow-y: auto;
+    word-break: break-all;
 }
 
 .material-symbols-outlined {
